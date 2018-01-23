@@ -51,6 +51,7 @@
     <Compile Include="AddPatientForm.Designer.cs">
       <DependentUpon>AddPatientForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Authenticator.cs" />
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="EditEmployeeForm.cs">
       <SubType>Form</SubType>

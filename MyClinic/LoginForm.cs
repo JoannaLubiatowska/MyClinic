@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -44,11 +46,23 @@ namespace MyClinic
         {
             if (openNextWindow("MainClinicWindow"))
             {
-                MainWindow window = new MainWindow();
-                window.Show();
+                try
+                {
+                    if (Authenticator.Instance.LoginForm(textBoxLogin.Text, textBoxPassword.Text))
+                    {
+                        MainWindow window = new MainWindow();
+                        window.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login lub hasło nieprawidłowe. Spróbuj ponownie.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            //MessageBox.Show("Błędny login lub hasło. Spróbuj ponownie.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
         }
     }
 }
