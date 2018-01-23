@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MyClinic
 {
-    public partial class Form1 : Form
+    public partial class EditEmployeeForm : Form
     {
-        public Form1()
+        public EditEmployeeForm()
         {
             InitializeComponent();
         }
