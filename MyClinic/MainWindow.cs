@@ -28,7 +28,7 @@ namespace MyClinic
             connection = new SqlConnection("Data Source=ASIA-HP;Initial Catalog=Clinic;Persist Security Info=True;User ID=sa;Password=praktyka");
             adapter = new SqlDataAdapter();
             Update_combobox(clinicEmployees = new DataTable("ClinicEmployees"), comboBoxSchedulerDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
-            Update_combobox(medicalServices = new DataTable("MedicalServices"), comboBoxSchedulerService, "select * from MedicalServices", "ServiceName", "Price");
+            Update_combobox(medicalServices = new DataTable("MedicalServices"), comboBoxSchedulerService, "select * from MedicalServices", "ServiceName", "ServiceDescription");
             Update_combobox(medicalServices, comboBoxServicesServiceName, "select * from MedicalServices", "ServiceName", "ServiceDescription");
             Update_combobox(clinicEmployees, comboBoxVisitDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
             Update_combobox(clinicEmployees, comboBoxServicesDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
@@ -55,7 +55,6 @@ namespace MyClinic
             string schedulerPesel = textBoxSchedulerPesel.Text;
             string schedulerFirstName = textBoxSchedulerFirstName.Text;
             string schedulerLastName = textBoxSchedulerLastName.Text;
-            string schedulerAddress = textBoxSchedulerAddress.Text;
             string schedulerDate = dateTimePickerScheduler.Text;
             string schedulerHour = textBoxSchedulerHour.Text;
 
@@ -144,6 +143,48 @@ namespace MyClinic
                 EmployeeForm window = new EmployeeForm();
                 window.Show();
             }
+        }
+
+        private void buttonSearchPatient_Click(object sender, EventArgs e)
+        {
+            DataTable patient = new DataTable();
+            string shedulerPesel = textBoxSchedulerPesel.Text;
+            
+            SqlCommand command = new SqlCommand("select * from Patients where PESEL = @shedulerPesel", connection);
+            adapter.SelectCommand = command;
+            adapter.SelectCommand.Parameters.AddWithValue("@shedulerPesel", shedulerPesel);
+            adapter.Fill(patient);
+            adapter.Update(patient);
+
+            textBoxSchedulerFirstName.Text = patient.Rows[0]["FirstName"].ToString();
+            textBoxSchedulerLastName.Text = patient.Rows[0]["LastName"].ToString();
+
+        }
+
+        private void buttonServicePatientSearch_Click(object sender, EventArgs e)
+        {
+            DataTable patient = new DataTable();
+            string servicePesel = textBoxServicesPesel.Text;
+
+            SqlCommand command = new SqlCommand("select * from Patients where PESEL = @servicePesel", connection);
+            adapter.SelectCommand = command;
+            adapter.SelectCommand.Parameters.AddWithValue("@servicePesel", servicePesel);
+            adapter.Fill(patient);
+            adapter.Update(patient);
+
+            textBoxServicesFirstName.Text = patient.Rows[0]["FirstName"].ToString();
+            textBoxServicesLastName.Text = patient.Rows[0]["LastName"].ToString();
+            textBoxServicesStreet.Text = patient.Rows[0]["Street"].ToString();
+            textBoxServicesStreetNo.Text = patient.Rows[0]["StreetNumer"].ToString();
+            textBoxServicesPostalCode.Text = patient.Rows[0]["PostalCode"].ToString();
+            textBoxServicesPhoneNo.Text = patient.Rows[0]["PhoneNumber"].ToString();
+
+            textBoxServicesCity.Text = patient.Rows[0]["CityName"].ToString();
+        }
+
+        private void buttonVisitPatientSearch_Click(object sender, EventArgs e)
+        {
+
         }
 
         private Boolean openNextWindow(string windowName)

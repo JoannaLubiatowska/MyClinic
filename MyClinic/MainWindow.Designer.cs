@@ -70,14 +70,12 @@
             this.textBoxSchedulerLastName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxSchedulerService = new System.Windows.Forms.ComboBox();
-            this.textBoxSchedulerAddress = new System.Windows.Forms.TextBox();
             this.comboBoxSchedulerDoctor = new System.Windows.Forms.ComboBox();
             this.radioButtonService = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.radioButtonVisit = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxSchedulerFirstName = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.textBoxSchedulerPesel = new System.Windows.Forms.TextBox();
             this.buttonSaveSchedule = new System.Windows.Forms.Button();
             this.tabPatients = new System.Windows.Forms.TabPage();
@@ -141,6 +139,9 @@
             this.LogoutButton = new System.Windows.Forms.Button();
             this.comboBoxServicesDoctor = new System.Windows.Forms.ComboBox();
             this.comboBoxVisitDoctor = new System.Windows.Forms.ComboBox();
+            this.buttonSearchPatient = new System.Windows.Forms.Button();
+            this.buttonVisitPatientSearch = new System.Windows.Forms.Button();
+            this.buttonServicePatientSearch = new System.Windows.Forms.Button();
             label7 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
             label15 = new System.Windows.Forms.Label();
@@ -507,6 +508,7 @@
             // 
             // groupBox10
             // 
+            this.groupBox10.Controls.Add(this.buttonSearchPatient);
             this.groupBox10.Controls.Add(this.label30);
             this.groupBox10.Controls.Add(this.dateTimePickerScheduler);
             this.groupBox10.Controls.Add(this.textBoxSchedulerHour);
@@ -514,14 +516,12 @@
             this.groupBox10.Controls.Add(this.textBoxSchedulerLastName);
             this.groupBox10.Controls.Add(this.label2);
             this.groupBox10.Controls.Add(this.comboBoxSchedulerService);
-            this.groupBox10.Controls.Add(this.textBoxSchedulerAddress);
             this.groupBox10.Controls.Add(this.comboBoxSchedulerDoctor);
             this.groupBox10.Controls.Add(this.radioButtonService);
             this.groupBox10.Controls.Add(this.label3);
             this.groupBox10.Controls.Add(this.radioButtonVisit);
             this.groupBox10.Controls.Add(this.label4);
             this.groupBox10.Controls.Add(this.textBoxSchedulerFirstName);
-            this.groupBox10.Controls.Add(this.label5);
             this.groupBox10.Controls.Add(this.textBoxSchedulerPesel);
             this.groupBox10.Location = new System.Drawing.Point(788, 14);
             this.groupBox10.Name = "groupBox10";
@@ -533,7 +533,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(39, 333);
+            this.label30.Location = new System.Drawing.Point(39, 388);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(33, 13);
             this.label30.TabIndex = 25;
@@ -541,14 +541,14 @@
             // 
             // dateTimePickerScheduler
             // 
-            this.dateTimePickerScheduler.Location = new System.Drawing.Point(132, 327);
+            this.dateTimePickerScheduler.Location = new System.Drawing.Point(132, 382);
             this.dateTimePickerScheduler.Name = "dateTimePickerScheduler";
             this.dateTimePickerScheduler.Size = new System.Drawing.Size(242, 20);
             this.dateTimePickerScheduler.TabIndex = 24;
             // 
             // textBoxSchedulerHour
             // 
-            this.textBoxSchedulerHour.Location = new System.Drawing.Point(132, 353);
+            this.textBoxSchedulerHour.Location = new System.Drawing.Point(132, 408);
             this.textBoxSchedulerHour.Name = "textBoxSchedulerHour";
             this.textBoxSchedulerHour.Size = new System.Drawing.Size(242, 20);
             this.textBoxSchedulerHour.TabIndex = 23;
@@ -556,7 +556,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(39, 356);
+            this.label29.Location = new System.Drawing.Point(39, 411);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(49, 13);
             this.label29.TabIndex = 22;
@@ -565,7 +565,7 @@
             // textBoxSchedulerLastName
             // 
             this.textBoxSchedulerLastName.Enabled = false;
-            this.textBoxSchedulerLastName.Location = new System.Drawing.Point(132, 275);
+            this.textBoxSchedulerLastName.Location = new System.Drawing.Point(132, 355);
             this.textBoxSchedulerLastName.Name = "textBoxSchedulerLastName";
             this.textBoxSchedulerLastName.Size = new System.Drawing.Size(242, 20);
             this.textBoxSchedulerLastName.TabIndex = 18;
@@ -586,14 +586,6 @@
             this.comboBoxSchedulerService.Name = "comboBoxSchedulerService";
             this.comboBoxSchedulerService.Size = new System.Drawing.Size(242, 21);
             this.comboBoxSchedulerService.TabIndex = 15;
-            // 
-            // textBoxSchedulerAddress
-            // 
-            this.textBoxSchedulerAddress.Enabled = false;
-            this.textBoxSchedulerAddress.Location = new System.Drawing.Point(132, 301);
-            this.textBoxSchedulerAddress.Name = "textBoxSchedulerAddress";
-            this.textBoxSchedulerAddress.Size = new System.Drawing.Size(242, 20);
-            this.textBoxSchedulerAddress.TabIndex = 19;
             // 
             // comboBoxSchedulerDoctor
             // 
@@ -616,7 +608,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(39, 250);
+            this.label3.Location = new System.Drawing.Point(39, 330);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 13);
             this.label3.TabIndex = 9;
@@ -637,7 +629,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 278);
+            this.label4.Location = new System.Drawing.Point(39, 358);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 12;
@@ -646,19 +638,10 @@
             // textBoxSchedulerFirstName
             // 
             this.textBoxSchedulerFirstName.Enabled = false;
-            this.textBoxSchedulerFirstName.Location = new System.Drawing.Point(132, 250);
+            this.textBoxSchedulerFirstName.Location = new System.Drawing.Point(132, 330);
             this.textBoxSchedulerFirstName.Name = "textBoxSchedulerFirstName";
             this.textBoxSchedulerFirstName.Size = new System.Drawing.Size(242, 20);
             this.textBoxSchedulerFirstName.TabIndex = 17;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(39, 304);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 13);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Adres:";
             // 
             // textBoxSchedulerPesel
             // 
@@ -957,6 +940,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonVisitPatientSearch);
             this.groupBox1.Controls.Add(this.comboBoxVisitDoctor);
             this.groupBox1.Controls.Add(this.dateTimePickerVisitDate);
             this.groupBox1.Controls.Add(medicalSpecialistLabel);
@@ -1098,6 +1082,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.buttonServicePatientSearch);
             this.groupBox5.Controls.Add(this.comboBoxServicesDoctor);
             this.groupBox5.Controls.Add(this.dateTimePickerServicesDate);
             this.groupBox5.Controls.Add(this.textBoxServicesPesel);
@@ -1296,6 +1281,36 @@
             this.comboBoxVisitDoctor.Size = new System.Drawing.Size(242, 21);
             this.comboBoxVisitDoctor.TabIndex = 46;
             // 
+            // buttonSearchPatient
+            // 
+            this.buttonSearchPatient.Location = new System.Drawing.Point(290, 250);
+            this.buttonSearchPatient.Name = "buttonSearchPatient";
+            this.buttonSearchPatient.Size = new System.Drawing.Size(84, 23);
+            this.buttonSearchPatient.TabIndex = 25;
+            this.buttonSearchPatient.Text = "Szukaj";
+            this.buttonSearchPatient.UseVisualStyleBackColor = true;
+            this.buttonSearchPatient.Click += new System.EventHandler(this.buttonSearchPatient_Click);
+            // 
+            // buttonVisitPatientSearch
+            // 
+            this.buttonVisitPatientSearch.Location = new System.Drawing.Point(287, 118);
+            this.buttonVisitPatientSearch.Name = "buttonVisitPatientSearch";
+            this.buttonVisitPatientSearch.Size = new System.Drawing.Size(84, 23);
+            this.buttonVisitPatientSearch.TabIndex = 47;
+            this.buttonVisitPatientSearch.Text = "Szukaj";
+            this.buttonVisitPatientSearch.UseVisualStyleBackColor = true;
+            this.buttonVisitPatientSearch.Click += new System.EventHandler(this.buttonVisitPatientSearch_Click);
+            // 
+            // buttonServicePatientSearch
+            // 
+            this.buttonServicePatientSearch.Location = new System.Drawing.Point(331, 150);
+            this.buttonServicePatientSearch.Name = "buttonServicePatientSearch";
+            this.buttonServicePatientSearch.Size = new System.Drawing.Size(84, 23);
+            this.buttonServicePatientSearch.TabIndex = 50;
+            this.buttonServicePatientSearch.Text = "Szukaj";
+            this.buttonServicePatientSearch.UseVisualStyleBackColor = true;
+            this.buttonServicePatientSearch.Click += new System.EventHandler(this.buttonServicePatientSearch_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1354,14 +1369,12 @@
         private System.Windows.Forms.TextBox textBoxSchedulerLastName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxSchedulerService;
-        private System.Windows.Forms.TextBox textBoxSchedulerAddress;
         private System.Windows.Forms.ComboBox comboBoxSchedulerDoctor;
         private System.Windows.Forms.RadioButton radioButtonService;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RadioButton radioButtonVisit;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxSchedulerFirstName;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxSchedulerPesel;
         private System.Windows.Forms.Button buttonSaveSchedule;
         private System.Windows.Forms.TabPage tabPatients;
@@ -1425,6 +1438,9 @@
         private System.Windows.Forms.Button LogoutButton;
         private System.Windows.Forms.ComboBox comboBoxServicesDoctor;
         private System.Windows.Forms.ComboBox comboBoxVisitDoctor;
+        private System.Windows.Forms.Button buttonSearchPatient;
+        private System.Windows.Forms.Button buttonVisitPatientSearch;
+        private System.Windows.Forms.Button buttonServicePatientSearch;
     }
 }
 
