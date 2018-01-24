@@ -36,7 +36,7 @@ namespace MyClinic
         {
             DataTable temp = new DataTable();
 
-            password = EncodeText(password);
+            password = EncodePassword(password);
 
             SqlCommand command = new SqlCommand("select * from ClinicEmployees where UserLogin = @login and UserPassword = @password", connection);
             adapter.SelectCommand = command;
@@ -53,7 +53,8 @@ namespace MyClinic
 
         }
 
-        private string EncodeText(string value)
+
+        public static string EncodePassword(string value)
         {
             using (SHA256 hash = SHA256Managed.Create())
             {

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace MyClinic
 {
@@ -22,6 +23,9 @@ namespace MyClinic
         private DataTable patients;
         private DataTable medicalServices;
         private DataTable clinicEmployees;
+        private string connectionString;
+        private LINQToSQLDataContext db;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,6 +36,9 @@ namespace MyClinic
             Update_combobox(medicalServices, comboBoxServicesServiceName, "select * from MedicalServices", "ServiceName", "ServiceDescription");
             Update_combobox(clinicEmployees, comboBoxVisitDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
             Update_combobox(clinicEmployees, comboBoxServicesDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
+
+            connectionString = ConfigurationManager.ConnectionStrings["MyClinic.Properties.Settings.ClinicConnectionString"].ToString();
+            db = new LINQToSQLDataContext(connectionString);
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -163,14 +170,8 @@ namespace MyClinic
 
         private void buttonServicePatientSearch_Click(object sender, EventArgs e)
         {
-            DataTable patient = new DataTable();
-            string servicePesel = textBoxServicesPesel.Text;
-
-            SqlCommand command = new SqlCommand("select * from Patients where PESEL = @servicePesel", connection);
-            adapter.SelectCommand = command;
-            adapter.SelectCommand.Parameters.AddWithValue("@servicePesel", servicePesel);
-            adapter.Fill(patient);
-            adapter.Update(patient);
+            DataTable patient = createPatientTable(textBoxServicesPesel.Text);
+            textBoxServicesCity.Text = fillPatientInformation(textBoxServicesPesel.Text, patient);
 
             textBoxServicesFirstName.Text = patient.Rows[0]["FirstName"].ToString();
             textBoxServicesLastName.Text = patient.Rows[0]["LastName"].ToString();
@@ -178,13 +179,31 @@ namespace MyClinic
             textBoxServicesStreetNo.Text = patient.Rows[0]["StreetNumer"].ToString();
             textBoxServicesPostalCode.Text = patient.Rows[0]["PostalCode"].ToString();
             textBoxServicesPhoneNo.Text = patient.Rows[0]["PhoneNumber"].ToString();
-
-            textBoxServicesCity.Text = patient.Rows[0]["CityName"].ToString();
         }
 
         private void buttonVisitPatientSearch_Click(object sender, EventArgs e)
         {
+            DataTable patient = createPatientTable(textBoxVisitPesel.Text);
+            textBoxVisitCity.Text = fillPatientInformation(textBoxVisitPesel.Text, patient);
 
+            textBoxVisitFirstName.Text = patient.Rows[0]["FirstName"].ToString();
+            textBoxVisitLastName.Text = patient.Rows[0]["LastName"].ToString();
+            textBoxVisitStreet.Text = patient.Rows[0]["Street"].ToString();
+            textBoxVisitStreetNo.Text = patient.Rows[0]["StreetNumer"].ToString();
+            textBoxVisitPostalCode.Text = patient.Rows[0]["PostalCode"].ToString();
+            textBoxVisitPhoneNo.Text = patient.Rows[0]["PhoneNumber"].ToString();
+
+            try
+            {
+                var patientVisits = db.Visits.Where(v => v.PatientID == Int32.Parse(patient.Rows[0]["PatientID"].ToString()));
+
+                textBoxVisitArchiveDescription.Text = String.Join(Environment.NewLine, patientVisits.Select(v => v.VisitDescription));
+                textBoxVisitArchivCode.Text = String.Join(", ", patientVisits.Select(v => v.DiseaseClassification));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private Boolean openNextWindow(string windowName)
@@ -209,6 +228,34 @@ namespace MyClinic
                 return false;
             }
         }
+
+        private DataTable createPatientTable(string servicePesel)
+        {
+            DataTable patient = new DataTable();
+
+            SqlCommand command = new SqlCommand("select * from Patients where PESEL = @servicePesel", connection);
+            adapter.SelectCommand = command;
+            adapter.SelectCommand.Parameters.AddWithValue("@servicePesel", servicePesel);
+            adapter.Fill(patient);
+            adapter.Update(patient);
+
+            return patient;
+        }
+        private string fillPatientInformation(string servicePesel, DataTable patient)
+        {
+            try
+            {
+                var city = db.Cities;
+                var answer = city.Single(x => x.CityID == Int32.Parse(patient.Rows[0]["CityID"].ToString()));
+                return answer.CityName;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return "";
+        }
+
         public void Update_combobox(DataTable transaction, ComboBox combo, String select, String field, String field2)
         {
             try

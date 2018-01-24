@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.75" name="LINQToSQL">
+  <DataContextMoniker Name="/LINQToSQLDataContext" />
+  <nestedChildShapes>
+    <classShape Id="19de6490-5899-4f02-b1a3-ec411d558fb7" absoluteBounds="3.5, 4.125, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/LINQToSQLDataContext/City" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4a5fb548-2e34-42e8-8fbb-7a41b9f7a40d" absoluteBounds="3.515, 4.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="eed86080-6716-4eae-9f4c-153cbc9ce341" absoluteBounds="0.75, 4.25, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/LINQToSQLDataContext/Voivodeship" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bed964c1-1d8f-413f-ba11-2cbb4cf7b702" absoluteBounds="0.765, 4.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c7cc1961-55df-4e42-98be-8b50db502645" absoluteBounds="6.25, 5, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/LINQToSQLDataContext/ClinicEmployee" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b604d55e-9cfb-4b2a-ad44-d44da28a15e9" absoluteBounds="6.265, 5.46, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="114c73b8-092e-4f89-95a6-73c37b97bdce" absoluteBounds="6.25, 1.25, 2, 3.1170068359375005">
+      <DataClassMoniker Name="/LINQToSQLDataContext/Patient" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a57d6417-9826-4ec9-869c-f9d882462e4b" absoluteBounds="6.265, 1.71, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 4.84699625651042); (3.5 : 4.84699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LINQToSQLDataContext/Voivodeship/Voivodeship_City" />
+      <nodes>
+        <classShapeMoniker Id="eed86080-6716-4eae-9f4c-153cbc9ce341" />
+        <classShapeMoniker Id="19de6490-5899-4f02-b1a3-ec411d558fb7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 5.25564697265625); (6.25 : 5.25564697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LINQToSQLDataContext/City/City_ClinicEmployee" />
+      <nodes>
+        <classShapeMoniker Id="19de6490-5899-4f02-b1a3-ec411d558fb7" />
+        <classShapeMoniker Id="c7cc1961-55df-4e42-98be-8b50db502645" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.65625 : 4.125); (4.65625 : 2.21875); (6.25 : 2.21875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LINQToSQLDataContext/City/City_Patient" />
+      <nodes>
+        <classShapeMoniker Id="19de6490-5899-4f02-b1a3-ec411d558fb7" />
+        <classShapeMoniker Id="114c73b8-092e-4f89-95a6-73c37b97bdce" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a09a0305-0ec8-4a96-b04a-1dd71777321d" absoluteBounds="1.375, 1.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/LINQToSQLDataContext/Visit" />
+      <nestedChildShapes>
+        <elementListCompartment Id="27985175-0721-4899-9b37-513123c1e080" absoluteBounds="1.3900000000000001, 1.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.25 : 2.90347412109375); (4.73958333333333 : 2.90347412109375 : JumpStart); (4.57291666666667 : 2.90347412109375 : JumpEnd); (3.375 : 2.90347412109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LINQToSQLDataContext/Patient/Patient_Visit" />
+      <nodes>
+        <classShapeMoniker Id="114c73b8-092e-4f89-95a6-73c37b97bdce" />
+        <classShapeMoniker Id="a09a0305-0ec8-4a96-b04a-1dd71777321d" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
