@@ -347,6 +347,8 @@
             this.Controls.Add(userPasswordLabel);
             this.Controls.Add(userLoginLabel);
             this.Controls.Add(streetLabel1);
+            this.MaximumSize = new System.Drawing.Size(382, 491);
+            this.MinimumSize = new System.Drawing.Size(382, 491);
             this.Name = "EmployeeForm";
             this.Text = "Pracownik";
             this.ResumeLayout(false);

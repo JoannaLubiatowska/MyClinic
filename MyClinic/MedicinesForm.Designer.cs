@@ -212,6 +212,8 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox6);
+            this.MaximumSize = new System.Drawing.Size(468, 573);
+            this.MinimumSize = new System.Drawing.Size(468, 573);
             this.Name = "MedicinesForm";
             this.Text = "Leki";
             this.groupBox2.ResumeLayout(false);

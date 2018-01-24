@@ -262,6 +262,8 @@
             this.Controls.Add(streetNumerLabel1);
             this.Controls.Add(streetLabel1);
             this.Controls.Add(pESELLabel);
+            this.MaximumSize = new System.Drawing.Size(377, 356);
+            this.MinimumSize = new System.Drawing.Size(377, 356);
             this.Name = "AddPatientForm";
             this.Text = "Dodaj pacjenta";
             this.ResumeLayout(false);

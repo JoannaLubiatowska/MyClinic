@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using static MyClinic.DataSet;
 
 namespace MyClinic
 {
@@ -138,7 +139,9 @@ namespace MyClinic
         {
             if (openNextWindow("EditEmployeeForm"))
             {
-                EditEmployeeForm window = new EditEmployeeForm();
+                ClinicEmployeesRow currentSelectedValue = (ClinicEmployeesRow)((DataRowView)clinicEmployeesBindingSource.Current).Row;
+
+                EditEmployeeForm window = new EditEmployeeForm(currentSelectedValue);
                 window.Show();
             }
         }
@@ -280,6 +283,31 @@ namespace MyClinic
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'dataSet.Patients' table. You can move, or remove it, as needed.
+            this.patientsTableAdapter.Fill(this.dataSet.Patients);
+            // TODO: This line of code loads data into the 'dataSet.Exterminations_view' table. You can move, or remove it, as needed.
+            this.exterminations_viewTableAdapter.Fill(this.dataSet.Exterminations_view);
+            // TODO: This line of code loads data into the 'dataSet.Visits_view' table. You can move, or remove it, as needed.
+            this.visits_viewTableAdapter.Fill(this.dataSet.Visits_view);
+            // TODO: This line of code loads data into the 'dataSet.MedicalServices' table. You can move, or remove it, as needed.
+            this.medicalServicesTableAdapter.Fill(this.dataSet.MedicalServices);
+            // TODO: This line of code loads data into the 'dataSet.ClinicEmployees' table. You can move, or remove it, as needed.
+            this.clinicEmployeesTableAdapter.Fill(this.dataSet.ClinicEmployees);
+            // TODO: This line of code loads data into the 'dataSet.Employee_view' table. You can move, or remove it, as needed.
+            this.employee_viewTableAdapter.Fill(this.dataSet.Employee_view);
+
+        }
+
+        private void clinicEmployeesBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            this.Validate();
+            this.clinicEmployeesBindingSource.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.dataSet);
+
         }
     }
 }

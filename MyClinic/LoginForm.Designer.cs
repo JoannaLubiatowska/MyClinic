@@ -116,6 +116,9 @@
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.textBoxLogin);
             this.Controls.Add(this.LoginButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximumSize = new System.Drawing.Size(592, 273);
+            this.MinimumSize = new System.Drawing.Size(592, 273);
             this.Name = "LoginForm";
             this.Text = "LoginForm";
             this.ResumeLayout(false);

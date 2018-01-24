@@ -61,90 +61,6 @@
             pESELLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBoxNewPatientFirstName
-            // 
-            this.textBoxNewPatientFirstName.Location = new System.Drawing.Point(111, 12);
-            this.textBoxNewPatientFirstName.Name = "textBoxNewPatientFirstName";
-            this.textBoxNewPatientFirstName.Size = new System.Drawing.Size(242, 20);
-            this.textBoxNewPatientFirstName.TabIndex = 125;
-            // 
-            // comboBoxNewPatientCity
-            // 
-            this.comboBoxNewPatientCity.FormattingEnabled = true;
-            this.comboBoxNewPatientCity.Location = new System.Drawing.Point(111, 169);
-            this.comboBoxNewPatientCity.Name = "comboBoxNewPatientCity";
-            this.comboBoxNewPatientCity.Size = new System.Drawing.Size(242, 21);
-            this.comboBoxNewPatientCity.TabIndex = 124;
-            // 
-            // comboBoxNewPatientVoivodeship
-            // 
-            this.comboBoxNewPatientVoivodeship.FormattingEnabled = true;
-            this.comboBoxNewPatientVoivodeship.Location = new System.Drawing.Point(111, 142);
-            this.comboBoxNewPatientVoivodeship.Name = "comboBoxNewPatientVoivodeship";
-            this.comboBoxNewPatientVoivodeship.Size = new System.Drawing.Size(242, 21);
-            this.comboBoxNewPatientVoivodeship.TabIndex = 123;
-            // 
-            // checkBoxNewPatientNFZ
-            // 
-            this.checkBoxNewPatientNFZ.AutoSize = true;
-            this.checkBoxNewPatientNFZ.Location = new System.Drawing.Point(111, 256);
-            this.checkBoxNewPatientNFZ.Name = "checkBoxNewPatientNFZ";
-            this.checkBoxNewPatientNFZ.Size = new System.Drawing.Size(45, 17);
-            this.checkBoxNewPatientNFZ.TabIndex = 122;
-            this.checkBoxNewPatientNFZ.Text = "Tak";
-            this.checkBoxNewPatientNFZ.UseVisualStyleBackColor = true;
-            // 
-            // buttonAddEmployee
-            // 
-            this.buttonAddEmployee.Location = new System.Drawing.Point(217, 282);
-            this.buttonAddEmployee.Name = "buttonAddEmployee";
-            this.buttonAddEmployee.Size = new System.Drawing.Size(136, 23);
-            this.buttonAddEmployee.TabIndex = 121;
-            this.buttonAddEmployee.Text = "Zapisz";
-            this.buttonAddEmployee.UseVisualStyleBackColor = true;
-            // 
-            // textBoxNewPatientPhoneNo
-            // 
-            this.textBoxNewPatientPhoneNo.Location = new System.Drawing.Point(111, 195);
-            this.textBoxNewPatientPhoneNo.Name = "textBoxNewPatientPhoneNo";
-            this.textBoxNewPatientPhoneNo.Size = new System.Drawing.Size(242, 20);
-            this.textBoxNewPatientPhoneNo.TabIndex = 120;
-            // 
-            // textBoxNewPatientPesel
-            // 
-            this.textBoxNewPatientPesel.Location = new System.Drawing.Point(111, 221);
-            this.textBoxNewPatientPesel.Name = "textBoxNewPatientPesel";
-            this.textBoxNewPatientPesel.Size = new System.Drawing.Size(242, 20);
-            this.textBoxNewPatientPesel.TabIndex = 119;
-            // 
-            // textBoxNewPatientPostalCode
-            // 
-            this.textBoxNewPatientPostalCode.Location = new System.Drawing.Point(111, 116);
-            this.textBoxNewPatientPostalCode.Name = "textBoxNewPatientPostalCode";
-            this.textBoxNewPatientPostalCode.Size = new System.Drawing.Size(242, 20);
-            this.textBoxNewPatientPostalCode.TabIndex = 118;
-            // 
-            // textBoxNewPatientStreet
-            // 
-            this.textBoxNewPatientStreet.Location = new System.Drawing.Point(111, 64);
-            this.textBoxNewPatientStreet.Name = "textBoxNewPatientStreet";
-            this.textBoxNewPatientStreet.Size = new System.Drawing.Size(242, 20);
-            this.textBoxNewPatientStreet.TabIndex = 117;
-            // 
-            // textBoxNewPatientStreetNo
-            // 
-            this.textBoxNewPatientStreetNo.Location = new System.Drawing.Point(111, 90);
-            this.textBoxNewPatientStreetNo.Name = "textBoxNewPatientStreetNo";
-            this.textBoxNewPatientStreetNo.Size = new System.Drawing.Size(242, 20);
-            this.textBoxNewPatientStreetNo.TabIndex = 116;
-            // 
-            // textBoxNewPatientLastName
-            // 
-            this.textBoxNewPatientLastName.Location = new System.Drawing.Point(111, 38);
-            this.textBoxNewPatientLastName.Name = "textBoxNewPatientLastName";
-            this.textBoxNewPatientLastName.Size = new System.Drawing.Size(242, 20);
-            this.textBoxNewPatientLastName.TabIndex = 115;
-            // 
             // label5
             // 
             label5.AutoSize = true;
@@ -235,6 +151,90 @@
             pESELLabel.TabIndex = 105;
             pESELLabel.Text = "PESEL:";
             // 
+            // textBoxNewPatientFirstName
+            // 
+            this.textBoxNewPatientFirstName.Location = new System.Drawing.Point(111, 12);
+            this.textBoxNewPatientFirstName.Name = "textBoxNewPatientFirstName";
+            this.textBoxNewPatientFirstName.Size = new System.Drawing.Size(242, 20);
+            this.textBoxNewPatientFirstName.TabIndex = 125;
+            // 
+            // comboBoxNewPatientCity
+            // 
+            this.comboBoxNewPatientCity.FormattingEnabled = true;
+            this.comboBoxNewPatientCity.Location = new System.Drawing.Point(111, 169);
+            this.comboBoxNewPatientCity.Name = "comboBoxNewPatientCity";
+            this.comboBoxNewPatientCity.Size = new System.Drawing.Size(242, 21);
+            this.comboBoxNewPatientCity.TabIndex = 124;
+            // 
+            // comboBoxNewPatientVoivodeship
+            // 
+            this.comboBoxNewPatientVoivodeship.FormattingEnabled = true;
+            this.comboBoxNewPatientVoivodeship.Location = new System.Drawing.Point(111, 142);
+            this.comboBoxNewPatientVoivodeship.Name = "comboBoxNewPatientVoivodeship";
+            this.comboBoxNewPatientVoivodeship.Size = new System.Drawing.Size(242, 21);
+            this.comboBoxNewPatientVoivodeship.TabIndex = 123;
+            // 
+            // checkBoxNewPatientNFZ
+            // 
+            this.checkBoxNewPatientNFZ.AutoSize = true;
+            this.checkBoxNewPatientNFZ.Location = new System.Drawing.Point(111, 256);
+            this.checkBoxNewPatientNFZ.Name = "checkBoxNewPatientNFZ";
+            this.checkBoxNewPatientNFZ.Size = new System.Drawing.Size(45, 17);
+            this.checkBoxNewPatientNFZ.TabIndex = 122;
+            this.checkBoxNewPatientNFZ.Text = "Tak";
+            this.checkBoxNewPatientNFZ.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddEmployee
+            // 
+            this.buttonAddEmployee.Location = new System.Drawing.Point(217, 282);
+            this.buttonAddEmployee.Name = "buttonAddEmployee";
+            this.buttonAddEmployee.Size = new System.Drawing.Size(136, 23);
+            this.buttonAddEmployee.TabIndex = 121;
+            this.buttonAddEmployee.Text = "Zapisz";
+            this.buttonAddEmployee.UseVisualStyleBackColor = true;
+            // 
+            // textBoxNewPatientPhoneNo
+            // 
+            this.textBoxNewPatientPhoneNo.Location = new System.Drawing.Point(111, 195);
+            this.textBoxNewPatientPhoneNo.Name = "textBoxNewPatientPhoneNo";
+            this.textBoxNewPatientPhoneNo.Size = new System.Drawing.Size(242, 20);
+            this.textBoxNewPatientPhoneNo.TabIndex = 120;
+            // 
+            // textBoxNewPatientPesel
+            // 
+            this.textBoxNewPatientPesel.Location = new System.Drawing.Point(111, 221);
+            this.textBoxNewPatientPesel.Name = "textBoxNewPatientPesel";
+            this.textBoxNewPatientPesel.Size = new System.Drawing.Size(242, 20);
+            this.textBoxNewPatientPesel.TabIndex = 119;
+            // 
+            // textBoxNewPatientPostalCode
+            // 
+            this.textBoxNewPatientPostalCode.Location = new System.Drawing.Point(111, 116);
+            this.textBoxNewPatientPostalCode.Name = "textBoxNewPatientPostalCode";
+            this.textBoxNewPatientPostalCode.Size = new System.Drawing.Size(242, 20);
+            this.textBoxNewPatientPostalCode.TabIndex = 118;
+            // 
+            // textBoxNewPatientStreet
+            // 
+            this.textBoxNewPatientStreet.Location = new System.Drawing.Point(111, 64);
+            this.textBoxNewPatientStreet.Name = "textBoxNewPatientStreet";
+            this.textBoxNewPatientStreet.Size = new System.Drawing.Size(242, 20);
+            this.textBoxNewPatientStreet.TabIndex = 117;
+            // 
+            // textBoxNewPatientStreetNo
+            // 
+            this.textBoxNewPatientStreetNo.Location = new System.Drawing.Point(111, 90);
+            this.textBoxNewPatientStreetNo.Name = "textBoxNewPatientStreetNo";
+            this.textBoxNewPatientStreetNo.Size = new System.Drawing.Size(242, 20);
+            this.textBoxNewPatientStreetNo.TabIndex = 116;
+            // 
+            // textBoxNewPatientLastName
+            // 
+            this.textBoxNewPatientLastName.Location = new System.Drawing.Point(111, 38);
+            this.textBoxNewPatientLastName.Name = "textBoxNewPatientLastName";
+            this.textBoxNewPatientLastName.Size = new System.Drawing.Size(242, 20);
+            this.textBoxNewPatientLastName.TabIndex = 115;
+            // 
             // EditPatientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -261,6 +261,8 @@
             this.Controls.Add(streetNumerLabel1);
             this.Controls.Add(streetLabel1);
             this.Controls.Add(pESELLabel);
+            this.MaximumSize = new System.Drawing.Size(377, 356);
+            this.MinimumSize = new System.Drawing.Size(377, 356);
             this.Name = "EditPatientForm";
             this.Text = "Edycja pacjenta";
             this.ResumeLayout(false);
