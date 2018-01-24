@@ -90,6 +90,7 @@
             this.textBoxLogin.Name = "textBoxLogin";
             this.textBoxLogin.Size = new System.Drawing.Size(400, 20);
             this.textBoxLogin.TabIndex = 25;
+            this.textBoxLogin.Text = "jan.kowalski@gmail.com";
             // 
             // LoginButton
             // 

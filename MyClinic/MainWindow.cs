@@ -30,7 +30,8 @@ namespace MyClinic
             Update_combobox(clinicEmployees = new DataTable("ClinicEmployees"), comboBoxSchedulerDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
             Update_combobox(medicalServices = new DataTable("MedicalServices"), comboBoxSchedulerService, "select * from MedicalServices", "ServiceName", "Price");
             Update_combobox(medicalServices, comboBoxServicesServiceName, "select * from MedicalServices", "ServiceName", "ServiceDescription");
-
+            Update_combobox(clinicEmployees, comboBoxVisitDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
+            Update_combobox(clinicEmployees, comboBoxServicesDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)

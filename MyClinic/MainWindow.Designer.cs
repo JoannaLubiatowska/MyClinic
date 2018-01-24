@@ -109,7 +109,6 @@
             this.textBoxVisitArchiveDescription = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dateTimePickerVisitDate = new System.Windows.Forms.DateTimePicker();
-            this.textBoxVisitDoctor = new System.Windows.Forms.TextBox();
             this.textBoxVisitPesel = new System.Windows.Forms.TextBox();
             this.tabServices = new System.Windows.Forms.TabPage();
             this.buttonSaveExamination = new System.Windows.Forms.Button();
@@ -126,7 +125,6 @@
             this.dateTimePickerServicesDate = new System.Windows.Forms.DateTimePicker();
             this.textBoxServicesPesel = new System.Windows.Forms.TextBox();
             this.comboBoxServicesServiceName = new System.Windows.Forms.ComboBox();
-            this.textBoxServicesDoctor = new System.Windows.Forms.TextBox();
             this.tabAdministration = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.buttonAddService = new System.Windows.Forms.Button();
@@ -140,9 +138,9 @@
             this.buttonAddEmployee = new System.Windows.Forms.Button();
             this.buttonEditEployee = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
-            this.labelLoginName = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.LogoutButton = new System.Windows.Forms.Button();
+            this.comboBoxServicesDoctor = new System.Windows.Forms.ComboBox();
+            this.comboBoxVisitDoctor = new System.Windows.Forms.ComboBox();
             label7 = new System.Windows.Forms.Label();
             label8 = new System.Windows.Forms.Label();
             label15 = new System.Windows.Forms.Label();
@@ -959,8 +957,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.comboBoxVisitDoctor);
             this.groupBox1.Controls.Add(this.dateTimePickerVisitDate);
-            this.groupBox1.Controls.Add(this.textBoxVisitDoctor);
             this.groupBox1.Controls.Add(medicalSpecialistLabel);
             this.groupBox1.Controls.Add(visitDateLabel);
             this.groupBox1.Controls.Add(label22);
@@ -978,14 +976,6 @@
             this.dateTimePickerVisitDate.Name = "dateTimePickerVisitDate";
             this.dateTimePickerVisitDate.Size = new System.Drawing.Size(242, 20);
             this.dateTimePickerVisitDate.TabIndex = 25;
-            // 
-            // textBoxVisitDoctor
-            // 
-            this.textBoxVisitDoctor.Enabled = false;
-            this.textBoxVisitDoctor.Location = new System.Drawing.Point(129, 66);
-            this.textBoxVisitDoctor.Name = "textBoxVisitDoctor";
-            this.textBoxVisitDoctor.Size = new System.Drawing.Size(242, 20);
-            this.textBoxVisitDoctor.TabIndex = 24;
             // 
             // textBoxVisitPesel
             // 
@@ -1108,11 +1098,11 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.comboBoxServicesDoctor);
             this.groupBox5.Controls.Add(this.dateTimePickerServicesDate);
             this.groupBox5.Controls.Add(this.textBoxServicesPesel);
             this.groupBox5.Controls.Add(this.comboBoxServicesServiceName);
             this.groupBox5.Controls.Add(employeeIDLabel);
-            this.groupBox5.Controls.Add(this.textBoxServicesDoctor);
             this.groupBox5.Controls.Add(medicalServiceIDLabel);
             this.groupBox5.Controls.Add(patientIDLabel);
             this.groupBox5.Controls.Add(examinationDateLabel);
@@ -1144,13 +1134,6 @@
             this.comboBoxServicesServiceName.Name = "comboBoxServicesServiceName";
             this.comboBoxServicesServiceName.Size = new System.Drawing.Size(242, 21);
             this.comboBoxServicesServiceName.TabIndex = 45;
-            // 
-            // textBoxServicesDoctor
-            // 
-            this.textBoxServicesDoctor.Location = new System.Drawing.Point(173, 46);
-            this.textBoxServicesDoctor.Name = "textBoxServicesDoctor";
-            this.textBoxServicesDoctor.Size = new System.Drawing.Size(242, 20);
-            this.textBoxServicesDoctor.TabIndex = 20;
             // 
             // tabAdministration
             // 
@@ -1287,35 +1270,31 @@
             this.label11.TabIndex = 28;
             this.label11.Text = "Przychodnia Medica";
             // 
-            // labelLoginName
-            // 
-            this.labelLoginName.AutoSize = true;
-            this.labelLoginName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelLoginName.Location = new System.Drawing.Point(934, 29);
-            this.labelLoginName.Name = "labelLoginName";
-            this.labelLoginName.Size = new System.Drawing.Size(69, 13);
-            this.labelLoginName.TabIndex = 27;
-            this.labelLoginName.Text = "Jan Kowalski";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label10.Location = new System.Drawing.Point(934, 12);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(107, 13);
-            this.label10.TabIndex = 26;
-            this.label10.Text = "Zalogowany jako:";
-            // 
             // LogoutButton
             // 
-            this.LogoutButton.Location = new System.Drawing.Point(1117, 4);
+            this.LogoutButton.Location = new System.Drawing.Point(1117, 5);
             this.LogoutButton.Name = "LogoutButton";
             this.LogoutButton.Size = new System.Drawing.Size(84, 23);
             this.LogoutButton.TabIndex = 25;
             this.LogoutButton.Text = "Wyloguj";
             this.LogoutButton.UseVisualStyleBackColor = true;
             this.LogoutButton.Click += new System.EventHandler(this.LogoutButton_Click);
+            // 
+            // comboBoxServicesDoctor
+            // 
+            this.comboBoxServicesDoctor.FormattingEnabled = true;
+            this.comboBoxServicesDoctor.Location = new System.Drawing.Point(173, 46);
+            this.comboBoxServicesDoctor.Name = "comboBoxServicesDoctor";
+            this.comboBoxServicesDoctor.Size = new System.Drawing.Size(242, 21);
+            this.comboBoxServicesDoctor.TabIndex = 49;
+            // 
+            // comboBoxVisitDoctor
+            // 
+            this.comboBoxVisitDoctor.FormattingEnabled = true;
+            this.comboBoxVisitDoctor.Location = new System.Drawing.Point(129, 66);
+            this.comboBoxVisitDoctor.Name = "comboBoxVisitDoctor";
+            this.comboBoxVisitDoctor.Size = new System.Drawing.Size(242, 21);
+            this.comboBoxVisitDoctor.TabIndex = 46;
             // 
             // MainWindow
             // 
@@ -1325,9 +1304,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1205, 716);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.labelLoginName);
             this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.label10);
             this.Controls.Add(this.LogoutButton);
             this.Name = "MainWindow";
             this.Text = "Okno główne";
@@ -1416,7 +1393,6 @@
         private System.Windows.Forms.TextBox textBoxVisitArchiveDescription;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DateTimePicker dateTimePickerVisitDate;
-        private System.Windows.Forms.TextBox textBoxVisitDoctor;
         private System.Windows.Forms.TextBox textBoxVisitPesel;
         private System.Windows.Forms.TabPage tabServices;
         private System.Windows.Forms.Button buttonSaveExamination;
@@ -1433,7 +1409,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerServicesDate;
         private System.Windows.Forms.TextBox textBoxServicesPesel;
         private System.Windows.Forms.ComboBox comboBoxServicesServiceName;
-        private System.Windows.Forms.TextBox textBoxServicesDoctor;
         private System.Windows.Forms.TabPage tabAdministration;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Button buttonAddService;
@@ -1447,9 +1422,9 @@
         private System.Windows.Forms.Button buttonAddEmployee;
         private System.Windows.Forms.Button buttonEditEployee;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label labelLoginName;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button LogoutButton;
+        private System.Windows.Forms.ComboBox comboBoxServicesDoctor;
+        private System.Windows.Forms.ComboBox comboBoxVisitDoctor;
     }
 }
 
