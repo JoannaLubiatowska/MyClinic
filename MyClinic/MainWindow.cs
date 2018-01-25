@@ -22,6 +22,7 @@ namespace MyClinic
         private DataTable clinicEmployees;
         private string connectionString;
         private LINQToSQLDataContext db;
+        private static MainWindow mainWindow;
 
         public MainWindow()
         {
@@ -36,6 +37,8 @@ namespace MyClinic
 
             connectionString = ConfigurationManager.ConnectionStrings["MyClinic.Properties.Settings.ClinicConnectionString"].ToString();
             db = new LINQToSQLDataContext(connectionString);
+
+            mainWindow = this;
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -128,7 +131,8 @@ namespace MyClinic
 
         private void buttonDeleteEmployee_Click(object sender, EventArgs e)
         {
-
+            ClinicEmployeesRow currentSelectedValue = (ClinicEmployeesRow)((DataRowView)clinicEmployeesBindingSource.Current).Row;
+            //currentSelectedValue;
         }
 
         private void buttonEditEployee_Click(object sender, EventArgs e)
@@ -279,6 +283,13 @@ namespace MyClinic
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public static void RefreshData()
+        {
+            //mainWindow.clinicEmployeesBindingSource.DataSource = mainWindow.dataSet.ClinicEmployees.Rows;
+            //mainWindow.clinicEmployeesBindingSource.ResetBindings(false);
+            //mainWindow.clinicEmployeesDataGridView.Refresh();
         }
 
         private void MainWindow_Load(object sender, EventArgs e)

@@ -20,7 +20,6 @@ namespace MyClinic
         private DataTable voivodeships;
         private DataTable city;
         private DataTable userGroups;
-        private DataTable medicalSpecialists;
         private DataTable medicalSpecializations;
         private ClinicEmployeesRow editedEmployee;
 
@@ -29,14 +28,12 @@ namespace MyClinic
             InitializeComponent();
             connection = new SqlConnection("Data Source=ASIA-HP;Initial Catalog=Clinic;Persist Security Info=True;User ID=sa;Password=praktyka");
             adapter = new SqlDataAdapter();
-            Update_combobox(medicalSpecializations = new DataTable("MedicalSpecializations"), comboBoxEmployeeAddSpecialization, "select * from MedicalSpecializations", "MedicalSpecializationName");
             Update_combobox(city = new DataTable("City"), comboBoxEmployeeCity, "select * from Cities", "CityName");
             Update_combobox(voivodeships = new DataTable("Voivodeships"), comboBoxEmployeeVoivodeship, "select * from Voivodeships", "VoivodeshipName");
             Update_combobox(userGroups = new DataTable("UserGroups"), comboBoxEmployeeGroup, "select * from UserGroups", "GroupName");
+            Update_combobox(medicalSpecializations = new DataTable("MedicalSpecializations"), comboBoxEmployeeAddSpecialization, "select * from MedicalSpecializations", "MedicalSpecializationName");
 
             editedEmployee = currentSelectedValue;
-            textBoxEmployeeFirstName.Text = currentSelectedValue.FirstName;
-
             textBoxEmployeeFirstName.Text = currentSelectedValue.FirstName;
             textBoxEmployeeLastName.Text = currentSelectedValue.LastName;
             textBoxEmployeeStreet.Text = currentSelectedValue.Street;
@@ -54,10 +51,10 @@ namespace MyClinic
 
             comboBoxEmployeeVoivodeship.Text = temp.Rows[0]["VoivodeshipName"].ToString();
             comboBoxEmployeeCity.SelectedItem = comboBoxEmployeeCity.Items.Cast<ComboBoxItem>().Where(x => x.Hidden["CityID"].ToString().Equals(currentSelectedValue.CityID.ToString())).Single();
+            comboBoxEmployeeGroup.SelectedItem = comboBoxEmployeeGroup.Items.Cast<ComboBoxItem>().Where(x => x.Hidden["UserGroupID"].ToString().Equals(currentSelectedValue.UserGroupID.ToString())).Single();
             textBoxEmployeePhoneNo.Text = currentSelectedValue.PhoneNumber.ToString();
             textBoxEmployeeDescription.Text = currentSelectedValue.EmployeeDescription;
             textBoxEmployeeLogin.Text = currentSelectedValue.UserLogin;
-            comboBoxEmployeeGroup.SelectedItem = comboBoxEmployeeGroup.Items.Cast<ComboBoxItem>().Where(x => x.Hidden["UserGroupID"].ToString().Equals(currentSelectedValue.UserGroupID.ToString())).Single();
 
             MemoryStream stream = new MemoryStream((byte[])currentSelectedValue.Picture);
             pictureBox.Image = Image.FromStream(stream); 
@@ -77,14 +74,15 @@ namespace MyClinic
             adapter.Update(temp);
 
             textBoxEmployeeSpecialization.Text = String.Join(Environment.NewLine, temp.Select().Select(row => row["name"].ToString()).ToArray());
-            //textBoxEmployeePicture.Text = currentSelectedValue.FirstName;
-            //pictureBox.Text = currentSelectedValue.FirstName;
-            //comboBoxEmployeeAddSpecialization.Text = currentSelectedValue.FirstName;
-            //textBoxEmployeeNewSpecialization.Text = currentSelectedValue.FirstName;
         }
 
         private void buttonAddEmployee_Click(object sender, EventArgs e)
         {
+            SqlCommand command;
+            DataSet dataSet = new DataSet();
+            adapter.SelectCommand = new SqlCommand("SELECT * FROM ClinicEmployees where 1 = 2", connection);
+            adapter.Fill(dataSet, "ClinicEmployees");
+
             string firstName = textBoxEmployeeFirstName.Text;
             string lastName = textBoxEmployeeLastName.Text;
             string street = textBoxEmployeeStreet.Text;
@@ -95,19 +93,54 @@ namespace MyClinic
             string phoneNo = textBoxEmployeePhoneNo.Text;
             string description = textBoxEmployeeDescription.Text;
             string login = textBoxEmployeeLogin.Text;
-            string password = textBoxEmployeePassword.Text;
-            string confirmPassword = textBoxEmployeePasswordConfirm.Text;
+            string password = Authenticator.EncodePassword(textBoxEmployeePassword.Text);
+            string confirmPassword = Authenticator.EncodePassword(textBoxEmployeePasswordConfirm.Text);
             string group = ((ComboBoxItem)comboBoxEmployeeGroup.SelectedItem).Hidden["UserGroupID"].ToString();
-            string specjalization = textBoxEmployeeSpecialization.Text;
             string picturePath = textBoxEmployeePicture.Text;
             string picture = pictureBox.Text;
-            string addSpecjalization = ((ComboBoxItem)comboBoxEmployeeAddSpecialization.SelectedItem).Hidden["MedicalSpecializationID"].ToString();
-            string newSpecjalization = textBoxEmployeeNewSpecialization.Text;
-        }
 
-        private void buttonLoadPicture_Click(object sender, EventArgs e)
-        {
+            if (password != confirmPassword)
+            {
+                MessageBox.Show("Wprowadzonne hasła nie zgadzają się. Spróbuj ponownie.");
+            }
+            else
+            {
+                if (picturePath.Length > 0)
+                {
+                    command = new SqlCommand("UPDATE ClinicEmployees SET FirstName=@firstName, LastName=@lastName, Street=@street, StreetNumer=@streetNo, PostalCode= @postalCode, CityID=@city," +
+                        "PhoneNumber=@phoneNo, EmployeeDescription=@employeeDescription, UserLogin=@userLogin, UserPassword=@userPassword, UserGroupID=@userGroupID, Picture=@picture " +
+                        "WHERE EmployeeID=@employeeID", connection);
+                    command.Parameters.AddWithValue("@picture", getPhoto(picturePath));
+                }
+                else
+                {
+                    command = new SqlCommand("UPDATE ClinicEmployees SET FirstName=@firstName, LastName=@lastName, Street=@street, StreetNumer=@streetNo, PostalCode= @postalCode, CityID=@city," +
+                        "PhoneNumber=@phoneNo, EmployeeDescription=@employeeDescription, UserLogin=@userLogin, UserPassword=@userPassword, UserGroupID=@userGroupID " +
+                        "WHERE EmployeeID=@employeeID", connection);
+                }
 
+                adapter.UpdateCommand = command;
+                adapter.UpdateCommand.Parameters.AddWithValue("@employeeID", editedEmployee.EmployeeID);
+                adapter.UpdateCommand.Parameters.AddWithValue("@firstName", firstName);
+                adapter.UpdateCommand.Parameters.AddWithValue("@lastName", lastName);
+                adapter.UpdateCommand.Parameters.AddWithValue("@street", street);
+                adapter.UpdateCommand.Parameters.AddWithValue("@streetNo", streetNo);
+                adapter.UpdateCommand.Parameters.AddWithValue("@postalCode", postalCode);
+                adapter.UpdateCommand.Parameters.AddWithValue("@city", city);
+                adapter.UpdateCommand.Parameters.AddWithValue("@phoneNo", phoneNo);
+                adapter.UpdateCommand.Parameters.AddWithValue("@employeeDescription", description);
+                adapter.UpdateCommand.Parameters.AddWithValue("@userLogin", login);
+                adapter.UpdateCommand.Parameters.AddWithValue("@userPassword", password);
+                adapter.UpdateCommand.Parameters.AddWithValue("@userGroupID", group);
+
+                adapter.UpdateCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "ClinicEmployees");
+                adapter.Update(dataSet, "ClinicEmployees");
+
+                MessageBox.Show("Zapisano pracownika.");
+                MainWindow.RefreshData();
+            }
         }
 
         public static byte[] getPhoto(string filePath)
@@ -145,6 +178,28 @@ namespace MyClinic
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void buttonAddSpecialization_Click(object sender, EventArgs e)
+        {
+            string specjalizationId = ((ComboBoxItem)comboBoxEmployeeAddSpecialization.SelectedItem).Hidden["MedicalSpecializationID"].ToString();
+            DataSet dataSet = new DataSet();
+            adapter.SelectCommand = new SqlCommand("SELECT * FROM MedicalSpecialists where 1 = 2", connection);
+            adapter.Fill(dataSet, "MedicalSpecialists");
+
+            SqlCommand command = new SqlCommand("INSERT INTO MedicalSpecialists(MedicalSpecializationID, EmployeeID) " +
+                                       "VALUES(@specjalizationId, @employeeID)", connection);
+
+            adapter.InsertCommand = command;
+            adapter.InsertCommand.Parameters.AddWithValue("@specjalizationId", specjalizationId);
+            adapter.InsertCommand.Parameters.AddWithValue("@employeeID", editedEmployee.EmployeeID);
+
+            adapter.InsertCommand = command;
+            adapter.SelectCommand = command;
+            adapter.Fill(dataSet, "MedicalSpecialists");
+            adapter.Update(dataSet, "MedicalSpecialists");
+
+            MessageBox.Show("Dodano specjalność.");
         }
     }
 }

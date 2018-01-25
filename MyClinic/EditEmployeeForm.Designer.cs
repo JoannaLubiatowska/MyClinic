@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label medicalSpecializationNameLabel;
-            System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label4;
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label1;
@@ -45,12 +43,9 @@
             System.Windows.Forms.Label userPasswordLabel;
             System.Windows.Forms.Label userLoginLabel;
             System.Windows.Forms.Label streetLabel1;
+            System.Windows.Forms.Label medicalSpecializationNameLabel;
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.buttonLoadPicture = new System.Windows.Forms.Button();
             this.buttonAddEmployee = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxEmployeeNewSpecialization = new System.Windows.Forms.TextBox();
-            this.comboBoxEmployeeAddSpecialization = new System.Windows.Forms.ComboBox();
             this.textBoxEmployeeSpecialization = new System.Windows.Forms.TextBox();
             this.textBoxEmployeePicture = new System.Windows.Forms.TextBox();
             this.comboBoxEmployeeGroup = new System.Windows.Forms.ComboBox();
@@ -66,8 +61,9 @@
             this.textBoxEmployeeStreetNo = new System.Windows.Forms.TextBox();
             this.textBoxEmployeeFirstName = new System.Windows.Forms.TextBox();
             this.textBoxEmployeeLastName = new System.Windows.Forms.TextBox();
-            medicalSpecializationNameLabel = new System.Windows.Forms.Label();
-            label3 = new System.Windows.Forms.Label();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.comboBoxEmployeeAddSpecialization = new System.Windows.Forms.ComboBox();
+            this.buttonAddSpecialization = new System.Windows.Forms.Button();
             label4 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
@@ -83,27 +79,10 @@
             userPasswordLabel = new System.Windows.Forms.Label();
             userLoginLabel = new System.Windows.Forms.Label();
             streetLabel1 = new System.Windows.Forms.Label();
+            medicalSpecializationNameLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.groupBox11.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // medicalSpecializationNameLabel
-            // 
-            medicalSpecializationNameLabel.AutoSize = true;
-            medicalSpecializationNameLabel.Location = new System.Drawing.Point(8, 22);
-            medicalSpecializationNameLabel.Name = "medicalSpecializationNameLabel";
-            medicalSpecializationNameLabel.Size = new System.Drawing.Size(68, 13);
-            medicalSpecializationNameLabel.TabIndex = 100;
-            medicalSpecializationNameLabel.Text = "Specjalność:";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(8, 49);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(97, 13);
-            label3.TabIndex = 101;
-            label3.Text = "Nowa specjalność:";
             // 
             // label4
             // 
@@ -240,62 +219,33 @@
             streetLabel1.TabIndex = 140;
             streetLabel1.Text = "Ulica:";
             // 
+            // medicalSpecializationNameLabel
+            // 
+            medicalSpecializationNameLabel.AutoSize = true;
+            medicalSpecializationNameLabel.Location = new System.Drawing.Point(10, 22);
+            medicalSpecializationNameLabel.Name = "medicalSpecializationNameLabel";
+            medicalSpecializationNameLabel.Size = new System.Drawing.Size(68, 13);
+            medicalSpecializationNameLabel.TabIndex = 100;
+            medicalSpecializationNameLabel.Text = "Specjalność:";
+            // 
             // pictureBox
             // 
-            this.pictureBox.Location = new System.Drawing.Point(384, 88);
+            this.pictureBox.Location = new System.Drawing.Point(377, 174);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(350, 243);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 171;
             this.pictureBox.TabStop = false;
             // 
-            // buttonLoadPicture
-            // 
-            this.buttonLoadPicture.Location = new System.Drawing.Point(590, 43);
-            this.buttonLoadPicture.Name = "buttonLoadPicture";
-            this.buttonLoadPicture.Size = new System.Drawing.Size(136, 23);
-            this.buttonLoadPicture.TabIndex = 170;
-            this.buttonLoadPicture.Text = "Dodaj";
-            this.buttonLoadPicture.UseVisualStyleBackColor = true;
-            this.buttonLoadPicture.Click += new System.EventHandler(this.buttonLoadPicture_Click);
-            // 
             // buttonAddEmployee
             // 
-            this.buttonAddEmployee.Location = new System.Drawing.Point(598, 439);
+            this.buttonAddEmployee.Location = new System.Drawing.Point(599, 439);
             this.buttonAddEmployee.Name = "buttonAddEmployee";
             this.buttonAddEmployee.Size = new System.Drawing.Size(136, 23);
             this.buttonAddEmployee.TabIndex = 169;
             this.buttonAddEmployee.Text = "Zapisz";
             this.buttonAddEmployee.UseVisualStyleBackColor = true;
             this.buttonAddEmployee.Click += new System.EventHandler(this.buttonAddEmployee_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(medicalSpecializationNameLabel);
-            this.groupBox1.Controls.Add(label3);
-            this.groupBox1.Controls.Add(this.textBoxEmployeeNewSpecialization);
-            this.groupBox1.Controls.Add(this.comboBoxEmployeeAddSpecialization);
-            this.groupBox1.Location = new System.Drawing.Point(371, 349);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(363, 84);
-            this.groupBox1.TabIndex = 168;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Dodaj specjalność";
-            // 
-            // textBoxEmployeeNewSpecialization
-            // 
-            this.textBoxEmployeeNewSpecialization.Location = new System.Drawing.Point(111, 46);
-            this.textBoxEmployeeNewSpecialization.Name = "textBoxEmployeeNewSpecialization";
-            this.textBoxEmployeeNewSpecialization.Size = new System.Drawing.Size(242, 20);
-            this.textBoxEmployeeNewSpecialization.TabIndex = 99;
-            // 
-            // comboBoxEmployeeAddSpecialization
-            // 
-            this.comboBoxEmployeeAddSpecialization.FormattingEnabled = true;
-            this.comboBoxEmployeeAddSpecialization.Location = new System.Drawing.Point(111, 19);
-            this.comboBoxEmployeeAddSpecialization.Name = "comboBoxEmployeeAddSpecialization";
-            this.comboBoxEmployeeAddSpecialization.Size = new System.Drawing.Size(242, 21);
-            this.comboBoxEmployeeAddSpecialization.TabIndex = 98;
             // 
             // textBoxEmployeeSpecialization
             // 
@@ -410,15 +360,44 @@
             this.textBoxEmployeeLastName.Size = new System.Drawing.Size(242, 20);
             this.textBoxEmployeeLastName.TabIndex = 153;
             // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.buttonAddSpecialization);
+            this.groupBox11.Controls.Add(medicalSpecializationNameLabel);
+            this.groupBox11.Controls.Add(this.comboBoxEmployeeAddSpecialization);
+            this.groupBox11.Location = new System.Drawing.Point(372, 54);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(363, 96);
+            this.groupBox11.TabIndex = 172;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Dodaj specjalność";
+            // 
+            // comboBoxEmployeeAddSpecialization
+            // 
+            this.comboBoxEmployeeAddSpecialization.FormattingEnabled = true;
+            this.comboBoxEmployeeAddSpecialization.Location = new System.Drawing.Point(113, 19);
+            this.comboBoxEmployeeAddSpecialization.Name = "comboBoxEmployeeAddSpecialization";
+            this.comboBoxEmployeeAddSpecialization.Size = new System.Drawing.Size(242, 21);
+            this.comboBoxEmployeeAddSpecialization.TabIndex = 98;
+            // 
+            // buttonAddSpecialization
+            // 
+            this.buttonAddSpecialization.Location = new System.Drawing.Point(219, 46);
+            this.buttonAddSpecialization.Name = "buttonAddSpecialization";
+            this.buttonAddSpecialization.Size = new System.Drawing.Size(136, 23);
+            this.buttonAddSpecialization.TabIndex = 173;
+            this.buttonAddSpecialization.Text = "Dodaj";
+            this.buttonAddSpecialization.UseVisualStyleBackColor = true;
+            this.buttonAddSpecialization.Click += new System.EventHandler(this.buttonAddSpecialization_Click);
+            // 
             // EditEmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(747, 476);
+            this.Controls.Add(this.groupBox11);
             this.Controls.Add(this.pictureBox);
-            this.Controls.Add(this.buttonLoadPicture);
             this.Controls.Add(this.buttonAddEmployee);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBoxEmployeeSpecialization);
             this.Controls.Add(this.textBoxEmployeePicture);
             this.Controls.Add(this.comboBoxEmployeeGroup);
@@ -454,8 +433,8 @@
             this.Name = "EditEmployeeForm";
             this.Text = "Edytuj pracownika";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,11 +443,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox;
-        private System.Windows.Forms.Button buttonLoadPicture;
         private System.Windows.Forms.Button buttonAddEmployee;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBoxEmployeeNewSpecialization;
-        private System.Windows.Forms.ComboBox comboBoxEmployeeAddSpecialization;
         private System.Windows.Forms.TextBox textBoxEmployeeSpecialization;
         private System.Windows.Forms.TextBox textBoxEmployeePicture;
         private System.Windows.Forms.ComboBox comboBoxEmployeeGroup;
@@ -484,5 +459,8 @@
         private System.Windows.Forms.TextBox textBoxEmployeeStreetNo;
         private System.Windows.Forms.TextBox textBoxEmployeeFirstName;
         private System.Windows.Forms.TextBox textBoxEmployeeLastName;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.ComboBox comboBoxEmployeeAddSpecialization;
+        private System.Windows.Forms.Button buttonAddSpecialization;
     }
 }

@@ -60,8 +60,8 @@ namespace MyClinic
             {
                 if (picturePath.Length > 0)
                 {
-                    command = new SqlCommand("INSERT INTO ClinicEmployees(FirstName, LastName, Street, StreetNumer, PostalCode, CityID, PhoneNumber, EmployeeDescription, UserLogin, UserPassword, UserGroupID, Picture)" +
-                                             "SELECT @firstName, @lastName, @street, @streetNo, @postalCode, @city, @phoneNo, @employeeDescription, @userLogin, @userPassword, @userGroupID, BulkColumn FROM OPENROWSET (Bulk '@picture', Single_Blob) as IMAGE", connection);
+                    command = new SqlCommand("INSERT INTO ClinicEmployees(FirstName, LastName, Street, StreetNumer, PostalCode, CityID, PhoneNumber, EmployeeDescription, UserLogin, UserPassword, UserGroupID, Picture) " +
+                                             "SELECT @firstName, @lastName, @street, @streetNo, @postalCode, @city, @phoneNo, @employeeDescription, @userLogin, @userPassword, @userGroupID, BulkColumn FROM OPENROWSET (Bulk '" + picturePath + "', Single_Blob) as IMAGE;", connection);
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace MyClinic
                 adapter.InsertCommand.Parameters.AddWithValue("@postalCode", postalCode);
                 adapter.InsertCommand.Parameters.AddWithValue("@city", city);
                 adapter.InsertCommand.Parameters.AddWithValue("@phoneNo", phoneNo);
-                adapter.InsertCommand.Parameters.AddWithValue("@picture", picturePath);
+                //adapter.InsertCommand.Parameters.AddWithValue("@picture", picturePath);
                 adapter.InsertCommand.Parameters.AddWithValue("@employeeDescription", description);
                 adapter.InsertCommand.Parameters.AddWithValue("@userLogin", login);
                 adapter.InsertCommand.Parameters.AddWithValue("@userPassword", password);
