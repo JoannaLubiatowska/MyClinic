@@ -120,7 +120,7 @@
             this.MaximumSize = new System.Drawing.Size(592, 273);
             this.MinimumSize = new System.Drawing.Size(592, 273);
             this.Name = "LoginForm";
-            this.Text = "LoginForm";
+            this.Text = "Logowanie";
             this.ResumeLayout(false);
             this.PerformLayout();
 

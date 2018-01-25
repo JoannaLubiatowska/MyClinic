@@ -17,6 +17,7 @@ namespace MyClinic
         public LoginForm()
         {
             InitializeComponent();
+            this.AcceptButton = LoginButton;
         }
 
         private Boolean openNextWindow(string windowName)

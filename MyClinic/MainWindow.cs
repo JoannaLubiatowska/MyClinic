@@ -18,10 +18,6 @@ namespace MyClinic
     {
         private SqlConnection connection;
         private SqlDataAdapter adapter;
-        private DataRow element;
-        private DataTable visits;
-        private DataTable medicalExaminations;
-        private DataTable patients;
         private DataTable medicalServices;
         private DataTable clinicEmployees;
         private string connectionString;

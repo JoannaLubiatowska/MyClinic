@@ -245,6 +245,7 @@
             this.pictureBox.Location = new System.Drawing.Point(384, 88);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(350, 243);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 171;
             this.pictureBox.TabStop = false;
             // 
@@ -298,6 +299,7 @@
             // 
             // textBoxEmployeeSpecialization
             // 
+            this.textBoxEmployeeSpecialization.Enabled = false;
             this.textBoxEmployeeSpecialization.Location = new System.Drawing.Point(115, 394);
             this.textBoxEmployeeSpecialization.Multiline = true;
             this.textBoxEmployeeSpecialization.Name = "textBoxEmployeeSpecialization";
