@@ -63,7 +63,6 @@ namespace MyClinic
             string schedulerFirstName = textBoxSchedulerFirstName.Text;
             string schedulerLastName = textBoxSchedulerLastName.Text;
             string schedulerDate = dateTimePickerScheduler.Text;
-            string schedulerHour = textBoxSchedulerHour.Text;
 
         }
 
@@ -101,15 +100,6 @@ namespace MyClinic
         {
             string visitCode = textBoxVisitCode.Text;
             string visitDescription = textBoxVisitDescription.Text;
-        }
-
-        private void buttonMedicines_Click(object sender, EventArgs e)
-        {
-            if (openNextWindow("MedicinesForm"))
-            {
-                MedicinesForm window = new MedicinesForm();
-                window.Show();
-            }
         }
 
         private void buttonSaveExamination_Click(object sender, EventArgs e)
