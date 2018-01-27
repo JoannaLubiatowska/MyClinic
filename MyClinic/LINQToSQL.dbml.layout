@@ -33,14 +33,14 @@
         <classShapeMoniker Id="19de6490-5899-4f02-b1a3-ec411d558fb7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 5.25564697265625); (5.79166416666667 : 5.25564697265625 : JumpStart); (5.95833083333333 : 5.25564697265625 : JumpEnd); (5.97916791666667 : 5.25564697265625 : JumpStart); (6.14583458333333 : 5.25564697265625 : JumpEnd); (6.25 : 5.25564697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 5.25564697265625); (5.66666666666667 : 5.25564697265625 : JumpStart); (5.83333333333333 : 5.25564697265625 : JumpEnd); (5.97916791666667 : 5.25564697265625 : JumpStart); (6.14583458333333 : 5.25564697265625 : JumpEnd); (6.25 : 5.25564697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/City/City_ClinicEmployee" />
       <nodes>
         <classShapeMoniker Id="19de6490-5899-4f02-b1a3-ec411d558fb7" />
         <classShapeMoniker Id="c7cc1961-55df-4e42-98be-8b50db502645" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.09375 : 4.125); (4.09375 : 3.54548906054688); (5.79166416666667 : 3.54548906054687 : JumpStart); (5.95833083333333 : 3.54548906054688 : JumpEnd); (6.25 : 3.54548906054688)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.96875 : 4.125); (3.96875 : 3.66189647265625); (6.25 : 3.66189647265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/LINQToSQLDataContext/City/City_Patient" />
       <nodes>
         <classShapeMoniker Id="19de6490-5899-4f02-b1a3-ec411d558fb7" />
@@ -53,7 +53,7 @@
         <elementListCompartment Id="27985175-0721-4899-9b37-513123c1e080" absoluteBounds="1.3900000000000001, 1.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.25 : 2.90347412109375); (5.95833083333333 : 2.90347412109375 : JumpStart); (5.79166416666667 : 2.90347412109375 : JumpEnd); (3.375 : 2.90347412109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6.25 : 3.33099609375); (3.375 : 3.33099609375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/LINQToSQLDataContext/Patient/Patient_Visit" />
       <nodes>
         <classShapeMoniker Id="114c73b8-092e-4f89-95a6-73c37b97bdce" />
@@ -66,14 +66,14 @@
         <elementListCompartment Id="10dc9d76-2f33-49ea-a999-4acd115369e9" absoluteBounds="2.3899999999999997, 7.5850000000000009, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.09375 : 7.125); (3.09375 : 3.4631982421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.09375 : 7.125); (3.09375 : 3.4631982421875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/MedicalSpecialist/MedicalSpecialist_Visit" />
       <nodes>
         <classShapeMoniker Id="0b57fc2b-b7a4-439a-b34f-31c526e34f48" />
         <classShapeMoniker Id="a09a0305-0ec8-4a96-b04a-1dd71777321d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.25 : 6.00564697265625); (6.14583458333333 : 6.00564697265625 : JumpStart); (5.97916791666667 : 6.00564697265625 : JumpEnd); (5.95833083333333 : 6.00564697265625 : JumpStart); (5.79166416666667 : 6.00564697265625 : JumpEnd); (3.2968775 : 6.00564697265625); (3.2968775 : 7.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.25 : 6.00564697265625); (6.14583458333333 : 6.00564697265625 : JumpStart); (5.97916791666667 : 6.00564697265625 : JumpEnd); (5.83333333333333 : 6.00564697265625 : JumpStart); (5.66666666666667 : 6.00564697265625 : JumpEnd); (3.2968775 : 6.00564697265625); (3.2968775 : 7.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/ClinicEmployee/ClinicEmployee_MedicalSpecialist" />
       <nodes>
         <classShapeMoniker Id="c7cc1961-55df-4e42-98be-8b50db502645" />
@@ -93,7 +93,7 @@
         <classShapeMoniker Id="681303eb-c513-46f4-993e-d06a7dd9a781" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.25 : 2.04548456054687); (5.8749975 : 2.04548456054687); (5.8749975 : 6.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.25 : 4.3670068359375); (7.25 : 4.875); (6.14583458333333 : 4.875 : JumpStart); (5.97916791666667 : 4.875 : JumpEnd); (5.75 : 4.875); (5.75 : 6.25); (4.75 : 6.25); (4.75 : 7.48159912109375); (5 : 7.48159912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/LINQToSQLDataContext/Patient/Patient_MedicalExamination" />
       <nodes>
         <classShapeMoniker Id="114c73b8-092e-4f89-95a6-73c37b97bdce" />
@@ -106,11 +106,37 @@
         <elementListCompartment Id="637f0069-fafb-4287-ab77-cd382de1d121" absoluteBounds="9.015, 5.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(9 : 5.41429768880208); (8.5 : 5.41429768880208); (8.5 : 4.75); (6.06250125 : 4.75); (6.06250125 : 6.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(9 : 5.41429768880208); (8.5 : 5.41429768880208); (8.5 : 4.75); (7.33333333333333 : 4.75 : JumpStart); (7.16666666666667 : 4.75 : JumpEnd); (6.06250125 : 4.75); (6.06250125 : 6.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/MedicalService/MedicalService_MedicalExamination" />
       <nodes>
         <classShapeMoniker Id="b54589cd-fcbb-4462-a26f-173942f15f55" />
         <classShapeMoniker Id="681303eb-c513-46f4-993e-d06a7dd9a781" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="3193a300-514a-4947-95df-93b1c4bcf63f" absoluteBounds="4.5, 1.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LINQToSQLDataContext/Medicine" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9492f33f-9fb2-4b2c-9c6f-af607ff3a53a" absoluteBounds="4.515, 2.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6e8ca530-ee1e-40de-af51-e51aa5c913a7" absoluteBounds="4.5, 1.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LINQToSQLDataContext/PrescribedMedicine" />
+      <nestedChildShapes>
+        <elementListCompartment Id="db740fb2-932b-4cbc-a9c0-be7ebc87a0b5" absoluteBounds="4.515, 1.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 3.1362939453125); (5.5 : 3.3862939453125); (5.5 : 3.3862939453125); (5.5 : 2.70359537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/LINQToSQLDataContext/Medicine/Medicine_PrescribedMedicine" />
+      <nodes>
+        <classShapeMoniker Id="3193a300-514a-4947-95df-93b1c4bcf63f" />
+        <classShapeMoniker Id="6e8ca530-ee1e-40de-af51-e51aa5c913a7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.375 : 2.10179768880208); (4.5 : 2.10179768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LINQToSQLDataContext/Visit/Visit_PrescribedMedicine" />
+      <nodes>
+        <classShapeMoniker Id="a09a0305-0ec8-4a96-b04a-1dd71777321d" />
+        <classShapeMoniker Id="6e8ca530-ee1e-40de-af51-e51aa5c913a7" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

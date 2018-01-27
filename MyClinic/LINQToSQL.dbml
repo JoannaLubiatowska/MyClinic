@@ -65,6 +65,7 @@
       <Column Name="DiseaseClassification" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="VisitDescription" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="VisitDate" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Visit_PrescribedMedicine" Member="PrescribedMedicines" ThisKey="VisitID" OtherKey="VisitID" Type="PrescribedMedicine" />
       <Association Name="Patient_Visit" Member="Patient" ThisKey="PatientID" OtherKey="PatientID" Type="Patient" IsForeignKey="true" />
       <Association Name="MedicalSpecialist_Visit" Member="MedicalSpecialist" ThisKey="MedicalSpecialistID" OtherKey="MedicalSpecialistID" Type="MedicalSpecialist" IsForeignKey="true" />
     </Type>
@@ -98,6 +99,24 @@
       <Column Name="ServiceDescription" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
       <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
       <Association Name="MedicalService_MedicalExamination" Member="MedicalExaminations" ThisKey="MedicalServiceID" OtherKey="MedicalServiceID" Type="MedicalExamination" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Medicines" Member="Medicines">
+    <Type Name="Medicine">
+      <Column Name="MedicineID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicineName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Medicine_PrescribedMedicine" Member="PrescribedMedicines" ThisKey="MedicineID" OtherKey="MedicineID" Type="PrescribedMedicine" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PrescribedMedicines" Member="PrescribedMedicines">
+    <Type Name="PrescribedMedicine">
+      <Column Name="PrescribedMedicineID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicineID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VisitID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DrugDosage" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="Medicine_PrescribedMedicine" Member="Medicine" ThisKey="MedicineID" OtherKey="MedicineID" Type="Medicine" IsForeignKey="true" />
+      <Association Name="Visit_PrescribedMedicine" Member="Visit" ThisKey="VisitID" OtherKey="VisitID" Type="Visit" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

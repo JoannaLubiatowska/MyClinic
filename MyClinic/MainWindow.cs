@@ -224,6 +224,14 @@ namespace MyClinic
 
                 textBoxVisitArchiveDescription.Text = String.Join(Environment.NewLine, patientVisits.Select(v => v.VisitDescription));
                 textBoxVisitArchivCode.Text = String.Join(", ", patientVisits.Select(v => v.DiseaseClassification));
+
+                var selected = from m in db.Medicines
+                               join pm in db.PrescribedMedicines on m.MedicineID equals pm.MedicineID
+                               join v in db.Visits on pm.VisitID equals v.VisitID
+                               where v.PatientID == Int32.Parse(patient.Rows[0]["PatientID"].ToString())
+                               select m;
+
+                textBoxArchivMedicines.Text = String.Join(Environment.NewLine, selected.Select(m => m.MedicineName));
             }
             catch (Exception ex)
             {
@@ -316,6 +324,8 @@ namespace MyClinic
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dataSet.count_visits' table. You can move, or remove it, as needed.
+            this.count_visitsTableAdapter.Fill(this.dataSet.count_visits);
             // TODO: This line of code loads data into the 'dataSet.Patients_view' table. You can move, or remove it, as needed.
             this.patients_viewTableAdapter.Fill(this.dataSet.Patients_view);
             // TODO: This line of code loads data into the 'dataSet.Patients' table. You can move, or remove it, as needed.

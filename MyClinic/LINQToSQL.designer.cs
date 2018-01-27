@@ -54,6 +54,12 @@ namespace MyClinic
     partial void InsertMedicalService(MedicalService instance);
     partial void UpdateMedicalService(MedicalService instance);
     partial void DeleteMedicalService(MedicalService instance);
+    partial void InsertMedicine(Medicine instance);
+    partial void UpdateMedicine(Medicine instance);
+    partial void DeleteMedicine(Medicine instance);
+    partial void InsertPrescribedMedicine(PrescribedMedicine instance);
+    partial void UpdatePrescribedMedicine(PrescribedMedicine instance);
+    partial void DeletePrescribedMedicine(PrescribedMedicine instance);
     #endregion
 		
 		public LINQToSQLDataContext() : 
@@ -147,6 +153,22 @@ namespace MyClinic
 			get
 			{
 				return this.GetTable<MedicalService>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Medicine> Medicines
+		{
+			get
+			{
+				return this.GetTable<Medicine>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PrescribedMedicine> PrescribedMedicines
+		{
+			get
+			{
+				return this.GetTable<PrescribedMedicine>();
 			}
 		}
 	}
@@ -1384,6 +1406,8 @@ namespace MyClinic
 		
 		private System.DateTime _VisitDate;
 		
+		private EntitySet<PrescribedMedicine> _PrescribedMedicines;
+		
 		private EntityRef<Patient> _Patient;
 		
 		private EntityRef<MedicalSpecialist> _MedicalSpecialist;
@@ -1408,6 +1432,7 @@ namespace MyClinic
 		
 		public Visit()
 		{
+			this._PrescribedMedicines = new EntitySet<PrescribedMedicine>(new Action<PrescribedMedicine>(this.attach_PrescribedMedicines), new Action<PrescribedMedicine>(this.detach_PrescribedMedicines));
 			this._Patient = default(EntityRef<Patient>);
 			this._MedicalSpecialist = default(EntityRef<MedicalSpecialist>);
 			OnCreated();
@@ -1541,6 +1566,19 @@ namespace MyClinic
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Visit_PrescribedMedicine", Storage="_PrescribedMedicines", ThisKey="VisitID", OtherKey="VisitID")]
+		public EntitySet<PrescribedMedicine> PrescribedMedicines
+		{
+			get
+			{
+				return this._PrescribedMedicines;
+			}
+			set
+			{
+				this._PrescribedMedicines.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Patient_Visit", Storage="_Patient", ThisKey="PatientID", OtherKey="PatientID", IsForeignKey=true)]
 		public Patient Patient
 		{
@@ -1627,6 +1665,18 @@ namespace MyClinic
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_PrescribedMedicines(PrescribedMedicine entity)
+		{
+			this.SendPropertyChanging();
+			entity.Visit = this;
+		}
+		
+		private void detach_PrescribedMedicines(PrescribedMedicine entity)
+		{
+			this.SendPropertyChanging();
+			entity.Visit = null;
 		}
 	}
 	
@@ -2273,6 +2323,360 @@ namespace MyClinic
 		{
 			this.SendPropertyChanging();
 			entity.MedicalService = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Medicines")]
+	public partial class Medicine : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _MedicineID;
+		
+		private string _MedicineName;
+		
+		private string _Amount;
+		
+		private EntitySet<PrescribedMedicine> _PrescribedMedicines;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMedicineIDChanging(int value);
+    partial void OnMedicineIDChanged();
+    partial void OnMedicineNameChanging(string value);
+    partial void OnMedicineNameChanged();
+    partial void OnAmountChanging(string value);
+    partial void OnAmountChanged();
+    #endregion
+		
+		public Medicine()
+		{
+			this._PrescribedMedicines = new EntitySet<PrescribedMedicine>(new Action<PrescribedMedicine>(this.attach_PrescribedMedicines), new Action<PrescribedMedicine>(this.detach_PrescribedMedicines));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MedicineID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int MedicineID
+		{
+			get
+			{
+				return this._MedicineID;
+			}
+			set
+			{
+				if ((this._MedicineID != value))
+				{
+					this.OnMedicineIDChanging(value);
+					this.SendPropertyChanging();
+					this._MedicineID = value;
+					this.SendPropertyChanged("MedicineID");
+					this.OnMedicineIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MedicineName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string MedicineName
+		{
+			get
+			{
+				return this._MedicineName;
+			}
+			set
+			{
+				if ((this._MedicineName != value))
+				{
+					this.OnMedicineNameChanging(value);
+					this.SendPropertyChanging();
+					this._MedicineName = value;
+					this.SendPropertyChanged("MedicineName");
+					this.OnMedicineNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Amount", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string Amount
+		{
+			get
+			{
+				return this._Amount;
+			}
+			set
+			{
+				if ((this._Amount != value))
+				{
+					this.OnAmountChanging(value);
+					this.SendPropertyChanging();
+					this._Amount = value;
+					this.SendPropertyChanged("Amount");
+					this.OnAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Medicine_PrescribedMedicine", Storage="_PrescribedMedicines", ThisKey="MedicineID", OtherKey="MedicineID")]
+		public EntitySet<PrescribedMedicine> PrescribedMedicines
+		{
+			get
+			{
+				return this._PrescribedMedicines;
+			}
+			set
+			{
+				this._PrescribedMedicines.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_PrescribedMedicines(PrescribedMedicine entity)
+		{
+			this.SendPropertyChanging();
+			entity.Medicine = this;
+		}
+		
+		private void detach_PrescribedMedicines(PrescribedMedicine entity)
+		{
+			this.SendPropertyChanging();
+			entity.Medicine = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PrescribedMedicines")]
+	public partial class PrescribedMedicine : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _PrescribedMedicineID;
+		
+		private int _MedicineID;
+		
+		private int _VisitID;
+		
+		private string _DrugDosage;
+		
+		private EntityRef<Medicine> _Medicine;
+		
+		private EntityRef<Visit> _Visit;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPrescribedMedicineIDChanging(int value);
+    partial void OnPrescribedMedicineIDChanged();
+    partial void OnMedicineIDChanging(int value);
+    partial void OnMedicineIDChanged();
+    partial void OnVisitIDChanging(int value);
+    partial void OnVisitIDChanged();
+    partial void OnDrugDosageChanging(string value);
+    partial void OnDrugDosageChanged();
+    #endregion
+		
+		public PrescribedMedicine()
+		{
+			this._Medicine = default(EntityRef<Medicine>);
+			this._Visit = default(EntityRef<Visit>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrescribedMedicineID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int PrescribedMedicineID
+		{
+			get
+			{
+				return this._PrescribedMedicineID;
+			}
+			set
+			{
+				if ((this._PrescribedMedicineID != value))
+				{
+					this.OnPrescribedMedicineIDChanging(value);
+					this.SendPropertyChanging();
+					this._PrescribedMedicineID = value;
+					this.SendPropertyChanged("PrescribedMedicineID");
+					this.OnPrescribedMedicineIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MedicineID", DbType="Int NOT NULL")]
+		public int MedicineID
+		{
+			get
+			{
+				return this._MedicineID;
+			}
+			set
+			{
+				if ((this._MedicineID != value))
+				{
+					if (this._Medicine.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMedicineIDChanging(value);
+					this.SendPropertyChanging();
+					this._MedicineID = value;
+					this.SendPropertyChanged("MedicineID");
+					this.OnMedicineIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VisitID", DbType="Int NOT NULL")]
+		public int VisitID
+		{
+			get
+			{
+				return this._VisitID;
+			}
+			set
+			{
+				if ((this._VisitID != value))
+				{
+					if (this._Visit.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnVisitIDChanging(value);
+					this.SendPropertyChanging();
+					this._VisitID = value;
+					this.SendPropertyChanged("VisitID");
+					this.OnVisitIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DrugDosage", DbType="VarChar(100)")]
+		public string DrugDosage
+		{
+			get
+			{
+				return this._DrugDosage;
+			}
+			set
+			{
+				if ((this._DrugDosage != value))
+				{
+					this.OnDrugDosageChanging(value);
+					this.SendPropertyChanging();
+					this._DrugDosage = value;
+					this.SendPropertyChanged("DrugDosage");
+					this.OnDrugDosageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Medicine_PrescribedMedicine", Storage="_Medicine", ThisKey="MedicineID", OtherKey="MedicineID", IsForeignKey=true)]
+		public Medicine Medicine
+		{
+			get
+			{
+				return this._Medicine.Entity;
+			}
+			set
+			{
+				Medicine previousValue = this._Medicine.Entity;
+				if (((previousValue != value) 
+							|| (this._Medicine.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Medicine.Entity = null;
+						previousValue.PrescribedMedicines.Remove(this);
+					}
+					this._Medicine.Entity = value;
+					if ((value != null))
+					{
+						value.PrescribedMedicines.Add(this);
+						this._MedicineID = value.MedicineID;
+					}
+					else
+					{
+						this._MedicineID = default(int);
+					}
+					this.SendPropertyChanged("Medicine");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Visit_PrescribedMedicine", Storage="_Visit", ThisKey="VisitID", OtherKey="VisitID", IsForeignKey=true)]
+		public Visit Visit
+		{
+			get
+			{
+				return this._Visit.Entity;
+			}
+			set
+			{
+				Visit previousValue = this._Visit.Entity;
+				if (((previousValue != value) 
+							|| (this._Visit.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Visit.Entity = null;
+						previousValue.PrescribedMedicines.Remove(this);
+					}
+					this._Visit.Entity = value;
+					if ((value != null))
+					{
+						value.PrescribedMedicines.Add(this);
+						this._VisitID = value.VisitID;
+					}
+					else
+					{
+						this._VisitID = default(int);
+					}
+					this.SendPropertyChanged("Visit");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
