@@ -38,7 +38,14 @@ namespace MyClinic
             connectionString = ConfigurationManager.ConnectionStrings["MyClinic.Properties.Settings.ClinicConnectionString"].ToString();
             db = new LINQToSQLDataContext(connectionString);
 
+            FillDataGridViewVistis();
             mainWindow = this;
+        }
+
+        private void FillDataGridViewVistis()
+        {
+            var patients = db.Patients;
+            //dataGridViewVistis
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -62,7 +69,7 @@ namespace MyClinic
             string schedulerPesel = textBoxSchedulerPesel.Text;
             string schedulerFirstName = textBoxSchedulerFirstName.Text;
             string schedulerLastName = textBoxSchedulerLastName.Text;
-            string schedulerDate = dateTimePickerScheduler.Text;
+            string schedulerDate = dateTimePickerSchedulerVisit.Text;
 
         }
 
@@ -284,6 +291,8 @@ namespace MyClinic
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dataSet.Patients_view' table. You can move, or remove it, as needed.
+            this.patients_viewTableAdapter.Fill(this.dataSet.Patients_view);
             // TODO: This line of code loads data into the 'dataSet.Patients' table. You can move, or remove it, as needed.
             this.patientsTableAdapter.Fill(this.dataSet.Patients);
             // TODO: This line of code loads data into the 'dataSet.Exterminations_view' table. You can move, or remove it, as needed.

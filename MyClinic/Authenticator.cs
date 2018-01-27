@@ -25,6 +25,7 @@ namespace MyClinic
 
         private SqlConnection connection;
         private SqlDataAdapter adapter;
+        public ClinicEmployee LoggedEmployee { get; private set; }
 
         private Authenticator()
         {
@@ -44,6 +45,16 @@ namespace MyClinic
             adapter.SelectCommand.Parameters.AddWithValue("@password", password);
             adapter.Fill(temp);
             adapter.Update(temp);
+
+            if (temp.Rows.Count != 0)
+            {
+                var employeeRecord = temp.Rows[0];
+                LoggedEmployee = new ClinicEmployee() {
+                    FirstName = (string)employeeRecord["FirstName"],
+                    LastName = (string)employeeRecord["LastName"],
+                    EmployeeID = (int)employeeRecord["EmployeeID"]
+                };
+            }
 
             return temp.Rows.Count != 0;
         }
