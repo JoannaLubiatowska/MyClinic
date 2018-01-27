@@ -37,17 +37,42 @@ namespace MyClinic
 
             connectionString = ConfigurationManager.ConnectionStrings["MyClinic.Properties.Settings.ClinicConnectionString"].ToString();
             db = new LINQToSQLDataContext(connectionString);
-
+            
             FillDataGridViewVistis();
+            FillDataGridViewServices();
             mainWindow = this;
         }
 
         private void FillDataGridViewVistis()
         {
-            var patients = db.Patients;
-            //dataGridViewVistis
+            var selected = from patient in db.Patients
+                            join visit in db.Visits on patient.PatientID equals visit.PatientID
+                            join specialist in db.MedicalSpecialists on visit.MedicalSpecialistID equals specialist.MedicalSpecialistID
+                            join employee in db.ClinicEmployees on specialist.EmployeeID equals employee.EmployeeID
+                            where employee.EmployeeID == Authenticator.Instance.LoggedEmployee.EmployeeID 
+                                && visit.VisitDate.Date == DateTime.Today
+                            select new { FirstName = patient.FirstName, LastName = patient.LastName, VisitDate = visit.VisitDate};
+
+            dataGridViewVistis.DataSource = selected;
+            dataGridViewVistis.Columns[0].HeaderText = "Imię";
+            dataGridViewVistis.Columns[1].HeaderText = "Nazwisko";
+            dataGridViewVistis.Columns[2].HeaderText = "Data wizyty";
         }
 
+        private void FillDataGridViewServices()
+        {
+            var selected = from patient in db.Patients
+                           join examination in db.MedicalExaminations on patient.PatientID equals examination.PatientID
+                           join service in db.MedicalServices on examination.MedicalServiceID equals service.MedicalServiceID
+                           where examination.ExaminationDate.Date == DateTime.Today
+                           select new { FirstName = patient.FirstName, LastName = patient.LastName, Date = examination.ExaminationDate, ServiceName = service.ServiceName };
+
+            dataGridViewServices.DataSource = selected;
+            dataGridViewServices.Columns[0].HeaderText = "Imię";
+            dataGridViewServices.Columns[1].HeaderText = "Nazwisko";
+            dataGridViewServices.Columns[2].HeaderText = "Data";
+            dataGridViewServices.Columns[3].HeaderText = "Nazwa";
+        }
         private void LogoutButton_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Czy na pewno chcesz wyjść z aplikacji?", "Wyloguj", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

@@ -60,6 +60,8 @@
             System.Windows.Forms.Label label8;
             System.Windows.Forms.Label label7;
             System.Windows.Forms.Label label35;
+            System.Windows.Forms.Label label36;
+            System.Windows.Forms.Label label37;
             this.label11 = new System.Windows.Forms.Label();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.tabAdministration = new System.Windows.Forms.TabPage();
@@ -239,6 +241,8 @@
             label8 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
             label35 = new System.Windows.Forms.Label();
+            label36 = new System.Windows.Forms.Label();
+            label37 = new System.Windows.Forms.Label();
             this.tabAdministration.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -552,6 +556,24 @@
             label35.TabIndex = 53;
             label35.Text = "Nowy lek:";
             // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Location = new System.Drawing.Point(15, 383);
+            label36.Name = "label36";
+            label36.Size = new System.Drawing.Size(55, 13);
+            label36.TabIndex = 30;
+            label36.Text = "Na dzisiaj:";
+            // 
+            // label37
+            // 
+            label37.AutoSize = true;
+            label37.Location = new System.Drawing.Point(9, 355);
+            label37.Name = "label37";
+            label37.Size = new System.Drawing.Size(55, 13);
+            label37.TabIndex = 54;
+            label37.Text = "Na dzisiaj:";
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -794,6 +816,7 @@
             // 
             // tabServices
             // 
+            this.tabServices.Controls.Add(label36);
             this.tabServices.Controls.Add(this.dataGridViewServices);
             this.tabServices.Controls.Add(this.buttonSaveExamination);
             this.tabServices.Controls.Add(this.textBoxServicesDescription);
@@ -811,9 +834,9 @@
             // dataGridViewServices
             // 
             this.dataGridViewServices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewServices.Location = new System.Drawing.Point(9, 382);
+            this.dataGridViewServices.Location = new System.Drawing.Point(9, 399);
             this.dataGridViewServices.Name = "dataGridViewServices";
-            this.dataGridViewServices.Size = new System.Drawing.Size(440, 240);
+            this.dataGridViewServices.Size = new System.Drawing.Size(440, 223);
             this.dataGridViewServices.TabIndex = 52;
             // 
             // buttonSaveExamination
@@ -973,6 +996,7 @@
             // 
             // tabVistis
             // 
+            this.tabVistis.Controls.Add(label37);
             this.tabVistis.Controls.Add(this.dataGridViewVistis);
             this.tabVistis.Controls.Add(this.buttonSaveVisit);
             this.tabVistis.Controls.Add(this.groupBox4);
@@ -990,9 +1014,9 @@
             // dataGridViewVistis
             // 
             this.dataGridViewVistis.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewVistis.Location = new System.Drawing.Point(9, 358);
+            this.dataGridViewVistis.Location = new System.Drawing.Point(9, 372);
             this.dataGridViewVistis.Name = "dataGridViewVistis";
-            this.dataGridViewVistis.Size = new System.Drawing.Size(407, 264);
+            this.dataGridViewVistis.Size = new System.Drawing.Size(407, 250);
             this.dataGridViewVistis.TabIndex = 53;
             // 
             // buttonSaveVisit
@@ -1904,6 +1928,7 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.tabVistis.ResumeLayout(false);
+            this.tabVistis.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVistis)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();

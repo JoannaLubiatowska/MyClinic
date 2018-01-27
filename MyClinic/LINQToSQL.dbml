@@ -33,6 +33,8 @@
       <Column Name="UserPassword" Type="System.String" DbType="NVarChar(64) NOT NULL" CanBeNull="false" />
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="UserGroupID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ClinicEmployee_MedicalSpecialist" Member="MedicalSpecialists" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="MedicalSpecialist" />
+      <Association Name="ClinicEmployee_MedicalExamination" Member="MedicalExaminations" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="MedicalExamination" />
       <Association Name="City_ClinicEmployee" Member="City" ThisKey="CityID" OtherKey="CityID" Type="City" IsForeignKey="true" />
     </Type>
   </Table>
@@ -51,6 +53,7 @@
       <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="UserGroupID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Patient_Visit" Member="Visits" ThisKey="PatientID" OtherKey="PatientID" Type="Visit" />
+      <Association Name="Patient_MedicalExamination" Member="MedicalExaminations" ThisKey="PatientID" OtherKey="PatientID" Type="MedicalExamination" />
       <Association Name="City_Patient" Member="City" ThisKey="CityID" OtherKey="CityID" Type="City" IsForeignKey="true" />
     </Type>
   </Table>
@@ -63,6 +66,38 @@
       <Column Name="VisitDescription" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="VisitDate" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
       <Association Name="Patient_Visit" Member="Patient" ThisKey="PatientID" OtherKey="PatientID" Type="Patient" IsForeignKey="true" />
+      <Association Name="MedicalSpecialist_Visit" Member="MedicalSpecialist" ThisKey="MedicalSpecialistID" OtherKey="MedicalSpecialistID" Type="MedicalSpecialist" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicalSpecialists" Member="MedicalSpecialists">
+    <Type Name="MedicalSpecialist">
+      <Column Name="MedicalSpecialistID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MedicalSpecializationID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MedicalSpecialist_Visit" Member="Visits" ThisKey="MedicalSpecialistID" OtherKey="MedicalSpecialistID" Type="Visit" />
+      <Association Name="ClinicEmployee_MedicalSpecialist" Member="ClinicEmployee" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="ClinicEmployee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicalExaminations" Member="MedicalExaminations">
+    <Type Name="MedicalExamination">
+      <Column Name="MedicalExaminationID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EmployeeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MedicalServiceID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PatientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ExaminationDate" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ExaminationDescription" Type="System.String" DbType="VarChar(5000)" CanBeNull="true" />
+      <Association Name="ClinicEmployee_MedicalExamination" Member="ClinicEmployee" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="ClinicEmployee" IsForeignKey="true" />
+      <Association Name="Patient_MedicalExamination" Member="Patient" ThisKey="PatientID" OtherKey="PatientID" Type="Patient" IsForeignKey="true" />
+      <Association Name="MedicalService_MedicalExamination" Member="MedicalService" ThisKey="MedicalServiceID" OtherKey="MedicalServiceID" Type="MedicalService" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicalServices" Member="MedicalServices">
+    <Type Name="MedicalService">
+      <Column Name="MedicalServiceID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ServiceName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ServiceDescription" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Association Name="MedicalService_MedicalExamination" Member="MedicalExaminations" ThisKey="MedicalServiceID" OtherKey="MedicalServiceID" Type="MedicalExamination" />
     </Type>
   </Table>
 </Database>
