@@ -59,6 +59,9 @@
     </Compile>
     <Compile Include="Authenticator.cs" />
     <Compile Include="ComboBoxItem.cs" />
+    <Compile Include="DataSet.cs">
+      <DependentUpon>DataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

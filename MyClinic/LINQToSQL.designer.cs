@@ -171,6 +171,14 @@ namespace MyClinic
 				return this.GetTable<PrescribedMedicine>();
 			}
 		}
+		
+		public System.Data.Linq.Table<specialists_view> specialists_views
+		{
+			get
+			{
+				return this.GetTable<specialists_view>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cities")]
@@ -2676,6 +2684,87 @@ namespace MyClinic
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.specialists_view")]
+	public partial class specialists_view
+	{
+		
+		private string _MedicalSpecializationName;
+		
+		private string _FirstName;
+		
+		private string _LastName;
+		
+		private int _MedicalSpecialistID;
+		
+		public specialists_view()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MedicalSpecializationName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string MedicalSpecializationName
+		{
+			get
+			{
+				return this._MedicalSpecializationName;
+			}
+			set
+			{
+				if ((this._MedicalSpecializationName != value))
+				{
+					this._MedicalSpecializationName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string FirstName
+		{
+			get
+			{
+				return this._FirstName;
+			}
+			set
+			{
+				if ((this._FirstName != value))
+				{
+					this._FirstName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string LastName
+		{
+			get
+			{
+				return this._LastName;
+			}
+			set
+			{
+				if ((this._LastName != value))
+				{
+					this._LastName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MedicalSpecialistID", DbType="Int NOT NULL")]
+		public int MedicalSpecialistID
+		{
+			get
+			{
+				return this._MedicalSpecialistID;
+			}
+			set
+			{
+				if ((this._MedicalSpecialistID != value))
+				{
+					this._MedicalSpecialistID = value;
+				}
 			}
 		}
 	}

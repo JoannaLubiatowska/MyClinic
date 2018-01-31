@@ -26,7 +26,7 @@
         <elementListCompartment Id="a57d6417-9826-4ec9-869c-f9d882462e4b" absoluteBounds="6.265, 1.71, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 4.84699625651042); (3.01041666666667 : 4.84699625651042 : JumpStart); (3.17708333333333 : 4.84699625651042 : JumpEnd); (3.5 : 4.84699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.75 : 4.84699625651042); (3.5 : 4.84699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/Voivodeship/Voivodeship_City" />
       <nodes>
         <classShapeMoniker Id="eed86080-6716-4eae-9f4c-153cbc9ce341" />
@@ -40,7 +40,7 @@
         <classShapeMoniker Id="c7cc1961-55df-4e42-98be-8b50db502645" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.96875 : 4.125); (3.96875 : 3.66189647265625); (6.25 : 3.66189647265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.96875 : 4.125); (3.96875 : 3.66189647265625); (6.25 : 3.66189647265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/City/City_Patient" />
       <nodes>
         <classShapeMoniker Id="19de6490-5899-4f02-b1a3-ec411d558fb7" />
@@ -53,7 +53,7 @@
         <elementListCompartment Id="27985175-0721-4899-9b37-513123c1e080" absoluteBounds="1.3900000000000001, 1.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.25 : 3.33099609375); (3.375 : 3.33099609375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.25 : 3.33099609375); (3.375 : 3.33099609375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/Patient/Patient_Visit" />
       <nodes>
         <classShapeMoniker Id="114c73b8-092e-4f89-95a6-73c37b97bdce" />
@@ -93,7 +93,7 @@
         <classShapeMoniker Id="681303eb-c513-46f4-993e-d06a7dd9a781" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.25 : 4.3670068359375); (7.25 : 4.875); (6.14583458333333 : 4.875 : JumpStart); (5.97916791666667 : 4.875 : JumpEnd); (5.75 : 4.875); (5.75 : 6.25); (4.75 : 6.25); (4.75 : 7.48159912109375); (5 : 7.48159912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.25 : 4.3670068359375); (7.25 : 4.875); (5.75 : 4.875); (5.75 : 6.25); (4.75 : 6.25); (4.75 : 7.48159912109375); (5 : 7.48159912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/Patient/Patient_MedicalExamination" />
       <nodes>
         <classShapeMoniker Id="114c73b8-092e-4f89-95a6-73c37b97bdce" />
@@ -132,12 +132,18 @@
         <classShapeMoniker Id="6e8ca530-ee1e-40de-af51-e51aa5c913a7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.375 : 2.10179768880208); (4.5 : 2.10179768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.375 : 2.10179768880208); (4.5 : 2.10179768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/LINQToSQLDataContext/Visit/Visit_PrescribedMedicine" />
       <nodes>
         <classShapeMoniker Id="a09a0305-0ec8-4a96-b04a-1dd71777321d" />
         <classShapeMoniker Id="6e8ca530-ee1e-40de-af51-e51aa5c913a7" />
       </nodes>
     </associationConnector>
+    <classShape Id="88273481-eac4-4284-b056-4c899252ad5f" absoluteBounds="8.875, 1.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LINQToSQLDataContext/specialists_view" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4b6a510d-ff5f-4700-846b-bddad3789dba" absoluteBounds="8.89, 1.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

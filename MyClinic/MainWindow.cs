@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using static MyClinic.DataSet;
+using System.Data.Linq;
 
 namespace MyClinic
 {
@@ -20,6 +21,7 @@ namespace MyClinic
         private SqlDataAdapter adapter;
         private DataTable medicalServices;
         private DataTable clinicEmployees;
+        private DataTable specialists;
         private string connectionString;
         private LINQToSQLDataContext db;
         private static MainWindow mainWindow;
@@ -27,20 +29,35 @@ namespace MyClinic
         public MainWindow()
         {
             InitializeComponent();
-            connection = new SqlConnection("Data Source=ASIA-HP;Initial Catalog=Clinic;Persist Security Info=True;User ID=sa;Password=praktyka");
-            adapter = new SqlDataAdapter();
-            Update_combobox(clinicEmployees = new DataTable("ClinicEmployees"), comboBoxSchedulerDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
-            Update_combobox(medicalServices = new DataTable("MedicalServices"), comboBoxSchedulerService, "select * from MedicalServices", "ServiceName", "ServiceDescription");
-            Update_combobox(medicalServices, comboBoxServicesServiceName, "select * from MedicalServices", "ServiceName", "ServiceDescription");
-            Update_combobox(clinicEmployees, comboBoxVisitDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
-            Update_combobox(clinicEmployees, comboBoxServicesDoctor, "select * from ClinicEmployees", "FirstName", "LastName");
-
+            
             connectionString = ConfigurationManager.ConnectionStrings["MyClinic.Properties.Settings.ClinicConnectionString"].ToString();
             db = new LINQToSQLDataContext(connectionString);
-            
+
+            clinicEmployees = new DataTable();
+            specialists = new DataTable();
+            medicalServices = new DataTable("MedicalServices");
+
+            connection = new SqlConnection("Data Source=ASIA-HP;Initial Catalog=Clinic;Persist Security Info=True;User ID=sa;Password=praktyka");
+            adapter = new SqlDataAdapter();
+            Update_combobox(specialists, comboBoxSchedulerDoctor, "select * from specialists_view", "{0} - {1} {2}", "MedicalSpecializationName", "FirstName", "LastName");
+            Update_combobox(medicalServices, comboBoxSchedulerService, "select * from MedicalServices", "{0} {1}", "ServiceName", "ServiceDescription");
+            Update_combobox(medicalServices, comboBoxServicesServiceName, "select * from MedicalServices", "{0} {1}", "ServiceName", "ServiceDescription");
+            Update_combobox(clinicEmployees, comboBoxVisitDoctor, "select * from ClinicEmployees", "{0} {1}", "FirstName", "LastName");
+            Update_combobox(clinicEmployees, comboBoxServicesDoctor, "select * from ClinicEmployees", "{0} {1}", "FirstName", "LastName");
+
+            FillAutoCompleteValues(textBoxSchedulerPesel, db.Patients.Select(patient => patient.PESEL).ToArray());
+            FillAutoCompleteValues(textBoxSchedulerLastName, db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
+
             FillDataGridViewVistis();
             FillDataGridViewServices();
             mainWindow = this;
+        }
+
+        private void FillAutoCompleteValues(TextBox textBox, string[] values)
+        {
+            AutoCompleteStringCollection peselACSC = new AutoCompleteStringCollection();
+            peselACSC.AddRange(values);
+            textBox.AutoCompleteCustomSource = peselACSC;
         }
 
         private void FillDataGridViewVistis()
@@ -89,13 +106,30 @@ namespace MyClinic
 
         private void buttonSaveSchedule_Click(object sender, EventArgs e)
         {
-            string schedulerDoctor = ((ComboBoxItem)comboBoxSchedulerDoctor.SelectedItem).Hidden["EmployeeID"].ToString();
-            string schedulerService = ((ComboBoxItem)comboBoxSchedulerService.SelectedItem).Hidden["MedicalServiceID"].ToString();
-            string schedulerPesel = textBoxSchedulerPesel.Text;
-            string schedulerFirstName = textBoxSchedulerFirstName.Text;
-            string schedulerLastName = textBoxSchedulerLastName.Text;
-            string schedulerDate = dateTimePickerSchedulerVisit.Text;
+            if (comboBoxSchedulerDoctor.SelectedItem == null)
+            {
+                MessageBox.Show("Nie wybrano specjalisty.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if (db.Patients.Where(pat => pat.PESEL.Equals(textBoxSchedulerPesel.Text)).Count().Equals(0))
+            {
+                MessageBox.Show("Nie znaleziono pacjenta o podanym numerze PESEL.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            var doctor = db.MedicalSpecialists.Where(empl => empl.MedicalSpecialistID.Equals((int)((ComboBoxItem)comboBoxSchedulerDoctor.SelectedItem).Hidden["MedicalSpecialistID"])).Single();
+            var patient = db.Patients.Where(pat => pat.PESEL.Equals(textBoxSchedulerPesel.Text)).Single();
+            DateTime schedulerDate = dateTimePickerSchedulerVisit.Value.Date.Add(dateTimePickerSchedulerVisitsHours.Value.TimeOfDay);
 
+            Visit visit = new Visit()
+            {
+                MedicalSpecialist = doctor,
+                Patient = patient,
+                VisitDate = schedulerDate                
+            };
+            db.Visits.InsertOnSubmit(visit);
+            db.SubmitChanges();
+
+            MessageBox.Show("Nowa wizyta została zanotowana.", "Zapisano wizytę", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void buttonAddPatient_Click(object sender, EventArgs e)
@@ -173,17 +207,51 @@ namespace MyClinic
         private void buttonSearchPatient_Click(object sender, EventArgs e)
         {
             DataTable patient = new DataTable();
-            string shedulerPesel = textBoxSchedulerPesel.Text;
-            
-            SqlCommand command = new SqlCommand("select * from Patients where PESEL = @shedulerPesel", connection);
-            adapter.SelectCommand = command;
-            adapter.SelectCommand.Parameters.AddWithValue("@shedulerPesel", shedulerPesel);
-            adapter.Fill(patient);
-            adapter.Update(patient);
+            string schedulerPesel = textBoxSchedulerPesel.Text;
+            string schedulerLastName = textBoxSchedulerLastName.Text;
 
-            textBoxSchedulerFirstName.Text = patient.Rows[0]["FirstName"].ToString();
-            textBoxSchedulerLastName.Text = patient.Rows[0]["LastName"].ToString();
+            if (schedulerPesel.Length > 0)
+            {
+                SqlCommand command = new SqlCommand("select * from Patients where PESEL = @shedulerPesel", connection);
+                adapter.SelectCommand = command;
+                adapter.SelectCommand.Parameters.AddWithValue("@shedulerPesel", schedulerPesel);
+                adapter.Fill(patient);
+                adapter.Update(patient);
 
+                if (patient.Rows.Count > 0)
+                {
+                    textBoxSchedulerFirstName.Text = patient.Rows[0]["FirstName"].ToString();
+                    textBoxSchedulerLastName.Text = patient.Rows[0]["LastName"].ToString();
+                } else
+                {
+                    MessageBox.Show("Nie znaleziono pacjenta o podanym numerze PESEL.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            else if (schedulerLastName.Length > 0)
+            {
+                SqlCommand command = new SqlCommand("select * from Patients where LastName LIKE @lastName", connection);
+                adapter.SelectCommand = command;
+                adapter.SelectCommand.Parameters.AddWithValue("@lastName", '%' + schedulerLastName + '%');
+                adapter.Fill(patient);
+                adapter.Update(patient);
+
+                switch (patient.Rows.Count)
+                {
+                    case 0:
+                        MessageBox.Show("Nie znaleziono pacjenta o podanym nazwisku.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        break;
+
+                    case 1:
+                        textBoxSchedulerPesel.Text = patient.Rows[0]["PESEL"].ToString();
+                        textBoxSchedulerFirstName.Text = patient.Rows[0]["FirstName"].ToString();
+                        textBoxSchedulerLastName.Text = patient.Rows[0]["LastName"].ToString();
+                        break;
+
+                    default:
+                        MessageBox.Show("Znaleziono więcej niż jedną osobę o danym nazwisku. Konieczne będzie podanie numeru PESEL", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
+                }
+            }
         }
 
         private void buttonServicePatientSearch_Click(object sender, EventArgs e)
@@ -281,22 +349,35 @@ namespace MyClinic
             }
             return "";
         }
-
-        public void Update_combobox(DataTable transaction, ComboBox combo, String select, String field, String field2)
+        
+        public void Update_combobox(DataTable transaction, ComboBox combo, String select, String format, params String[] fieldNames)
         {
             try
             {
+                List<ComboBoxItem> list = new List<ComboBoxItem>();
+
                 if (transaction.Rows.Count == 0)
                 {
                     adapter.SelectCommand = new SqlCommand(select, connection);
                     adapter.Fill(transaction);
                 }
+
                 combo.Items.Clear();
+
+                string.Format(format, fieldNames);
+
                 for (int i = 0; i < transaction.Rows.Count; ++i)
                 {
+                    string text = format;
+
+                    for (int paramNo = 0; paramNo < fieldNames.Length; paramNo++)
+                    {
+                        text = text.Replace($"{'{'}{paramNo}{'}'}", transaction.Rows[i][fieldNames[paramNo]].ToString());
+                    }
+
                     ComboBoxItem item = new ComboBoxItem()
                     {
-                        Text = transaction.Rows[i][field].ToString() + " " + transaction.Rows[i][field2].ToString(),
+                        Text = text,
                         Hidden = transaction.Rows[i]
                     };
                     combo.Items.Add(item);

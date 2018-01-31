@@ -62,12 +62,12 @@
             System.Windows.Forms.Label label35;
             System.Windows.Forms.Label label36;
             System.Windows.Forms.Label label37;
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label11 = new System.Windows.Forms.Label();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.tabAdministration = new System.Windows.Forms.TabPage();
@@ -1581,6 +1581,8 @@
             // 
             // textBoxSchedulerLastName
             // 
+            this.textBoxSchedulerLastName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.textBoxSchedulerLastName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxSchedulerLastName.Location = new System.Drawing.Point(132, 139);
             this.textBoxSchedulerLastName.Name = "textBoxSchedulerLastName";
             this.textBoxSchedulerLastName.Size = new System.Drawing.Size(242, 20);
@@ -1630,6 +1632,8 @@
             // 
             // textBoxSchedulerPesel
             // 
+            this.textBoxSchedulerPesel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.textBoxSchedulerPesel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBoxSchedulerPesel.Location = new System.Drawing.Point(132, 83);
             this.textBoxSchedulerPesel.Name = "textBoxSchedulerPesel";
             this.textBoxSchedulerPesel.Size = new System.Drawing.Size(242, 20);
@@ -1878,21 +1882,21 @@
             // 
             // chart2
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea3);
+            chartArea5.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea5);
             this.chart2.DataSource = this.countByMonthviewBindingSource;
-            legend3.Name = "Legend1";
-            this.chart2.Legends.Add(legend3);
+            legend5.Name = "Legend1";
+            this.chart2.Legends.Add(legend5);
             this.chart2.Location = new System.Drawing.Point(594, 40);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Ilość przyjętych pacjentów w miesiącu przez wszystkich pracowników";
-            series3.XValueMember = "visitMonth";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series3.YValueMembers = "visitCount";
-            this.chart2.Series.Add(series3);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Ilość przyjętych pacjentów w miesiącu przez wszystkich pracowników";
+            series5.XValueMember = "visitMonth";
+            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series5.YValueMembers = "visitCount";
+            this.chart2.Series.Add(series5);
             this.chart2.Size = new System.Drawing.Size(552, 534);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
@@ -1904,20 +1908,20 @@
             // 
             // chart1
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
+            chartArea6.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea6);
             this.chart1.DataSource = this.countvisitsBindingSource;
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            legend6.Name = "Legend1";
+            this.chart1.Legends.Add(legend6);
             this.chart1.Location = new System.Drawing.Point(55, 40);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Ilość przyjętych pacjentów ogółem";
-            series4.XValueMember = "doctor";
-            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series4.YValueMembers = "visitCount";
-            this.chart1.Series.Add(series4);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Ilość przyjętych pacjentów ogółem";
+            series6.XValueMember = "doctor";
+            series6.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series6.YValueMembers = "visitCount";
+            this.chart1.Series.Add(series6);
             this.chart1.Size = new System.Drawing.Size(506, 534);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";

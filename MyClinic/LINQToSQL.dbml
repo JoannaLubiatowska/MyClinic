@@ -119,4 +119,12 @@
       <Association Name="Visit_PrescribedMedicine" Member="Visit" ThisKey="VisitID" OtherKey="VisitID" Type="Visit" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.specialists_view" Member="specialists_views">
+    <Type Name="specialists_view">
+      <Column Name="MedicalSpecializationName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="MedicalSpecialistID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
 </Database>
