@@ -98,13 +98,6 @@ namespace MyClinic
 
         }
 
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
-            string patientPesel = textBoxPatientPesel.Text;
-
-
-        }
-
         private void buttonAddPatient_Click(object sender, EventArgs e)
         {
             if (openNextWindow("AddPatientForm"))
@@ -324,6 +317,10 @@ namespace MyClinic
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dataSet.CountByMonth_view' table. You can move, or remove it, as needed.
+            this.countByMonth_viewTableAdapter.Fill(this.dataSet.CountByMonth_view);
+            // TODO: This line of code loads data into the 'dataSet.CountVisitByMonth_view' table. You can move, or remove it, as needed.
+            this.countVisitByMonth_viewTableAdapter.Fill(this.dataSet.CountVisitByMonth_view);
             // TODO: This line of code loads data into the 'dataSet.count_visits' table. You can move, or remove it, as needed.
             this.count_visitsTableAdapter.Fill(this.dataSet.count_visits);
             // TODO: This line of code loads data into the 'dataSet.Patients_view' table. You can move, or remove it, as needed.
@@ -349,6 +346,11 @@ namespace MyClinic
             this.clinicEmployeesBindingSource.EndEdit();
             this.tableAdapterManager.UpdateAll(this.dataSet);
 
+        }
+
+        private void textBoxPatientPesel_TextChanged(object sender, EventArgs e)
+        {
+            patients_viewBindingSource.Filter = string.Format("PESEL LIKE '%{0}%'", textBoxPatientPesel.Text);
         }
     }
 }
