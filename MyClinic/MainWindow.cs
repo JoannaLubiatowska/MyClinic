@@ -217,10 +217,6 @@ namespace MyClinic
             {
                 MessageBox.Show("Wybierz wizytę lub dodaj nową.");
             }
-
-
-
-            //comboBoxSelectMedicines
         }
 
         private void buttonSaveExamination_Click(object sender, EventArgs e)
@@ -535,5 +531,28 @@ namespace MyClinic
             }
         }
     }
+
+        private void buttonAddMedicine_Click(object sender, EventArgs e)
+        {
+            SqlCommand command;
+            DataSet dataSet = new DataSet();
+            adapter.SelectCommand = new SqlCommand("SELECT * FROM PrescribedMedicines where 1 = 2", connection);
+            adapter.Fill(dataSet, "PrescribedMedicines");
+
+            command = new SqlCommand("INSERT INTO PrescribedMedicines(MedicineID, VisitID, DrugDosage) " +
+                                    "VALUES(@medicineID, @visitID, @drugDosage); ", connection);
+
+            adapter.UpdateCommand = command;
+            adapter.UpdateCommand.Parameters.AddWithValue("@visitID", ((VisitBasics_viewRow)((DataRowView)visitBasics_viewBindingSource.Current).Row).VisitID);
+            adapter.UpdateCommand.Parameters.AddWithValue("@medicineID", ((ComboBoxItem)comboBoxSelectMedicines.SelectedItem).Hidden["MedicineID"].ToString());
+            adapter.UpdateCommand.Parameters.AddWithValue("@drugDosage", "1x1");
+
+            adapter.UpdateCommand = command;
+            adapter.SelectCommand = command;
+            adapter.Fill(dataSet, "PrescribedMedicines");
+            adapter.Update(dataSet, "PrescribedMedicines");
+
+            MessageBox.Show("Zapisano.");
+        }
     }
 }
