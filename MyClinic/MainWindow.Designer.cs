@@ -62,13 +62,14 @@
             System.Windows.Forms.Label label35;
             System.Windows.Forms.Label label36;
             System.Windows.Forms.Label label37;
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.Label label38;
+            System.Windows.Forms.Label label39;
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label11 = new System.Windows.Forms.Label();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.tabAdministration = new System.Windows.Forms.TabPage();
@@ -101,6 +102,7 @@
             this.buttonSaveExamination = new System.Windows.Forms.Button();
             this.textBoxServicesDescription = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.textBoxServicePesel = new System.Windows.Forms.TextBox();
             this.textBoxServicesCity = new System.Windows.Forms.TextBox();
             this.textBoxServicesPhoneNo = new System.Windows.Forms.TextBox();
             this.textBoxServicesPostalCode = new System.Windows.Forms.TextBox();
@@ -122,10 +124,12 @@
             this.visitBasics_viewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonSaveVisit = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.buttonAddMedicine = new System.Windows.Forms.Button();
             this.comboBoxSelectMedicines = new System.Windows.Forms.ComboBox();
             this.textBoxVisitCode = new System.Windows.Forms.TextBox();
             this.textBoxVisitDescription = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBoxPesel = new System.Windows.Forms.TextBox();
             this.textBoxVisitCity = new System.Windows.Forms.TextBox();
             this.textBoxVisitPhoneNo = new System.Windows.Forms.TextBox();
             this.textBoxVisitPostalCode = new System.Windows.Forms.TextBox();
@@ -229,8 +233,6 @@
             this.countVisitByMonth_viewTableAdapter = new MyClinic.DataSetTableAdapters.CountVisitByMonth_viewTableAdapter();
             this.countByMonth_viewTableAdapter = new MyClinic.DataSetTableAdapters.CountByMonth_viewTableAdapter();
             this.visitBasics_viewTableAdapter = new MyClinic.DataSetTableAdapters.VisitBasics_viewTableAdapter();
-            this.textBoxPesel = new System.Windows.Forms.TextBox();
-            this.buttonAddMedicine = new System.Windows.Forms.Button();
             priceLabel = new System.Windows.Forms.Label();
             serviceDescriptionLabel = new System.Windows.Forms.Label();
             serviceNameLabel = new System.Windows.Forms.Label();
@@ -265,6 +267,7 @@
             label36 = new System.Windows.Forms.Label();
             label37 = new System.Windows.Forms.Label();
             label38 = new System.Windows.Forms.Label();
+            label39 = new System.Windows.Forms.Label();
             this.tabAdministration.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -336,7 +339,7 @@
             // examinationDateLabel
             // 
             examinationDateLabel.AutoSize = true;
-            examinationDateLabel.Location = new System.Drawing.Point(6, 103);
+            examinationDateLabel.Location = new System.Drawing.Point(6, 94);
             examinationDateLabel.Name = "examinationDateLabel";
             examinationDateLabel.Size = new System.Drawing.Size(128, 13);
             examinationDateLabel.TabIndex = 43;
@@ -345,7 +348,7 @@
             // patientIDLabel
             // 
             patientIDLabel.AutoSize = true;
-            patientIDLabel.Location = new System.Drawing.Point(6, 74);
+            patientIDLabel.Location = new System.Drawing.Point(6, 67);
             patientIDLabel.Name = "patientIDLabel";
             patientIDLabel.Size = new System.Drawing.Size(88, 13);
             patientIDLabel.TabIndex = 41;
@@ -354,7 +357,7 @@
             // medicalServiceIDLabel
             // 
             medicalServiceIDLabel.AutoSize = true;
-            medicalServiceIDLabel.Location = new System.Drawing.Point(6, 48);
+            medicalServiceIDLabel.Location = new System.Drawing.Point(6, 42);
             medicalServiceIDLabel.Name = "medicalServiceIDLabel";
             medicalServiceIDLabel.Size = new System.Drawing.Size(75, 13);
             medicalServiceIDLabel.TabIndex = 40;
@@ -363,7 +366,7 @@
             // employeeIDLabel
             // 
             employeeIDLabel.AutoSize = true;
-            employeeIDLabel.Location = new System.Drawing.Point(6, 22);
+            employeeIDLabel.Location = new System.Drawing.Point(6, 17);
             employeeIDLabel.Name = "employeeIDLabel";
             employeeIDLabel.Size = new System.Drawing.Size(142, 13);
             employeeIDLabel.TabIndex = 39;
@@ -372,7 +375,7 @@
             // label28
             // 
             label28.AutoSize = true;
-            label28.Location = new System.Drawing.Point(6, 178);
+            label28.Location = new System.Drawing.Point(6, 204);
             label28.Name = "label28";
             label28.Size = new System.Drawing.Size(82, 13);
             label28.TabIndex = 21;
@@ -381,7 +384,7 @@
             // label27
             // 
             label27.AutoSize = true;
-            label27.Location = new System.Drawing.Point(6, 152);
+            label27.Location = new System.Drawing.Point(6, 178);
             label27.Name = "label27";
             label27.Size = new System.Drawing.Size(41, 13);
             label27.TabIndex = 20;
@@ -390,7 +393,7 @@
             // label26
             // 
             label26.AutoSize = true;
-            label26.Location = new System.Drawing.Point(6, 126);
+            label26.Location = new System.Drawing.Point(6, 152);
             label26.Name = "label26";
             label26.Size = new System.Drawing.Size(77, 13);
             label26.TabIndex = 19;
@@ -399,7 +402,7 @@
             // label25
             // 
             label25.AutoSize = true;
-            label25.Location = new System.Drawing.Point(6, 100);
+            label25.Location = new System.Drawing.Point(6, 126);
             label25.Name = "label25";
             label25.Size = new System.Drawing.Size(70, 13);
             label25.TabIndex = 18;
@@ -408,7 +411,7 @@
             // label24
             // 
             label24.AutoSize = true;
-            label24.Location = new System.Drawing.Point(6, 74);
+            label24.Location = new System.Drawing.Point(6, 100);
             label24.Name = "label24";
             label24.Size = new System.Drawing.Size(34, 13);
             label24.TabIndex = 17;
@@ -603,6 +606,24 @@
             label37.TabIndex = 54;
             label37.Text = "Na dzisiaj:";
             // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Location = new System.Drawing.Point(6, 75);
+            label38.Name = "label38";
+            label38.Size = new System.Drawing.Size(88, 13);
+            label38.TabIndex = 48;
+            label38.Text = "PESEL pacjenta:";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Location = new System.Drawing.Point(6, 74);
+            label39.Name = "label39";
+            label39.Size = new System.Drawing.Size(88, 13);
+            label39.TabIndex = 51;
+            label39.Text = "PESEL pacjenta:";
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -641,6 +662,7 @@
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.buttonAddService);
+            this.groupBox9.Controls.Add(this.buttonEditService);
             this.groupBox9.Controls.Add(this.textBoxAdministrationServicePrice);
             this.groupBox9.Controls.Add(this.textBoxAdministrationServiceDescription);
             this.groupBox9.Controls.Add(serviceNameLabel);
@@ -689,7 +711,6 @@
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.medicalServicesDataGridView);
-            this.groupBox8.Controls.Add(this.buttonEditService);
             this.groupBox8.Location = new System.Drawing.Point(722, 6);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(460, 456);
@@ -708,8 +729,9 @@
             this.medicalServicesDataGridView.DataSource = this.medicalServicesBindingSource;
             this.medicalServicesDataGridView.Location = new System.Drawing.Point(23, 19);
             this.medicalServicesDataGridView.Name = "medicalServicesDataGridView";
-            this.medicalServicesDataGridView.Size = new System.Drawing.Size(417, 388);
+            this.medicalServicesDataGridView.Size = new System.Drawing.Size(417, 415);
             this.medicalServicesDataGridView.TabIndex = 8;
+            this.medicalServicesDataGridView.SelectionChanged += new System.EventHandler(this.medicalServicesDataGridView_SelectionChanged);
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -741,7 +763,7 @@
             // 
             // buttonEditService
             // 
-            this.buttonEditService.Location = new System.Drawing.Point(304, 427);
+            this.buttonEditService.Location = new System.Drawing.Point(162, 154);
             this.buttonEditService.Name = "buttonEditService";
             this.buttonEditService.Size = new System.Drawing.Size(136, 23);
             this.buttonEditService.TabIndex = 8;
@@ -888,6 +910,8 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(label39);
+            this.groupBox6.Controls.Add(this.textBoxServicePesel);
             this.groupBox6.Controls.Add(this.textBoxServicesCity);
             this.groupBox6.Controls.Add(this.textBoxServicesPhoneNo);
             this.groupBox6.Controls.Add(this.textBoxServicesPostalCode);
@@ -902,17 +926,25 @@
             this.groupBox6.Controls.Add(label26);
             this.groupBox6.Controls.Add(label27);
             this.groupBox6.Controls.Add(label28);
-            this.groupBox6.Location = new System.Drawing.Point(9, 169);
+            this.groupBox6.Location = new System.Drawing.Point(9, 145);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(440, 207);
+            this.groupBox6.Size = new System.Drawing.Size(440, 231);
             this.groupBox6.TabIndex = 22;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Dane pacjenta";
             // 
+            // textBoxServicePesel
+            // 
+            this.textBoxServicePesel.Enabled = false;
+            this.textBoxServicePesel.Location = new System.Drawing.Point(173, 71);
+            this.textBoxServicePesel.Name = "textBoxServicePesel";
+            this.textBoxServicePesel.Size = new System.Drawing.Size(242, 20);
+            this.textBoxServicePesel.TabIndex = 51;
+            // 
             // textBoxServicesCity
             // 
             this.textBoxServicesCity.Enabled = false;
-            this.textBoxServicesCity.Location = new System.Drawing.Point(173, 149);
+            this.textBoxServicesCity.Location = new System.Drawing.Point(173, 175);
             this.textBoxServicesCity.Name = "textBoxServicesCity";
             this.textBoxServicesCity.Size = new System.Drawing.Size(242, 20);
             this.textBoxServicesCity.TabIndex = 29;
@@ -920,7 +952,7 @@
             // textBoxServicesPhoneNo
             // 
             this.textBoxServicesPhoneNo.Enabled = false;
-            this.textBoxServicesPhoneNo.Location = new System.Drawing.Point(173, 175);
+            this.textBoxServicesPhoneNo.Location = new System.Drawing.Point(173, 201);
             this.textBoxServicesPhoneNo.Name = "textBoxServicesPhoneNo";
             this.textBoxServicesPhoneNo.Size = new System.Drawing.Size(242, 20);
             this.textBoxServicesPhoneNo.TabIndex = 28;
@@ -928,7 +960,7 @@
             // textBoxServicesPostalCode
             // 
             this.textBoxServicesPostalCode.Enabled = false;
-            this.textBoxServicesPostalCode.Location = new System.Drawing.Point(173, 123);
+            this.textBoxServicesPostalCode.Location = new System.Drawing.Point(173, 149);
             this.textBoxServicesPostalCode.Name = "textBoxServicesPostalCode";
             this.textBoxServicesPostalCode.Size = new System.Drawing.Size(242, 20);
             this.textBoxServicesPostalCode.TabIndex = 27;
@@ -936,7 +968,7 @@
             // textBoxServicesStreet
             // 
             this.textBoxServicesStreet.Enabled = false;
-            this.textBoxServicesStreet.Location = new System.Drawing.Point(173, 71);
+            this.textBoxServicesStreet.Location = new System.Drawing.Point(173, 97);
             this.textBoxServicesStreet.Name = "textBoxServicesStreet";
             this.textBoxServicesStreet.Size = new System.Drawing.Size(242, 20);
             this.textBoxServicesStreet.TabIndex = 26;
@@ -944,7 +976,7 @@
             // textBoxServicesStreetNo
             // 
             this.textBoxServicesStreetNo.Enabled = false;
-            this.textBoxServicesStreetNo.Location = new System.Drawing.Point(173, 97);
+            this.textBoxServicesStreetNo.Location = new System.Drawing.Point(173, 123);
             this.textBoxServicesStreetNo.Name = "textBoxServicesStreetNo";
             this.textBoxServicesStreetNo.Size = new System.Drawing.Size(242, 20);
             this.textBoxServicesStreetNo.TabIndex = 25;
@@ -978,14 +1010,14 @@
             this.groupBox5.Controls.Add(examinationDateLabel);
             this.groupBox5.Location = new System.Drawing.Point(9, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(440, 157);
+            this.groupBox5.Size = new System.Drawing.Size(440, 139);
             this.groupBox5.TabIndex = 21;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Szczegóły";
             // 
             // buttonServicePatientSearch
             // 
-            this.buttonServicePatientSearch.Location = new System.Drawing.Point(331, 123);
+            this.buttonServicePatientSearch.Location = new System.Drawing.Point(331, 110);
             this.buttonServicePatientSearch.Name = "buttonServicePatientSearch";
             this.buttonServicePatientSearch.Size = new System.Drawing.Size(84, 23);
             this.buttonServicePatientSearch.TabIndex = 50;
@@ -998,21 +1030,23 @@
             this.comboBoxServicesDoctor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBoxServicesDoctor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxServicesDoctor.FormattingEnabled = true;
-            this.comboBoxServicesDoctor.Location = new System.Drawing.Point(173, 19);
+            this.comboBoxServicesDoctor.Location = new System.Drawing.Point(173, 14);
             this.comboBoxServicesDoctor.Name = "comboBoxServicesDoctor";
             this.comboBoxServicesDoctor.Size = new System.Drawing.Size(242, 21);
             this.comboBoxServicesDoctor.TabIndex = 49;
             // 
             // dateTimePickerServicesDate
             // 
-            this.dateTimePickerServicesDate.Location = new System.Drawing.Point(173, 97);
+            this.dateTimePickerServicesDate.Location = new System.Drawing.Point(173, 88);
             this.dateTimePickerServicesDate.Name = "dateTimePickerServicesDate";
             this.dateTimePickerServicesDate.Size = new System.Drawing.Size(242, 20);
             this.dateTimePickerServicesDate.TabIndex = 48;
             // 
             // textBoxServicesPesel
             // 
-            this.textBoxServicesPesel.Location = new System.Drawing.Point(173, 71);
+            this.textBoxServicesPesel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.textBoxServicesPesel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxServicesPesel.Location = new System.Drawing.Point(173, 64);
             this.textBoxServicesPesel.Name = "textBoxServicesPesel";
             this.textBoxServicesPesel.Size = new System.Drawing.Size(242, 20);
             this.textBoxServicesPesel.TabIndex = 46;
@@ -1022,7 +1056,7 @@
             this.comboBoxServicesServiceName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBoxServicesServiceName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxServicesServiceName.FormattingEnabled = true;
-            this.comboBoxServicesServiceName.Location = new System.Drawing.Point(173, 45);
+            this.comboBoxServicesServiceName.Location = new System.Drawing.Point(173, 39);
             this.comboBoxServicesServiceName.Name = "comboBoxServicesServiceName";
             this.comboBoxServicesServiceName.Size = new System.Drawing.Size(242, 21);
             this.comboBoxServicesServiceName.TabIndex = 45;
@@ -1110,6 +1144,16 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opis wizyty";
             // 
+            // buttonAddMedicine
+            // 
+            this.buttonAddMedicine.Location = new System.Drawing.Point(667, 235);
+            this.buttonAddMedicine.Name = "buttonAddMedicine";
+            this.buttonAddMedicine.Size = new System.Drawing.Size(84, 23);
+            this.buttonAddMedicine.TabIndex = 55;
+            this.buttonAddMedicine.Text = "Dodaj";
+            this.buttonAddMedicine.UseVisualStyleBackColor = true;
+            this.buttonAddMedicine.Click += new System.EventHandler(this.buttonAddMedicine_Click);
+            // 
             // comboBoxSelectMedicines
             // 
             this.comboBoxSelectMedicines.FormattingEnabled = true;
@@ -1157,6 +1201,14 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Dane pacjenta";
+            // 
+            // textBoxPesel
+            // 
+            this.textBoxPesel.Enabled = false;
+            this.textBoxPesel.Location = new System.Drawing.Point(129, 72);
+            this.textBoxPesel.Name = "textBoxPesel";
+            this.textBoxPesel.Size = new System.Drawing.Size(242, 20);
+            this.textBoxPesel.TabIndex = 48;
             // 
             // textBoxVisitCity
             // 
@@ -1933,21 +1985,21 @@
             // 
             // chart2
             // 
-            chartArea13.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea13);
+            chartArea3.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea3);
             this.chart2.DataSource = this.countByMonthviewBindingSource;
-            legend13.Name = "Legend1";
-            this.chart2.Legends.Add(legend13);
+            legend3.Name = "Legend1";
+            this.chart2.Legends.Add(legend3);
             this.chart2.Location = new System.Drawing.Point(594, 40);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series13.ChartArea = "ChartArea1";
-            series13.Legend = "Legend1";
-            series13.Name = "Ilość przyjętych pacjentów w miesiącu przez wszystkich pracowników";
-            series13.XValueMember = "visitMonth";
-            series13.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series13.YValueMembers = "visitCount";
-            this.chart2.Series.Add(series13);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Ilość przyjętych pacjentów w miesiącu przez wszystkich pracowników";
+            series3.XValueMember = "visitMonth";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series3.YValueMembers = "visitCount";
+            this.chart2.Series.Add(series3);
             this.chart2.Size = new System.Drawing.Size(552, 534);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
@@ -1959,20 +2011,20 @@
             // 
             // chart1
             // 
-            chartArea14.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea14);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.DataSource = this.countvisitsBindingSource;
-            legend14.Name = "Legend1";
-            this.chart1.Legends.Add(legend14);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(55, 40);
             this.chart1.Name = "chart1";
-            series14.ChartArea = "ChartArea1";
-            series14.Legend = "Legend1";
-            series14.Name = "Ilość przyjętych pacjentów ogółem";
-            series14.XValueMember = "doctor";
-            series14.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series14.YValueMembers = "visitCount";
-            this.chart1.Series.Add(series14);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Ilość przyjętych pacjentów ogółem";
+            series4.XValueMember = "doctor";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series4.YValueMembers = "visitCount";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(506, 534);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -2044,33 +2096,6 @@
             // visitBasics_viewTableAdapter
             // 
             this.visitBasics_viewTableAdapter.ClearBeforeFill = true;
-            // 
-            // textBoxPesel
-            // 
-            this.textBoxPesel.Enabled = false;
-            this.textBoxPesel.Location = new System.Drawing.Point(129, 72);
-            this.textBoxPesel.Name = "textBoxPesel";
-            this.textBoxPesel.Size = new System.Drawing.Size(242, 20);
-            this.textBoxPesel.TabIndex = 48;
-            // 
-            // label38
-            // 
-            label38.AutoSize = true;
-            label38.Location = new System.Drawing.Point(6, 75);
-            label38.Name = "label38";
-            label38.Size = new System.Drawing.Size(88, 13);
-            label38.TabIndex = 48;
-            label38.Text = "PESEL pacjenta:";
-            // 
-            // buttonAddMedicine
-            // 
-            this.buttonAddMedicine.Location = new System.Drawing.Point(667, 235);
-            this.buttonAddMedicine.Name = "buttonAddMedicine";
-            this.buttonAddMedicine.Size = new System.Drawing.Size(84, 23);
-            this.buttonAddMedicine.TabIndex = 55;
-            this.buttonAddMedicine.Text = "Dodaj";
-            this.buttonAddMedicine.UseVisualStyleBackColor = true;
-            this.buttonAddMedicine.Click += new System.EventHandler(this.buttonAddMedicine_Click);
             // 
             // MainWindow
             // 
@@ -2306,6 +2331,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn34;
         private System.Windows.Forms.TextBox textBoxPesel;
         private System.Windows.Forms.Button buttonAddMedicine;
+        private System.Windows.Forms.TextBox textBoxServicePesel;
     }
 }
 

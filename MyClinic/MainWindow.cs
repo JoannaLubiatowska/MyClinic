@@ -54,6 +54,7 @@ namespace MyClinic
             FillAutoCompleteValues(textBoxSchedulerPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxVisitPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxSchedulerLastName, Db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
+            FillAutoCompleteValues(textBoxServicesPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
             patients_viewBindingSource.Filter = "Zapisany = 1";
             visitBasics_viewBindingSource.Filter = string.Format("EmployeeID = {0} and VisitDate >= '{1}' and VisitDate <= '{2}'", Authenticator.Instance.LoggedEmployee.EmployeeID, DateTime.Now.Date, DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
             FillDataGridViewServices();
@@ -227,7 +228,37 @@ namespace MyClinic
 
         private void buttonEditService_Click(object sender, EventArgs e)
         {
+            try
+            {
+                MedicalServicesRow currentSelectedValue = (MedicalServicesRow)((DataRowView)medicalServicesBindingSource.Current).Row;
 
+                DataSet dataSet = new DataSet();
+                adapter.SelectCommand = new SqlCommand("SELECT * FROM MedicalServices where 1 = 2", connection);
+                adapter.Fill(dataSet, "MedicalServices");
+                
+                SqlCommand command = new SqlCommand("UPDATE MedicalServices SET ServiceName=@serviceName, ServiceDescription= @serviceDescription, Price= @price " +
+                    "WHERE MedicalServiceID=@serviceID", connection);
+
+                adapter.InsertCommand = command;
+                adapter.InsertCommand.Parameters.AddWithValue("@serviceID", currentSelectedValue.MedicalServiceID);
+                adapter.InsertCommand.Parameters.AddWithValue("@serviceName", textBoxAdministrationServiceName.Text);
+                adapter.InsertCommand.Parameters.AddWithValue("@serviceDescription", textBoxAdministrationServiceDescription.Text);
+                adapter.InsertCommand.Parameters.AddWithValue("@price", textBoxAdministrationServicePrice.Text);
+
+                adapter.InsertCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "MedicalServices");
+                adapter.Update(dataSet, "MedicalServices");
+
+                MessageBox.Show("Zapisano.");
+                textBoxAdministrationServiceName.Clear();
+                textBoxAdministrationServiceDescription.Clear();
+                textBoxAdministrationServicePrice.Clear();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Spróbuj ponownie.");
+            }
         }
 
         private void buttonAddService_Click(object sender, EventArgs e)
@@ -370,9 +401,10 @@ namespace MyClinic
         {
             DataTable patient = createPatientTable(textBoxServicesPesel.Text);
             textBoxServicesCity.Text = fillPatientInformation(textBoxServicesPesel.Text, patient);
-
+            
             textBoxServicesFirstName.Text = patient.Rows[0]["FirstName"].ToString();
             textBoxServicesLastName.Text = patient.Rows[0]["LastName"].ToString();
+            textBoxServicePesel.Text = patient.Rows[0]["PESEL"].ToString();
             textBoxServicesStreet.Text = patient.Rows[0]["Street"].ToString();
             textBoxServicesStreetNo.Text = patient.Rows[0]["StreetNumer"].ToString();
             textBoxServicesPostalCode.Text = patient.Rows[0]["PostalCode"].ToString();
@@ -607,6 +639,14 @@ namespace MyClinic
             adapter.Update(dataSet, "PrescribedMedicines");
 
             MessageBox.Show("Zapisano.");
+        }
+
+        private void medicalServicesDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            MedicalServicesRow currentSelectedValue = (MedicalServicesRow)((DataRowView)medicalServicesBindingSource.Current).Row;
+            textBoxAdministrationServiceName.Text = currentSelectedValue.ServiceName.ToString();
+            textBoxAdministrationServiceDescription.Text = currentSelectedValue.ServiceDescription.ToString();
+            textBoxAdministrationServicePrice.Text = currentSelectedValue.Price.ToString();
         }
     }
 }
