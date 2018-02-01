@@ -27,6 +27,7 @@ namespace MyClinic
         private string connectionString;
         private LINQToSQLDataContext db;
         private static MainWindow mainWindow;
+        private bool selectedVisit;
 
         public MainWindow()
         {
@@ -178,19 +179,45 @@ namespace MyClinic
             adapter.SelectCommand = new SqlCommand("SELECT * FROM Visits where 1 = 2", connection);
             adapter.Fill(dataSet, "Visits");
 
-            command = new SqlCommand("UPDATE Patients SET DiseaseClassification=@active, VisitDescription=@visitDescription WHERE PatientID=@patientID", connection);
+            if (selectedVisit)
+            {
+                command = new SqlCommand("UPDATE Visits SET DiseaseClassification=@diseaseClassification, VisitDescription=@visitDescription WHERE VisitID=@visitID", connection);
 
-            adapter.UpdateCommand = command;
-            adapter.UpdateCommand.Parameters.AddWithValue("@patientID", patient.Rows[0]["PatientID"]);
-            adapter.UpdateCommand.Parameters.AddWithValue("@diseaseClassification", textBoxVisitCode.Text);
-            adapter.UpdateCommand.Parameters.AddWithValue("@visitDescription", textBoxVisitDescription.Text);
+                adapter.UpdateCommand = command;
+                adapter.UpdateCommand.Parameters.AddWithValue("@visitID", ((VisitBasics_viewRow)((DataRowView)visitBasics_viewBindingSource.Current).Row).VisitID);
+                adapter.UpdateCommand.Parameters.AddWithValue("@diseaseClassification", textBoxVisitCode.Text);
+                adapter.UpdateCommand.Parameters.AddWithValue("@visitDescription", textBoxVisitDescription.Text);
 
-            adapter.UpdateCommand = command;
-            adapter.SelectCommand = command;
-            adapter.Fill(dataSet, "Visits");
-            adapter.Update(dataSet, "Visits");
+                adapter.UpdateCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "Visits");
+                adapter.Update(dataSet, "Visits");
 
-            MessageBox.Show("Zapisano.");
+                MessageBox.Show("Zapisano.");
+
+            }else if (!selectedVisit)
+            {
+                command = new SqlCommand("INSERT INTO Visits(PatientID, MedicalSpecialistID, DiseaseClassification, VisitDescription, VisitDate) " +
+                    "VALUES(@patientID, @medicalSpecialistID, @diseaseClassification, @visitDescription, getdate());", connection);
+
+                adapter.UpdateCommand = command;
+                adapter.UpdateCommand.Parameters.AddWithValue("patientID", patient.Rows[0]["PatientID"].ToString());
+                adapter.UpdateCommand.Parameters.AddWithValue("medicalSpecialistID", ((ComboBoxItem)comboBoxVisitDoctor.SelectedItem).Hidden["MedicalSpecialistID"].ToString());
+                adapter.UpdateCommand.Parameters.AddWithValue("@diseaseClassification", textBoxVisitCode.Text);
+                adapter.UpdateCommand.Parameters.AddWithValue("@visitDescription", textBoxVisitDescription.Text);
+
+                adapter.UpdateCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "Visits");
+                adapter.Update(dataSet, "Visits");
+
+                MessageBox.Show("Zapisano.");
+            }
+            else
+            {
+                MessageBox.Show("Wybierz wizytę lub dodaj nową.");
+            }
+
 
 
             //comboBoxSelectMedicines
@@ -304,6 +331,7 @@ namespace MyClinic
 
         private void buttonVisitPatientSearch_Click(object sender, EventArgs e)
         {
+            selectedVisit = false;
             patient = createPatientTable(textBoxVisitPesel.Text);
             textBoxVisitCity.Text = fillPatientInformation(textBoxVisitPesel.Text, patient);
 
@@ -472,10 +500,11 @@ namespace MyClinic
 
         private void visitBasics_viewDataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            var selectedVisit = ((VisitBasics_viewRow)((DataRowView)visitBasics_viewBindingSource.Current).Row);
-            if (selectedVisit != null)
+            this.selectedVisit = true;
+            var Selected = ((VisitBasics_viewRow)((DataRowView)visitBasics_viewBindingSource.Current).Row);
+            if (Selected != null)
             {
-                Patient selectedPatient = db.Patients.Single(pat => pat.PatientID.Equals(selectedVisit.PatientID));
+                Patient selectedPatient = db.Patients.Single(pat => pat.PatientID.Equals(Selected.PatientID));
                 textBoxVisitFirstName.Text = selectedPatient.FirstName ?? "";
                 textBoxVisitLastName.Text = selectedPatient.LastName ?? "";
                 textBoxPesel.Text = selectedPatient.PESEL ?? "";
@@ -484,9 +513,9 @@ namespace MyClinic
                 textBoxVisitPostalCode.Text = selectedPatient.PostalCode ?? "";
                 textBoxVisitCity.Text = selectedPatient.City.CityName ?? "";
                 textBoxVisitPhoneNo.Text = selectedPatient.PhoneNumber.ToString() ?? "";
-                
-                //try
-                //{
+
+                try
+                {
                     var patientVisits = db.Visits.Where(v => v.PatientID == selectedPatient.PatientID);
 
                     textBoxVisitArchiveDescription.Text = String.Join(Environment.NewLine, patientVisits.Select(v => v.VisitDescription));
@@ -499,12 +528,12 @@ namespace MyClinic
                                    select m;
 
                     textBoxArchivMedicines.Text = String.Join(Environment.NewLine, selected.Select(m => m.MedicineName).ToArray());
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.Message);
-                //}
+            }
+                catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
+    }
     }
 }
