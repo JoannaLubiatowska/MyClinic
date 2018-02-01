@@ -36,6 +36,7 @@
       <Association Name="ClinicEmployee_MedicalSpecialist" Member="MedicalSpecialists" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="MedicalSpecialist" />
       <Association Name="ClinicEmployee_MedicalExamination" Member="MedicalExaminations" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="MedicalExamination" />
       <Association Name="City_ClinicEmployee" Member="City" ThisKey="CityID" OtherKey="CityID" Type="City" IsForeignKey="true" />
+      <Association Name="UserGroup_ClinicEmployee" Member="UserGroup" ThisKey="UserGroupID" OtherKey="UserGroupID" Type="UserGroup" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Patients" Member="Patients">
@@ -55,6 +56,7 @@
       <Association Name="Patient_Visit" Member="Visits" ThisKey="PatientID" OtherKey="PatientID" Type="Visit" />
       <Association Name="Patient_MedicalExamination" Member="MedicalExaminations" ThisKey="PatientID" OtherKey="PatientID" Type="MedicalExamination" />
       <Association Name="City_Patient" Member="City" ThisKey="CityID" OtherKey="CityID" Type="City" IsForeignKey="true" />
+      <Association Name="UserGroup_Patient" Member="UserGroup" ThisKey="UserGroupID" OtherKey="UserGroupID" Type="UserGroup" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Visits" Member="Visits">
@@ -125,6 +127,14 @@
       <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="MedicalSpecialistID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserGroups" Member="UserGroups">
+    <Type Name="UserGroup">
+      <Column Name="UserGroupID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GroupName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="UserGroup_ClinicEmployee" Member="ClinicEmployees" ThisKey="UserGroupID" OtherKey="UserGroupID" Type="ClinicEmployee" />
+      <Association Name="UserGroup_Patient" Member="Patients" ThisKey="UserGroupID" OtherKey="UserGroupID" Type="Patient" />
     </Type>
   </Table>
 </Database>

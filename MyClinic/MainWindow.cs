@@ -63,7 +63,42 @@ namespace MyClinic
             visitBasics_viewBindingSource.Filter = string.Format("EmployeeID = {0} and VisitDate >= '{1}' and VisitDate <= '{2}'", Authenticator.Instance.LoggedEmployee.EmployeeID, DateTime.Now.Date, DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
             e_viewBindingSource.Filter = string.Format("ExaminationDate >= '{0}' and ExaminationDate <= '{1}'", DateTime.Now.Date, DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
 
+            ControllAccess();
+
             Instance = this;
+        }
+
+        private void ControllAccess()
+        {
+            switch (Authenticator.Instance.LoggedEmployee.UserGroupID)
+            {
+                case (int)UserGroupCode.Administrator:
+                    // Ma dostęp do wszystkiego
+                    break;
+
+                case (int)UserGroupCode.Lekarz:
+                    tabControl.TabPages.RemoveByKey("tabAdministration");
+                    tabControl.TabPages.RemoveByKey("tabPage2");
+                    break;
+
+                case (int)UserGroupCode.Pracownik:
+                    tabControl.TabPages.RemoveByKey("tabVistis");
+                    tabControl.TabPages.RemoveByKey("tabServices");
+                    tabControl.TabPages.RemoveByKey("tabAdministration");
+                    tabControl.TabPages.RemoveByKey("tabPage2");
+                    break;
+                    
+                case (int)UserGroupCode.Pacjent:
+                default:
+                    tabControl.TabPages.RemoveByKey("tabSchedule");
+                    tabControl.TabPages.RemoveByKey("tabPage1");
+                    tabControl.TabPages.RemoveByKey("tabPatients");
+                    tabControl.TabPages.RemoveByKey("tabVistis");
+                    tabControl.TabPages.RemoveByKey("tabServices");
+                    tabControl.TabPages.RemoveByKey("tabAdministration");
+                    tabControl.TabPages.RemoveByKey("tabPage2");
+                    break;
+            }
         }
 
         private void FillAutoCompleteValues(TextBox textBox, string[] values)

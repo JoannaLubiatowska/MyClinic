@@ -50,6 +50,9 @@ namespace MyClinic
             {
                 var employeeRecord = temp.Rows[0];
                 LoggedEmployee = new ClinicEmployee() {
+                    Active = (bool)employeeRecord["Active"],
+                    CityID = (int)employeeRecord["CityID"],
+                    UserGroupID = (int)employeeRecord["UserGroupID"],
                     FirstName = (string)employeeRecord["FirstName"],
                     LastName = (string)employeeRecord["LastName"],
                     EmployeeID = (int)employeeRecord["EmployeeID"]
@@ -74,5 +77,12 @@ namespace MyClinic
                   .Select(item => item.ToString("x2")));
             }
         }
+    }
+
+    enum UserGroupCode {
+        Lekarz = 1,
+        Pracownik,
+        Pacjent,
+        Administrator
     }
 }

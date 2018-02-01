@@ -60,6 +60,9 @@ namespace MyClinic
     partial void InsertPrescribedMedicine(PrescribedMedicine instance);
     partial void UpdatePrescribedMedicine(PrescribedMedicine instance);
     partial void DeletePrescribedMedicine(PrescribedMedicine instance);
+    partial void InsertUserGroup(UserGroup instance);
+    partial void UpdateUserGroup(UserGroup instance);
+    partial void DeleteUserGroup(UserGroup instance);
     #endregion
 		
 		public LINQToSQLDataContext() : 
@@ -177,6 +180,14 @@ namespace MyClinic
 			get
 			{
 				return this.GetTable<specialists_view>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UserGroup> UserGroups
+		{
+			get
+			{
+				return this.GetTable<UserGroup>();
 			}
 		}
 	}
@@ -542,6 +553,8 @@ namespace MyClinic
 		
 		private EntityRef<City> _City;
 		
+		private EntityRef<UserGroup> _UserGroup;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -581,6 +594,7 @@ namespace MyClinic
 			this._MedicalSpecialists = new EntitySet<MedicalSpecialist>(new Action<MedicalSpecialist>(this.attach_MedicalSpecialists), new Action<MedicalSpecialist>(this.detach_MedicalSpecialists));
 			this._MedicalExaminations = new EntitySet<MedicalExamination>(new Action<MedicalExamination>(this.attach_MedicalExaminations), new Action<MedicalExamination>(this.detach_MedicalExaminations));
 			this._City = default(EntityRef<City>);
+			this._UserGroup = default(EntityRef<UserGroup>);
 			OnCreated();
 		}
 		
@@ -859,6 +873,10 @@ namespace MyClinic
 			{
 				if ((this._UserGroupID != value))
 				{
+					if (this._UserGroup.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnUserGroupIDChanging(value);
 					this.SendPropertyChanging();
 					this._UserGroupID = value;
@@ -924,6 +942,40 @@ namespace MyClinic
 						this._CityID = default(int);
 					}
 					this.SendPropertyChanged("City");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserGroup_ClinicEmployee", Storage="_UserGroup", ThisKey="UserGroupID", OtherKey="UserGroupID", IsForeignKey=true)]
+		public UserGroup UserGroup
+		{
+			get
+			{
+				return this._UserGroup.Entity;
+			}
+			set
+			{
+				UserGroup previousValue = this._UserGroup.Entity;
+				if (((previousValue != value) 
+							|| (this._UserGroup.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UserGroup.Entity = null;
+						previousValue.ClinicEmployees.Remove(this);
+					}
+					this._UserGroup.Entity = value;
+					if ((value != null))
+					{
+						value.ClinicEmployees.Add(this);
+						this._UserGroupID = value.UserGroupID;
+					}
+					else
+					{
+						this._UserGroupID = default(int);
+					}
+					this.SendPropertyChanged("UserGroup");
 				}
 			}
 		}
@@ -1009,6 +1061,8 @@ namespace MyClinic
 		
 		private EntityRef<City> _City;
 		
+		private EntityRef<UserGroup> _UserGroup;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1044,6 +1098,7 @@ namespace MyClinic
 			this._Visits = new EntitySet<Visit>(new Action<Visit>(this.attach_Visits), new Action<Visit>(this.detach_Visits));
 			this._MedicalExaminations = new EntitySet<MedicalExamination>(new Action<MedicalExamination>(this.attach_MedicalExaminations), new Action<MedicalExamination>(this.detach_MedicalExaminations));
 			this._City = default(EntityRef<City>);
+			this._UserGroup = default(EntityRef<UserGroup>);
 			OnCreated();
 		}
 		
@@ -1282,6 +1337,10 @@ namespace MyClinic
 			{
 				if ((this._UserGroupID != value))
 				{
+					if (this._UserGroup.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnUserGroupIDChanging(value);
 					this.SendPropertyChanging();
 					this._UserGroupID = value;
@@ -1347,6 +1406,40 @@ namespace MyClinic
 						this._CityID = default(int);
 					}
 					this.SendPropertyChanged("City");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserGroup_Patient", Storage="_UserGroup", ThisKey="UserGroupID", OtherKey="UserGroupID", IsForeignKey=true)]
+		public UserGroup UserGroup
+		{
+			get
+			{
+				return this._UserGroup.Entity;
+			}
+			set
+			{
+				UserGroup previousValue = this._UserGroup.Entity;
+				if (((previousValue != value) 
+							|| (this._UserGroup.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UserGroup.Entity = null;
+						previousValue.Patients.Remove(this);
+					}
+					this._UserGroup.Entity = value;
+					if ((value != null))
+					{
+						value.Patients.Add(this);
+						this._UserGroupID = value.UserGroupID;
+					}
+					else
+					{
+						this._UserGroupID = default(int);
+					}
+					this.SendPropertyChanged("UserGroup");
 				}
 			}
 		}
@@ -2766,6 +2859,148 @@ namespace MyClinic
 					this._MedicalSpecialistID = value;
 				}
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserGroups")]
+	public partial class UserGroup : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _UserGroupID;
+		
+		private string _GroupName;
+		
+		private EntitySet<ClinicEmployee> _ClinicEmployees;
+		
+		private EntitySet<Patient> _Patients;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnUserGroupIDChanging(int value);
+    partial void OnUserGroupIDChanged();
+    partial void OnGroupNameChanging(string value);
+    partial void OnGroupNameChanged();
+    #endregion
+		
+		public UserGroup()
+		{
+			this._ClinicEmployees = new EntitySet<ClinicEmployee>(new Action<ClinicEmployee>(this.attach_ClinicEmployees), new Action<ClinicEmployee>(this.detach_ClinicEmployees));
+			this._Patients = new EntitySet<Patient>(new Action<Patient>(this.attach_Patients), new Action<Patient>(this.detach_Patients));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserGroupID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int UserGroupID
+		{
+			get
+			{
+				return this._UserGroupID;
+			}
+			set
+			{
+				if ((this._UserGroupID != value))
+				{
+					this.OnUserGroupIDChanging(value);
+					this.SendPropertyChanging();
+					this._UserGroupID = value;
+					this.SendPropertyChanged("UserGroupID");
+					this.OnUserGroupIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string GroupName
+		{
+			get
+			{
+				return this._GroupName;
+			}
+			set
+			{
+				if ((this._GroupName != value))
+				{
+					this.OnGroupNameChanging(value);
+					this.SendPropertyChanging();
+					this._GroupName = value;
+					this.SendPropertyChanged("GroupName");
+					this.OnGroupNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserGroup_ClinicEmployee", Storage="_ClinicEmployees", ThisKey="UserGroupID", OtherKey="UserGroupID")]
+		public EntitySet<ClinicEmployee> ClinicEmployees
+		{
+			get
+			{
+				return this._ClinicEmployees;
+			}
+			set
+			{
+				this._ClinicEmployees.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UserGroup_Patient", Storage="_Patients", ThisKey="UserGroupID", OtherKey="UserGroupID")]
+		public EntitySet<Patient> Patients
+		{
+			get
+			{
+				return this._Patients;
+			}
+			set
+			{
+				this._Patients.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ClinicEmployees(ClinicEmployee entity)
+		{
+			this.SendPropertyChanging();
+			entity.UserGroup = this;
+		}
+		
+		private void detach_ClinicEmployees(ClinicEmployee entity)
+		{
+			this.SendPropertyChanging();
+			entity.UserGroup = null;
+		}
+		
+		private void attach_Patients(Patient entity)
+		{
+			this.SendPropertyChanging();
+			entity.UserGroup = this;
+		}
+		
+		private void detach_Patients(Patient entity)
+		{
+			this.SendPropertyChanging();
+			entity.UserGroup = null;
 		}
 	}
 }
