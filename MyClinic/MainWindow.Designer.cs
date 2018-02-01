@@ -62,12 +62,12 @@
             System.Windows.Forms.Label label35;
             System.Windows.Forms.Label label36;
             System.Windows.Forms.Label label37;
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label11 = new System.Windows.Forms.Label();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.tabAdministration = new System.Windows.Forms.TabPage();
@@ -151,7 +151,6 @@
             this.dataGridViewTextBoxColumn28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.patients_viewBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.buttonShowArchive = new System.Windows.Forms.Button();
             this.buttonDeletePatient = new System.Windows.Forms.Button();
             this.buttonEditPatient = new System.Windows.Forms.Button();
             this.buttonAddPatient = new System.Windows.Forms.Button();
@@ -224,6 +223,7 @@
             this.count_visitsTableAdapter = new MyClinic.DataSetTableAdapters.count_visitsTableAdapter();
             this.countVisitByMonth_viewTableAdapter = new MyClinic.DataSetTableAdapters.CountVisitByMonth_viewTableAdapter();
             this.countByMonth_viewTableAdapter = new MyClinic.DataSetTableAdapters.CountByMonth_viewTableAdapter();
+            this.checkBoxArchive = new System.Windows.Forms.CheckBox();
             priceLabel = new System.Windows.Forms.Label();
             serviceDescriptionLabel = new System.Windows.Forms.Label();
             serviceNameLabel = new System.Windows.Forms.Label();
@@ -1267,8 +1267,8 @@
             // tabPatients
             // 
             this.tabPatients.AutoScroll = true;
+            this.tabPatients.Controls.Add(this.checkBoxArchive);
             this.tabPatients.Controls.Add(this.patients_viewDataGridView);
-            this.tabPatients.Controls.Add(this.buttonShowArchive);
             this.tabPatients.Controls.Add(this.buttonDeletePatient);
             this.tabPatients.Controls.Add(this.buttonEditPatient);
             this.tabPatients.Controls.Add(this.buttonAddPatient);
@@ -1367,15 +1367,6 @@
             // 
             this.patients_viewBindingSource.DataMember = "Patients_view";
             this.patients_viewBindingSource.DataSource = this.dataSet;
-            // 
-            // buttonShowArchive
-            // 
-            this.buttonShowArchive.Location = new System.Drawing.Point(20, 622);
-            this.buttonShowArchive.Name = "buttonShowArchive";
-            this.buttonShowArchive.Size = new System.Drawing.Size(136, 23);
-            this.buttonShowArchive.TabIndex = 26;
-            this.buttonShowArchive.Text = "Pokaż archiwalne";
-            this.buttonShowArchive.UseVisualStyleBackColor = true;
             // 
             // buttonDeletePatient
             // 
@@ -1882,21 +1873,21 @@
             // 
             // chart2
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea5);
+            chartArea3.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea3);
             this.chart2.DataSource = this.countByMonthviewBindingSource;
-            legend5.Name = "Legend1";
-            this.chart2.Legends.Add(legend5);
+            legend3.Name = "Legend1";
+            this.chart2.Legends.Add(legend3);
             this.chart2.Location = new System.Drawing.Point(594, 40);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Ilość przyjętych pacjentów w miesiącu przez wszystkich pracowników";
-            series5.XValueMember = "visitMonth";
-            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series5.YValueMembers = "visitCount";
-            this.chart2.Series.Add(series5);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Ilość przyjętych pacjentów w miesiącu przez wszystkich pracowników";
+            series3.XValueMember = "visitMonth";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series3.YValueMembers = "visitCount";
+            this.chart2.Series.Add(series3);
             this.chart2.Size = new System.Drawing.Size(552, 534);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
@@ -1908,20 +1899,20 @@
             // 
             // chart1
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea6);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.DataSource = this.countvisitsBindingSource;
-            legend6.Name = "Legend1";
-            this.chart1.Legends.Add(legend6);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(55, 40);
             this.chart1.Name = "chart1";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Ilość przyjętych pacjentów ogółem";
-            series6.XValueMember = "doctor";
-            series6.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series6.YValueMembers = "visitCount";
-            this.chart1.Series.Add(series6);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Ilość przyjętych pacjentów ogółem";
+            series4.XValueMember = "doctor";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series4.YValueMembers = "visitCount";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(506, 534);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1989,6 +1980,17 @@
             // countByMonth_viewTableAdapter
             // 
             this.countByMonth_viewTableAdapter.ClearBeforeFill = true;
+            // 
+            // checkBoxArchive
+            // 
+            this.checkBoxArchive.AutoSize = true;
+            this.checkBoxArchive.Location = new System.Drawing.Point(20, 622);
+            this.checkBoxArchive.Name = "checkBoxArchive";
+            this.checkBoxArchive.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxArchive.TabIndex = 27;
+            this.checkBoxArchive.Text = "Archiwalne";
+            this.checkBoxArchive.UseVisualStyleBackColor = true;
+            this.checkBoxArchive.CheckedChanged += new System.EventHandler(this.checkBoxArchive_CheckedChanged);
             // 
             // MainWindow
             // 
@@ -2190,7 +2192,6 @@
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Button buttonSaveSchedulerExaminaion;
         private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Button buttonShowArchive;
         private System.Windows.Forms.BindingSource patients_viewBindingSource;
         private DataSetTableAdapters.Patients_viewTableAdapter patients_viewTableAdapter;
         private System.Windows.Forms.DataGridView patients_viewDataGridView;
@@ -2217,6 +2218,7 @@
         private DataSetTableAdapters.CountVisitByMonth_viewTableAdapter countVisitByMonth_viewTableAdapter;
         private System.Windows.Forms.BindingSource countByMonthviewBindingSource;
         private DataSetTableAdapters.CountByMonth_viewTableAdapter countByMonth_viewTableAdapter;
+        private System.Windows.Forms.CheckBox checkBoxArchive;
     }
 }
 

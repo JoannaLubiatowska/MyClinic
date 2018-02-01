@@ -47,7 +47,7 @@ namespace MyClinic
 
             FillAutoCompleteValues(textBoxSchedulerPesel, db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxSchedulerLastName, db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
-
+            patients_viewBindingSource.Filter = "Zapisany = 1";
             FillDataGridViewVistis();
             FillDataGridViewServices();
             mainWindow = this;
@@ -439,17 +439,14 @@ namespace MyClinic
 
         }
 
-        private void clinicEmployeesBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.clinicEmployeesBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.dataSet);
-
-        }
-
         private void textBoxPatientPesel_TextChanged(object sender, EventArgs e)
         {
             patients_viewBindingSource.Filter = string.Format("PESEL LIKE '%{0}%'", textBoxPatientPesel.Text);
+        }
+
+        private void checkBoxArchive_CheckedChanged(object sender, EventArgs e)
+        {
+            patients_viewBindingSource.Filter = string.Format("Zapisany = {0}", checkBoxArchive.Checked ? 0 : 1);
         }
     }
 }
