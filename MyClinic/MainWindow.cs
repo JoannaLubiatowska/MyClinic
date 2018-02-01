@@ -54,7 +54,10 @@ namespace MyClinic
             FillAutoCompleteValues(textBoxSchedulerPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxVisitPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxSchedulerLastName, Db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
+            FillAutoCompleteValues(textBoxLastNameSchedulerExamination, Db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
             FillAutoCompleteValues(textBoxServicesPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
+            FillAutoCompleteValues(textBoxPeselSchedulerExamination, Db.Patients.Select(patient => patient.PESEL).ToArray());
+
             patients_viewBindingSource.Filter = "Zapisany = 1";
             visitBasics_viewBindingSource.Filter = string.Format("EmployeeID = {0} and VisitDate >= '{1}' and VisitDate <= '{2}'", Authenticator.Instance.LoggedEmployee.EmployeeID, DateTime.Now.Date, DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
             FillDataGridViewServices();
