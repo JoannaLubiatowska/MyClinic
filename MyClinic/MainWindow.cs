@@ -21,7 +21,9 @@ namespace MyClinic
         private SqlDataAdapter adapter;
         private DataTable medicalServices;
         private DataTable clinicEmployees;
+        private DataTable medicines;
         private DataTable specialists;
+        private DataTable patient;
         private string connectionString;
         private LINQToSQLDataContext db;
         private static MainWindow mainWindow;
@@ -35,6 +37,7 @@ namespace MyClinic
 
             clinicEmployees = new DataTable();
             specialists = new DataTable();
+            medicines = new DataTable();
             medicalServices = new DataTable("MedicalServices");
 
             connection = new SqlConnection("Data Source=ASIA-HP;Initial Catalog=Clinic;Persist Security Info=True;User ID=sa;Password=praktyka");
@@ -42,13 +45,14 @@ namespace MyClinic
             Update_combobox(specialists, comboBoxSchedulerDoctor, "select * from specialists_view", "{0} - {1} {2}", "MedicalSpecializationName", "FirstName", "LastName");
             Update_combobox(medicalServices, comboBoxSchedulerService, "select * from MedicalServices", "{0} {1}", "ServiceName", "ServiceDescription");
             Update_combobox(medicalServices, comboBoxServicesServiceName, "select * from MedicalServices", "{0} {1}", "ServiceName", "ServiceDescription");
-            Update_combobox(clinicEmployees, comboBoxVisitDoctor, "select * from ClinicEmployees", "{0} {1}", "FirstName", "LastName");
+            Update_combobox(clinicEmployees, comboBoxVisitDoctor, "select * from specialists_view", "{0} - {1} {2}", "MedicalSpecializationName", "FirstName", "LastName");
             Update_combobox(clinicEmployees, comboBoxServicesDoctor, "select * from ClinicEmployees", "{0} {1}", "FirstName", "LastName");
-
+            Update_combobox(medicines, comboBoxSelectMedicines, "select * from Medicines", "{0} {1}", "MedicineName", "Amount");
+            
             FillAutoCompleteValues(textBoxSchedulerPesel, db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxSchedulerLastName, db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
             patients_viewBindingSource.Filter = "Zapisany = 1";
-            FillDataGridViewVistis();
+            //FillDataGridViewVistis();
             FillDataGridViewServices();
             mainWindow = this;
         }
@@ -90,6 +94,7 @@ namespace MyClinic
             dataGridViewServices.Columns[2].HeaderText = "Data";
             dataGridViewServices.Columns[3].HeaderText = "Nazwa";
         }
+
         private void LogoutButton_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Czy na pewno chcesz wyjść z aplikacji?", "Wyloguj", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -152,31 +157,58 @@ namespace MyClinic
 
         private void buttonDeletePatient_Click(object sender, EventArgs e)
         {
-            Patients_viewRow currentSelectedValue = (Patients_viewRow)((DataRowView)patients_viewBindingSource.Current).Row;
+            try
+            {
+                Patients_viewRow currentSelectedValue = (Patients_viewRow)((DataRowView)patients_viewBindingSource.Current).Row;
 
-            SqlCommand command;
-            DataSet dataSet = new DataSet();
-            adapter.SelectCommand = new SqlCommand("SELECT * FROM Patients where 1 = 2", connection);
-            adapter.Fill(dataSet, "Patients");
+                SqlCommand command;
+                DataSet dataSet = new DataSet();
+                adapter.SelectCommand = new SqlCommand("SELECT * FROM Patients where 1 = 2", connection);
+                adapter.Fill(dataSet, "Patients");
 
-            command = new SqlCommand("UPDATE Patients SET Active=@active WHERE PESEL=@pesel", connection);
+                command = new SqlCommand("UPDATE Patients SET Active=@active WHERE PESEL=@pesel", connection);
 
-            adapter.UpdateCommand = command;
-            adapter.UpdateCommand.Parameters.AddWithValue("@pesel", currentSelectedValue.PESEL);
-            adapter.UpdateCommand.Parameters.AddWithValue("@active", 0);
+                adapter.UpdateCommand = command;
+                adapter.UpdateCommand.Parameters.AddWithValue("@pesel", currentSelectedValue.PESEL);
+                adapter.UpdateCommand.Parameters.AddWithValue("@active", 0);
 
-            adapter.UpdateCommand = command;
-            adapter.SelectCommand = command;
-            adapter.Fill(dataSet, "Patients");
-            adapter.Update(dataSet, "Patients");
+                adapter.UpdateCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "Patients");
+                adapter.Update(dataSet, "Patients");
 
-            MessageBox.Show("Wypisano pacjenta.");
+                MessageBox.Show("Wypisano pacjenta.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nie zaznaczono pacjenta.");
+            }
+            
         }
 
         private void buttonSaveVisit_Click(object sender, EventArgs e)
         {
-            string visitCode = textBoxVisitCode.Text;
-            string visitDescription = textBoxVisitDescription.Text;
+            SqlCommand command;
+            DataSet dataSet = new DataSet();
+            adapter.SelectCommand = new SqlCommand("SELECT * FROM Visits where 1 = 2", connection);
+            adapter.Fill(dataSet, "Visits");
+
+            command = new SqlCommand("UPDATE Patients SET DiseaseClassification=@active, VisitDescription=@visitDescription WHERE PatientID=@patientID", connection);
+
+            adapter.UpdateCommand = command;
+            adapter.UpdateCommand.Parameters.AddWithValue("@patientID", patient.Rows[0]["PatientID"]);
+            adapter.UpdateCommand.Parameters.AddWithValue("@diseaseClassification", textBoxVisitCode.Text);
+            adapter.UpdateCommand.Parameters.AddWithValue("@visitDescription", textBoxVisitDescription.Text);
+
+            adapter.UpdateCommand = command;
+            adapter.SelectCommand = command;
+            adapter.Fill(dataSet, "Visits");
+            adapter.Update(dataSet, "Visits");
+
+            MessageBox.Show("Zapisano.");
+
+
+            //comboBoxSelectMedicines
         }
 
         private void buttonSaveExamination_Click(object sender, EventArgs e)
@@ -287,7 +319,7 @@ namespace MyClinic
 
         private void buttonVisitPatientSearch_Click(object sender, EventArgs e)
         {
-            DataTable patient = createPatientTable(textBoxVisitPesel.Text);
+            patient = createPatientTable(textBoxVisitPesel.Text);
             textBoxVisitCity.Text = fillPatientInformation(textBoxVisitPesel.Text, patient);
 
             textBoxVisitFirstName.Text = patient.Rows[0]["FirstName"].ToString();
@@ -353,6 +385,7 @@ namespace MyClinic
 
             return patient;
         }
+
         private string fillPatientInformation(string servicePesel, DataTable patient)
         {
             try
@@ -447,6 +480,11 @@ namespace MyClinic
         private void checkBoxArchive_CheckedChanged(object sender, EventArgs e)
         {
             patients_viewBindingSource.Filter = string.Format("Zapisany = {0}", checkBoxArchive.Checked ? 0 : 1);
+        }
+
+        private void dataGridViewVistis_SelectionChanged(object sender, EventArgs e)
+        {
+            bool test = 1 == 1;
         }
     }
 }
