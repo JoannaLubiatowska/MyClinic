@@ -192,6 +192,7 @@
             this.buttonAddEmployee.TabIndex = 121;
             this.buttonAddEmployee.Text = "Zapisz";
             this.buttonAddEmployee.UseVisualStyleBackColor = true;
+            this.buttonAddEmployee.Click += new System.EventHandler(this.buttonAddEmployee_Click);
             // 
             // textBoxNewPatientPhoneNo
             // 

@@ -25,8 +25,9 @@ namespace MyClinic
         private DataTable specialists;
         private DataTable patient;
         private string connectionString;
-        private LINQToSQLDataContext db;
-        private static MainWindow mainWindow;
+        public LINQToSQLDataContext Db { get; internal set; }
+        public static MainWindow Instance { get; private set; }
+
         private bool selectedVisit;
 
         public MainWindow()
@@ -34,7 +35,7 @@ namespace MyClinic
             InitializeComponent();
             
             connectionString = ConfigurationManager.ConnectionStrings["MyClinic.Properties.Settings.ClinicConnectionString"].ToString();
-            db = new LINQToSQLDataContext(connectionString);
+            Db = new LINQToSQLDataContext(connectionString);
 
             clinicEmployees = new DataTable();
             specialists = new DataTable();
@@ -50,13 +51,13 @@ namespace MyClinic
             Update_combobox(clinicEmployees, comboBoxServicesDoctor, "select * from ClinicEmployees", "{0} {1}", "FirstName", "LastName");
             Update_combobox(medicines, comboBoxSelectMedicines, "select * from Medicines", "{0} {1}", "MedicineName", "Amount");
             
-            FillAutoCompleteValues(textBoxSchedulerPesel, db.Patients.Select(patient => patient.PESEL).ToArray());
-            FillAutoCompleteValues(textBoxVisitPesel, db.Patients.Select(patient => patient.PESEL).ToArray());
-            FillAutoCompleteValues(textBoxSchedulerLastName, db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
+            FillAutoCompleteValues(textBoxSchedulerPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
+            FillAutoCompleteValues(textBoxVisitPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
+            FillAutoCompleteValues(textBoxSchedulerLastName, Db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
             patients_viewBindingSource.Filter = "Zapisany = 1";
             visitBasics_viewBindingSource.Filter = string.Format("EmployeeID = {0} and VisitDate >= '{1}' and VisitDate <= '{2}'", Authenticator.Instance.LoggedEmployee.EmployeeID, DateTime.Now.Date, DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
             FillDataGridViewServices();
-            mainWindow = this;
+            Instance = this;
         }
 
         private void FillAutoCompleteValues(TextBox textBox, string[] values)
@@ -68,9 +69,9 @@ namespace MyClinic
        
         private void FillDataGridViewServices()
         {
-            var selected = from patient in db.Patients
-                           join examination in db.MedicalExaminations on patient.PatientID equals examination.PatientID
-                           join service in db.MedicalServices on examination.MedicalServiceID equals service.MedicalServiceID
+            var selected = from patient in Db.Patients
+                           join examination in Db.MedicalExaminations on patient.PatientID equals examination.PatientID
+                           join service in Db.MedicalServices on examination.MedicalServiceID equals service.MedicalServiceID
                            where examination.ExaminationDate.Date == DateTime.Today
                            select new { FirstName = patient.FirstName, LastName = patient.LastName, Date = examination.ExaminationDate, ServiceName = service.ServiceName };
 
@@ -102,13 +103,13 @@ namespace MyClinic
                 MessageBox.Show("Nie wybrano specjalisty.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (db.Patients.Where(pat => pat.PESEL.Equals(textBoxSchedulerPesel.Text)).Count().Equals(0))
+            if (Db.Patients.Where(pat => pat.PESEL.Equals(textBoxSchedulerPesel.Text)).Count().Equals(0))
             {
                 MessageBox.Show("Nie znaleziono pacjenta o podanym numerze PESEL.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            var doctor = db.MedicalSpecialists.Where(empl => empl.MedicalSpecialistID.Equals((int)((ComboBoxItem)comboBoxSchedulerDoctor.SelectedItem).Hidden["MedicalSpecialistID"])).Single();
-            var patient = db.Patients.Where(pat => pat.PESEL.Equals(textBoxSchedulerPesel.Text)).Single();
+            var doctor = Db.MedicalSpecialists.Where(empl => empl.MedicalSpecialistID.Equals((int)((ComboBoxItem)comboBoxSchedulerDoctor.SelectedItem).Hidden["MedicalSpecialistID"])).Single();
+            var patient = Db.Patients.Where(pat => pat.PESEL.Equals(textBoxSchedulerPesel.Text)).Single();
             DateTime schedulerDate = dateTimePickerSchedulerVisit.Value.Date.Add(dateTimePickerSchedulerVisitsHours.Value.TimeOfDay);
 
             Visit visit = new Visit()
@@ -117,8 +118,8 @@ namespace MyClinic
                 Patient = patient,
                 VisitDate = schedulerDate                
             };
-            db.Visits.InsertOnSubmit(visit);
-            db.SubmitChanges();
+            Db.Visits.InsertOnSubmit(visit);
+            Db.SubmitChanges();
 
             MessageBox.Show("Nowa wizyta została zanotowana.", "Zapisano wizytę", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -136,7 +137,8 @@ namespace MyClinic
         {
             if (openNextWindow("EditPatientForm"))
             {
-                EditPatientForm window = new EditPatientForm();
+                Patients_viewRow currentSelectedValue = (Patients_viewRow)((DataRowView)patients_viewBindingSource.Current).Row;
+                EditPatientForm window = new EditPatientForm(currentSelectedValue);
                 window.Show();
             }
         }
@@ -168,8 +170,7 @@ namespace MyClinic
             catch (Exception ex)
             {
                 MessageBox.Show("Nie zaznaczono pacjenta.");
-            }
-            
+            }         
         }
 
         private void buttonSaveVisit_Click(object sender, EventArgs e)
@@ -231,15 +232,68 @@ namespace MyClinic
 
         private void buttonAddService_Click(object sender, EventArgs e)
         {
-            string administrationServiceName = textBoxAdministrationServiceName.Text;
-            string administrationDescription = textBoxAdministrationServiceDescription.Text;
-            string administrationDrice = textBoxAdministrationServicePrice.Text;
+            try
+            {
+                string administrationServiceName = textBoxAdministrationServiceName.Text;
+                string administrationDescription = textBoxAdministrationServiceDescription.Text;
+                string administrationPrice = textBoxAdministrationServicePrice.Text;
+
+                DataSet dataSet = new DataSet();
+                adapter.SelectCommand = new SqlCommand("SELECT * FROM MedicalServices where 1 = 2", connection);
+                adapter.Fill(dataSet, "MedicalServices");
+
+                SqlCommand command = new SqlCommand("INSERT INTO MedicalServices(ServiceName, ServiceDescription, Price)" +
+                    "VALUES(@serviceName, @serviceDescription, @price); ", connection);
+
+                adapter.InsertCommand = command;
+                adapter.InsertCommand.Parameters.AddWithValue("@serviceName", administrationServiceName);
+                adapter.InsertCommand.Parameters.AddWithValue("@serviceDescription", administrationDescription);
+                adapter.InsertCommand.Parameters.AddWithValue("@price", administrationPrice);
+
+                adapter.InsertCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "MedicalServices");
+                adapter.Update(dataSet, "MedicalServices");
+
+                MessageBox.Show("Zapisano.");
+                textBoxAdministrationServiceName.Clear();
+                textBoxAdministrationServiceDescription.Clear();
+                textBoxAdministrationServicePrice.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void buttonDeleteEmployee_Click(object sender, EventArgs e)
         {
-            ClinicEmployeesRow currentSelectedValue = (ClinicEmployeesRow)((DataRowView)clinicEmployeesBindingSource.Current).Row;
-            //currentSelectedValue;
+            try
+            {
+                ClinicEmployeesRow currentSelectedValue = (ClinicEmployeesRow)((DataRowView)clinicEmployeesBindingSource.Current).Row;
+
+                SqlCommand command;
+                DataSet dataSet = new DataSet();
+                adapter.SelectCommand = new SqlCommand("SELECT * FROM ClinicEmployees where 1 = 2", connection);
+                adapter.Fill(dataSet, "ClinicEmployees");
+
+                command = new SqlCommand("UPDATE ClinicEmployees SET Active=@active WHERE UserLogin=@userLogin", connection);
+
+                adapter.UpdateCommand = command;
+                adapter.UpdateCommand.Parameters.AddWithValue("@userLogin", currentSelectedValue.UserLogin);
+                adapter.UpdateCommand.Parameters.AddWithValue("@active", 0);
+
+                adapter.UpdateCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "ClinicEmployees");
+                adapter.Update(dataSet, "ClinicEmployees");
+
+                MessageBox.Show("Zwolniono pracownika.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nie zaznaczono pracownika.");
+            }
         }
 
         private void buttonEditEployee_Click(object sender, EventArgs e)
@@ -341,14 +395,14 @@ namespace MyClinic
 
             try
             {
-                var patientVisits = db.Visits.Where(v => v.PatientID == Int32.Parse(patient.Rows[0]["PatientID"].ToString()));
+                var patientVisits = Db.Visits.Where(v => v.PatientID == Int32.Parse(patient.Rows[0]["PatientID"].ToString()));
 
                 textBoxVisitArchiveDescription.Text = String.Join(Environment.NewLine, patientVisits.Select(v => v.VisitDescription));
                 textBoxVisitArchivCode.Text = String.Join(", ", patientVisits.Select(v => v.DiseaseClassification));
 
-                var selected = from m in db.Medicines
-                               join pm in db.PrescribedMedicines on m.MedicineID equals pm.MedicineID
-                               join v in db.Visits on pm.VisitID equals v.VisitID
+                var selected = from m in Db.Medicines
+                               join pm in Db.PrescribedMedicines on m.MedicineID equals pm.MedicineID
+                               join v in Db.Visits on pm.VisitID equals v.VisitID
                                where v.PatientID == Int32.Parse(patient.Rows[0]["PatientID"].ToString())
                                select m;
 
@@ -400,7 +454,7 @@ namespace MyClinic
         {
             try
             {
-                var city = db.Cities;
+                var city = Db.Cities;
                 var answer = city.Single(x => x.CityID == Int32.Parse(patient.Rows[0]["CityID"].ToString()));
                 return answer.CityName;
             }
@@ -500,7 +554,7 @@ namespace MyClinic
             var Selected = ((VisitBasics_viewRow)((DataRowView)visitBasics_viewBindingSource.Current).Row);
             if (Selected != null)
             {
-                Patient selectedPatient = db.Patients.Single(pat => pat.PatientID.Equals(Selected.PatientID));
+                Patient selectedPatient = Db.Patients.Single(pat => pat.PatientID.Equals(Selected.PatientID));
                 textBoxVisitFirstName.Text = selectedPatient.FirstName ?? "";
                 textBoxVisitLastName.Text = selectedPatient.LastName ?? "";
                 textBoxPesel.Text = selectedPatient.PESEL ?? "";
@@ -512,14 +566,14 @@ namespace MyClinic
 
                 try
                 {
-                    var patientVisits = db.Visits.Where(v => v.PatientID == selectedPatient.PatientID);
+                    var patientVisits = Db.Visits.Where(v => v.PatientID == selectedPatient.PatientID);
 
                     textBoxVisitArchiveDescription.Text = String.Join(Environment.NewLine, patientVisits.Select(v => v.VisitDescription));
                     textBoxVisitArchivCode.Text = String.Join(", ", patientVisits.Select(v => v.DiseaseClassification));
 
-                    var selected = from m in db.Medicines
-                                   join pm in db.PrescribedMedicines on m.MedicineID equals pm.MedicineID
-                                   join v in db.Visits on pm.VisitID equals v.VisitID
+                    var selected = from m in Db.Medicines
+                                   join pm in Db.PrescribedMedicines on m.MedicineID equals pm.MedicineID
+                                   join v in Db.Visits on pm.VisitID equals v.VisitID
                                    where v.PatientID == selectedPatient.PatientID
                                    select m;
 
