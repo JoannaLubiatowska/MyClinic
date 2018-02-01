@@ -29,11 +29,12 @@ namespace MyClinic
         public static MainWindow Instance { get; private set; }
 
         private bool selectedVisit;
+        private bool selectedExamination;
 
         public MainWindow()
         {
             InitializeComponent();
-            
+
             connectionString = ConfigurationManager.ConnectionStrings["MyClinic.Properties.Settings.ClinicConnectionString"].ToString();
             Db = new LINQToSQLDataContext(connectionString);
 
@@ -50,7 +51,7 @@ namespace MyClinic
             Update_combobox(clinicEmployees, comboBoxVisitDoctor, "select * from specialists_view", "{0} - {1} {2}", "MedicalSpecializationName", "FirstName", "LastName");
             Update_combobox(clinicEmployees, comboBoxServicesDoctor, "select * from ClinicEmployees", "{0} {1}", "FirstName", "LastName");
             Update_combobox(medicines, comboBoxSelectMedicines, "select * from Medicines", "{0} {1}", "MedicineName", "Amount");
-            
+
             FillAutoCompleteValues(textBoxSchedulerPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxVisitPesel, Db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxSchedulerLastName, Db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
@@ -60,7 +61,8 @@ namespace MyClinic
 
             patients_viewBindingSource.Filter = "Zapisany = 1";
             visitBasics_viewBindingSource.Filter = string.Format("EmployeeID = {0} and VisitDate >= '{1}' and VisitDate <= '{2}'", Authenticator.Instance.LoggedEmployee.EmployeeID, DateTime.Now.Date, DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
-            FillDataGridViewServices();
+            e_viewBindingSource.Filter = string.Format("ExaminationDate >= '{0}' and ExaminationDate <= '{1}'", DateTime.Now.Date, DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
+
             Instance = this;
         }
 
@@ -69,21 +71,6 @@ namespace MyClinic
             AutoCompleteStringCollection peselACSC = new AutoCompleteStringCollection();
             peselACSC.AddRange(values);
             textBox.AutoCompleteCustomSource = peselACSC;
-        }
-       
-        private void FillDataGridViewServices()
-        {
-            var selected = from patient in Db.Patients
-                           join examination in Db.MedicalExaminations on patient.PatientID equals examination.PatientID
-                           join service in Db.MedicalServices on examination.MedicalServiceID equals service.MedicalServiceID
-                           where examination.ExaminationDate.Date == DateTime.Today
-                           select new { FirstName = patient.FirstName, LastName = patient.LastName, Date = examination.ExaminationDate, ServiceName = service.ServiceName };
-
-            dataGridViewServices.DataSource = selected;
-            dataGridViewServices.Columns[0].HeaderText = "Imię";
-            dataGridViewServices.Columns[1].HeaderText = "Nazwisko";
-            dataGridViewServices.Columns[2].HeaderText = "Data";
-            dataGridViewServices.Columns[3].HeaderText = "Nazwa";
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -95,9 +82,9 @@ namespace MyClinic
             }
             else if (dialogResult == DialogResult.No)
             {
- 
+
             }
-            
+
         }
 
         private void buttonSaveSchedule_Click(object sender, EventArgs e)
@@ -120,7 +107,7 @@ namespace MyClinic
             {
                 MedicalSpecialist = doctor,
                 Patient = patient,
-                VisitDate = schedulerDate                
+                VisitDate = schedulerDate
             };
             Db.Visits.InsertOnSubmit(visit);
             Db.SubmitChanges();
@@ -174,7 +161,7 @@ namespace MyClinic
             catch (Exception ex)
             {
                 MessageBox.Show("Nie zaznaczono pacjenta.");
-            }         
+            }
         }
 
         private void buttonSaveVisit_Click(object sender, EventArgs e)
@@ -200,7 +187,8 @@ namespace MyClinic
 
                 MessageBox.Show("Zapisano.");
 
-            }else if (!selectedVisit)
+            }
+            else if (!selectedVisit)
             {
                 command = new SqlCommand("INSERT INTO Visits(PatientID, MedicalSpecialistID, DiseaseClassification, VisitDescription, VisitDate) " +
                     "VALUES(@patientID, @medicalSpecialistID, @diseaseClassification, @visitDescription, getdate());", connection);
@@ -226,7 +214,53 @@ namespace MyClinic
 
         private void buttonSaveExamination_Click(object sender, EventArgs e)
         {
-            string servicesServiceName = ((ComboBoxItem)comboBoxServicesServiceName.SelectedItem).Hidden["MedicalServiceID"].ToString();
+            SqlCommand command;
+            DataSet dataSet = new DataSet();
+            adapter.SelectCommand = new SqlCommand("SELECT * FROM MedicalExaminations where 1 = 2", connection);
+            adapter.Fill(dataSet, "MedicalExaminations");
+
+            if (selectedExamination)
+            {
+                command = new SqlCommand("UPDATE MedicalExaminations SET EmployeeID=@employeeID, ExaminationDescription=@ExaminationDescription WHERE MedicalExaminationID=@medicalExaminationID", connection);
+
+                adapter.UpdateCommand = command;
+                adapter.UpdateCommand.Parameters.AddWithValue("@medicalExaminationID", ((E_viewRow)((DataRowView)e_viewBindingSource.Current).Row).MedicalExaminationID);
+                adapter.UpdateCommand.Parameters.AddWithValue("@employeeID", Authenticator.Instance.LoggedEmployee.EmployeeID.ToString());
+                //adapter.UpdateCommand.Parameters.AddWithValue("@medicalServiceID", ((E_viewRow)((DataRowView)e_viewBindingSource.Current).Row).MedicalServiceID);
+                //adapter.UpdateCommand.Parameters.AddWithValue("@PatientID", ((E_viewRow)((DataRowView)e_viewBindingSource.Current).Row).PatientID);
+                //adapter.UpdateCommand.Parameters.AddWithValue("@ExaminationDate", ((E_viewRow)((DataRowView)e_viewBindingSource.Current).Row).ExaminationDate);
+                adapter.UpdateCommand.Parameters.AddWithValue("@ExaminationDescription", textBoxServicesDescription.Text);
+
+                adapter.UpdateCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "MedicalExaminations");
+                adapter.Update(dataSet, "MedicalExaminations");
+
+                MessageBox.Show("Zapisano.");
+            }
+            else if (!selectedExamination)
+            {
+                command = new SqlCommand("INSERT INTO MedicalExaminations(EmployeeID, MedicalServiceID, PatientID, ExaminationDate, ExaminationDescription) " +
+                    "VALUES(@employeeID, @medicalServiceID, @patientID, getdate(), @ExaminationDescription);", connection);
+
+                adapter.UpdateCommand = command;
+                adapter.UpdateCommand.Parameters.AddWithValue("@patientID", patient.Rows[0]["PatientID"].ToString());
+                adapter.UpdateCommand.Parameters.AddWithValue("@medicalExaminationID", ((E_viewRow)((DataRowView)e_viewBindingSource.Current).Row).MedicalExaminationID);
+                adapter.UpdateCommand.Parameters.AddWithValue("@employeeID", Authenticator.Instance.LoggedEmployee.EmployeeID.ToString());
+                adapter.UpdateCommand.Parameters.AddWithValue("@medicalServiceID", ((ComboBoxItem)comboBoxServicesServiceName.SelectedItem).Hidden["MedicalServiceID"].ToString());
+                adapter.UpdateCommand.Parameters.AddWithValue("@ExaminationDescription", textBoxServicesDescription.Text);
+
+                adapter.UpdateCommand = command;
+                adapter.SelectCommand = command;
+                adapter.Fill(dataSet, "MedicalExaminations");
+                adapter.Update(dataSet, "MedicalExaminations");
+
+                MessageBox.Show("Zapisano.");
+            }
+            else
+            {
+                MessageBox.Show("Nie dokonano wyboru.");
+            }
         }
 
         private void buttonEditService_Click(object sender, EventArgs e)
@@ -238,7 +272,7 @@ namespace MyClinic
                 DataSet dataSet = new DataSet();
                 adapter.SelectCommand = new SqlCommand("SELECT * FROM MedicalServices where 1 = 2", connection);
                 adapter.Fill(dataSet, "MedicalServices");
-                
+
                 SqlCommand command = new SqlCommand("UPDATE MedicalServices SET ServiceName=@serviceName, ServiceDescription= @serviceDescription, Price= @price " +
                     "WHERE MedicalServiceID=@serviceID", connection);
 
@@ -258,7 +292,7 @@ namespace MyClinic
                 textBoxAdministrationServiceDescription.Clear();
                 textBoxAdministrationServicePrice.Clear();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Spróbuj ponownie.");
             }
@@ -368,7 +402,8 @@ namespace MyClinic
                 {
                     textBoxSchedulerFirstName.Text = patient.Rows[0]["FirstName"].ToString();
                     textBoxSchedulerLastName.Text = patient.Rows[0]["LastName"].ToString();
-                } else
+                }
+                else
                 {
                     MessageBox.Show("Nie znaleziono pacjenta o podanym numerze PESEL.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
@@ -402,9 +437,10 @@ namespace MyClinic
 
         private void buttonServicePatientSearch_Click(object sender, EventArgs e)
         {
-            DataTable patient = createPatientTable(textBoxServicesPesel.Text);
+            selectedExamination = false;
+            patient = createPatientTable(textBoxServicesPesel.Text);
             textBoxServicesCity.Text = fillPatientInformation(textBoxServicesPesel.Text, patient);
-            
+
             textBoxServicesFirstName.Text = patient.Rows[0]["FirstName"].ToString();
             textBoxServicesLastName.Text = patient.Rows[0]["LastName"].ToString();
             textBoxServicePesel.Text = patient.Rows[0]["PESEL"].ToString();
@@ -412,6 +448,17 @@ namespace MyClinic
             textBoxServicesStreetNo.Text = patient.Rows[0]["StreetNumer"].ToString();
             textBoxServicesPostalCode.Text = patient.Rows[0]["PostalCode"].ToString();
             textBoxServicesPhoneNo.Text = patient.Rows[0]["PhoneNumber"].ToString();
+
+            try
+            {
+                var patientExamination = Db.MedicalExaminations.Where(v => v.PatientID == Int32.Parse(patient.Rows[0]["PatientID"].ToString()));
+
+                textBoxServicesArchive.Text = String.Join(Environment.NewLine, patientExamination.Select(v => v.ExaminationDescription));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void buttonVisitPatientSearch_Click(object sender, EventArgs e)
@@ -493,13 +540,13 @@ namespace MyClinic
                 var answer = city.Single(x => x.CityID == Int32.Parse(patient.Rows[0]["CityID"].ToString()));
                 return answer.CityName;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
             return "";
         }
-        
+
         public void Update_combobox(DataTable transaction, ComboBox combo, String select, String format, params String[] fieldNames)
         {
             try
@@ -548,6 +595,10 @@ namespace MyClinic
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dataSet.E_view' table. You can move, or remove it, as needed.
+            this.e_viewTableAdapter.Fill(this.dataSet.E_view);
+            // TODO: This line of code loads data into the 'dataSet.ExaminationBasic_view' table. You can move, or remove it, as needed.
+            this.examinationBasic_viewTableAdapter.Fill(this.dataSet.ExaminationBasic_view);
             // TODO: This line of code loads data into the 'dataSet.VisitBasics_view' table. You can move, or remove it, as needed.
             this.visitBasics_viewTableAdapter.Fill(this.dataSet.VisitBasics_view);
             // TODO: This line of code loads data into the 'dataSet.CountByMonth_view' table. You can move, or remove it, as needed.
@@ -613,13 +664,13 @@ namespace MyClinic
                                    select m;
 
                     textBoxArchivMedicines.Text = String.Join(Environment.NewLine, selected.Select(m => m.MedicineName).ToArray());
-            }
+                }
                 catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
-    }
 
         private void buttonAddMedicine_Click(object sender, EventArgs e)
         {
@@ -650,6 +701,36 @@ namespace MyClinic
             textBoxAdministrationServiceName.Text = currentSelectedValue.ServiceName.ToString();
             textBoxAdministrationServiceDescription.Text = currentSelectedValue.ServiceDescription.ToString();
             textBoxAdministrationServicePrice.Text = currentSelectedValue.Price.ToString();
+        }
+
+        private void e_viewDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            this.selectedExamination = true;
+            var selected = (E_viewRow)((DataRowView)e_viewBindingSource.Current).Row;
+            if (selected != null)
+            {
+                Patient selectedPatient = Db.Patients.Single(pat => pat.PatientID.Equals(selected.PatientID));
+                textBoxServicesFirstName.Text = selectedPatient.FirstName;
+                textBoxServicesLastName.Text = selectedPatient.LastName;
+                textBoxServicePesel.Text = selectedPatient.PESEL;
+                textBoxServicesStreet.Text = selectedPatient.Street;
+                textBoxServicesStreetNo.Text = selectedPatient.StreetNumer;
+                textBoxServicesPostalCode.Text = selectedPatient.PostalCode;
+                textBoxServicesCity.Text = selectedPatient.City.CityName;
+                textBoxServicesPhoneNo.Text = selectedPatient.PhoneNumber.ToString();
+
+                var selectedExamination = Db.MedicalExaminations.Single(exam => exam.MedicalExaminationID.Equals(selected.MedicalExaminationID));
+
+                try
+                {
+                    var patientExamination = Db.MedicalExaminations.Where(v => v.PatientID == selectedPatient.PatientID);
+                    textBoxServicesArchive.Text = String.Join(Environment.NewLine, patientExamination.Select(v => v.ExaminationDescription));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }
