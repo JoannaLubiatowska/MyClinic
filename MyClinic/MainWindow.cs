@@ -50,9 +50,10 @@ namespace MyClinic
             Update_combobox(medicines, comboBoxSelectMedicines, "select * from Medicines", "{0} {1}", "MedicineName", "Amount");
             
             FillAutoCompleteValues(textBoxSchedulerPesel, db.Patients.Select(patient => patient.PESEL).ToArray());
+            FillAutoCompleteValues(textBoxVisitPesel, db.Patients.Select(patient => patient.PESEL).ToArray());
             FillAutoCompleteValues(textBoxSchedulerLastName, db.Patients.Select(patient => patient.LastName).Distinct().ToArray());
             patients_viewBindingSource.Filter = "Zapisany = 1";
-            //FillDataGridViewVistis();
+            visitBasics_viewBindingSource.Filter = string.Format("EmployeeID = {0} and VisitDate >= '{1}' and VisitDate <= '{2}'", Authenticator.Instance.LoggedEmployee.EmployeeID, DateTime.Now.Date, DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
             FillDataGridViewServices();
             mainWindow = this;
         }
@@ -63,23 +64,7 @@ namespace MyClinic
             peselACSC.AddRange(values);
             textBox.AutoCompleteCustomSource = peselACSC;
         }
-
-        private void FillDataGridViewVistis()
-        {
-            var selected = from patient in db.Patients
-                            join visit in db.Visits on patient.PatientID equals visit.PatientID
-                            join specialist in db.MedicalSpecialists on visit.MedicalSpecialistID equals specialist.MedicalSpecialistID
-                            join employee in db.ClinicEmployees on specialist.EmployeeID equals employee.EmployeeID
-                            where employee.EmployeeID == Authenticator.Instance.LoggedEmployee.EmployeeID 
-                                && visit.VisitDate.Date == DateTime.Today
-                            select new { FirstName = patient.FirstName, LastName = patient.LastName, VisitDate = visit.VisitDate};
-
-            dataGridViewVistis.DataSource = selected;
-            dataGridViewVistis.Columns[0].HeaderText = "Imię";
-            dataGridViewVistis.Columns[1].HeaderText = "Nazwisko";
-            dataGridViewVistis.Columns[2].HeaderText = "Data wizyty";
-        }
-
+       
         private void FillDataGridViewServices()
         {
             var selected = from patient in db.Patients
@@ -324,6 +309,7 @@ namespace MyClinic
 
             textBoxVisitFirstName.Text = patient.Rows[0]["FirstName"].ToString();
             textBoxVisitLastName.Text = patient.Rows[0]["LastName"].ToString();
+            textBoxPesel.Text = patient.Rows[0]["Pesel"].ToString();
             textBoxVisitStreet.Text = patient.Rows[0]["Street"].ToString();
             textBoxVisitStreetNo.Text = patient.Rows[0]["StreetNumer"].ToString();
             textBoxVisitPostalCode.Text = patient.Rows[0]["PostalCode"].ToString();
@@ -449,6 +435,8 @@ namespace MyClinic
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dataSet.VisitBasics_view' table. You can move, or remove it, as needed.
+            this.visitBasics_viewTableAdapter.Fill(this.dataSet.VisitBasics_view);
             // TODO: This line of code loads data into the 'dataSet.CountByMonth_view' table. You can move, or remove it, as needed.
             this.countByMonth_viewTableAdapter.Fill(this.dataSet.CountByMonth_view);
             // TODO: This line of code loads data into the 'dataSet.CountVisitByMonth_view' table. You can move, or remove it, as needed.
@@ -482,9 +470,41 @@ namespace MyClinic
             patients_viewBindingSource.Filter = string.Format("Zapisany = {0}", checkBoxArchive.Checked ? 0 : 1);
         }
 
-        private void dataGridViewVistis_SelectionChanged(object sender, EventArgs e)
+        private void visitBasics_viewDataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            bool test = 1 == 1;
+            var selectedVisit = ((VisitBasics_viewRow)((DataRowView)visitBasics_viewBindingSource.Current).Row);
+            if (selectedVisit != null)
+            {
+                Patient selectedPatient = db.Patients.Single(pat => pat.PatientID.Equals(selectedVisit.PatientID));
+                textBoxVisitFirstName.Text = selectedPatient.FirstName ?? "";
+                textBoxVisitLastName.Text = selectedPatient.LastName ?? "";
+                textBoxPesel.Text = selectedPatient.PESEL ?? "";
+                textBoxVisitStreet.Text = selectedPatient.Street ?? "";
+                textBoxVisitStreetNo.Text = selectedPatient.StreetNumer ?? "";
+                textBoxVisitPostalCode.Text = selectedPatient.PostalCode ?? "";
+                textBoxVisitCity.Text = selectedPatient.City.CityName ?? "";
+                textBoxVisitPhoneNo.Text = selectedPatient.PhoneNumber.ToString() ?? "";
+                
+                //try
+                //{
+                    var patientVisits = db.Visits.Where(v => v.PatientID == selectedPatient.PatientID);
+
+                    textBoxVisitArchiveDescription.Text = String.Join(Environment.NewLine, patientVisits.Select(v => v.VisitDescription));
+                    textBoxVisitArchivCode.Text = String.Join(", ", patientVisits.Select(v => v.DiseaseClassification));
+
+                    var selected = from m in db.Medicines
+                                   join pm in db.PrescribedMedicines on m.MedicineID equals pm.MedicineID
+                                   join v in db.Visits on pm.VisitID equals v.VisitID
+                                   where v.PatientID == selectedPatient.PatientID
+                                   select m;
+
+                    textBoxArchivMedicines.Text = String.Join(Environment.NewLine, selected.Select(m => m.MedicineName).ToArray());
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message);
+                //}
+            }
         }
     }
 }

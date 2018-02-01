@@ -62,12 +62,13 @@
             System.Windows.Forms.Label label35;
             System.Windows.Forms.Label label36;
             System.Windows.Forms.Label label37;
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.Label label38;
             this.label11 = new System.Windows.Forms.Label();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.tabAdministration = new System.Windows.Forms.TabPage();
@@ -114,7 +115,11 @@
             this.textBoxServicesPesel = new System.Windows.Forms.TextBox();
             this.comboBoxServicesServiceName = new System.Windows.Forms.ComboBox();
             this.tabVistis = new System.Windows.Forms.TabPage();
-            this.dataGridViewVistis = new System.Windows.Forms.DataGridView();
+            this.visitBasics_viewDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn31 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.visitBasics_viewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonSaveVisit = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.comboBoxSelectMedicines = new System.Windows.Forms.ComboBox();
@@ -223,6 +228,8 @@
             this.count_visitsTableAdapter = new MyClinic.DataSetTableAdapters.count_visitsTableAdapter();
             this.countVisitByMonth_viewTableAdapter = new MyClinic.DataSetTableAdapters.CountVisitByMonth_viewTableAdapter();
             this.countByMonth_viewTableAdapter = new MyClinic.DataSetTableAdapters.CountByMonth_viewTableAdapter();
+            this.visitBasics_viewTableAdapter = new MyClinic.DataSetTableAdapters.VisitBasics_viewTableAdapter();
+            this.textBoxPesel = new System.Windows.Forms.TextBox();
             priceLabel = new System.Windows.Forms.Label();
             serviceDescriptionLabel = new System.Windows.Forms.Label();
             serviceNameLabel = new System.Windows.Forms.Label();
@@ -256,6 +263,7 @@
             label35 = new System.Windows.Forms.Label();
             label36 = new System.Windows.Forms.Label();
             label37 = new System.Windows.Forms.Label();
+            label38 = new System.Windows.Forms.Label();
             this.tabAdministration.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -270,7 +278,8 @@
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tabVistis.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVistis)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.visitBasics_viewDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.visitBasics_viewBindingSource)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -443,7 +452,7 @@
             // visitDateLabel
             // 
             visitDateLabel.AutoSize = true;
-            visitDateLabel.Location = new System.Drawing.Point(6, 76);
+            visitDateLabel.Location = new System.Drawing.Point(6, 73);
             visitDateLabel.Name = "visitDateLabel";
             visitDateLabel.Size = new System.Drawing.Size(64, 13);
             visitDateLabel.TabIndex = 21;
@@ -452,7 +461,7 @@
             // medicalSpecialistLabel
             // 
             medicalSpecialistLabel.AutoSize = true;
-            medicalSpecialistLabel.Location = new System.Drawing.Point(6, 47);
+            medicalSpecialistLabel.Location = new System.Drawing.Point(6, 45);
             medicalSpecialistLabel.Name = "medicalSpecialistLabel";
             medicalSpecialistLabel.Size = new System.Drawing.Size(61, 13);
             medicalSpecialistLabel.TabIndex = 20;
@@ -488,7 +497,7 @@
             // label21
             // 
             label21.AutoSize = true;
-            label21.Location = new System.Drawing.Point(6, 178);
+            label21.Location = new System.Drawing.Point(6, 205);
             label21.Name = "label21";
             label21.Size = new System.Drawing.Size(82, 13);
             label21.TabIndex = 21;
@@ -497,7 +506,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Location = new System.Drawing.Point(6, 152);
+            label20.Location = new System.Drawing.Point(6, 179);
             label20.Name = "label20";
             label20.Size = new System.Drawing.Size(41, 13);
             label20.TabIndex = 20;
@@ -506,7 +515,7 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new System.Drawing.Point(6, 126);
+            label19.Location = new System.Drawing.Point(6, 153);
             label19.Name = "label19";
             label19.Size = new System.Drawing.Size(77, 13);
             label19.TabIndex = 19;
@@ -515,7 +524,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new System.Drawing.Point(6, 100);
+            label18.Location = new System.Drawing.Point(6, 127);
             label18.Name = "label18";
             label18.Size = new System.Drawing.Size(70, 13);
             label18.TabIndex = 18;
@@ -524,7 +533,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new System.Drawing.Point(6, 74);
+            label17.Location = new System.Drawing.Point(6, 101);
             label17.Name = "label17";
             label17.Size = new System.Drawing.Size(34, 13);
             label17.TabIndex = 17;
@@ -1015,8 +1024,9 @@
             // 
             // tabVistis
             // 
+            this.tabVistis.AutoScroll = true;
+            this.tabVistis.Controls.Add(this.visitBasics_viewDataGridView);
             this.tabVistis.Controls.Add(label37);
-            this.tabVistis.Controls.Add(this.dataGridViewVistis);
             this.tabVistis.Controls.Add(this.buttonSaveVisit);
             this.tabVistis.Controls.Add(this.groupBox4);
             this.tabVistis.Controls.Add(this.groupBox3);
@@ -1030,14 +1040,44 @@
             this.tabVistis.Text = "Wizyty";
             this.tabVistis.UseVisualStyleBackColor = true;
             // 
-            // dataGridViewVistis
+            // visitBasics_viewDataGridView
             // 
-            this.dataGridViewVistis.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewVistis.Location = new System.Drawing.Point(9, 372);
-            this.dataGridViewVistis.Name = "dataGridViewVistis";
-            this.dataGridViewVistis.Size = new System.Drawing.Size(407, 250);
-            this.dataGridViewVistis.TabIndex = 53;
-            this.dataGridViewVistis.SelectionChanged += new System.EventHandler(this.dataGridViewVistis_SelectionChanged);
+            this.visitBasics_viewDataGridView.AutoGenerateColumns = false;
+            this.visitBasics_viewDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.visitBasics_viewDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.visitBasics_viewDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn30,
+            this.dataGridViewTextBoxColumn31,
+            this.dataGridViewTextBoxColumn34});
+            this.visitBasics_viewDataGridView.DataSource = this.visitBasics_viewBindingSource;
+            this.visitBasics_viewDataGridView.Location = new System.Drawing.Point(9, 371);
+            this.visitBasics_viewDataGridView.Name = "visitBasics_viewDataGridView";
+            this.visitBasics_viewDataGridView.Size = new System.Drawing.Size(407, 251);
+            this.visitBasics_viewDataGridView.TabIndex = 54;
+            this.visitBasics_viewDataGridView.SelectionChanged += new System.EventHandler(this.visitBasics_viewDataGridView_SelectionChanged);
+            // 
+            // dataGridViewTextBoxColumn30
+            // 
+            this.dataGridViewTextBoxColumn30.DataPropertyName = "FirstName";
+            this.dataGridViewTextBoxColumn30.HeaderText = "FirstName";
+            this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
+            // 
+            // dataGridViewTextBoxColumn31
+            // 
+            this.dataGridViewTextBoxColumn31.DataPropertyName = "LastName";
+            this.dataGridViewTextBoxColumn31.HeaderText = "LastName";
+            this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
+            // 
+            // dataGridViewTextBoxColumn34
+            // 
+            this.dataGridViewTextBoxColumn34.DataPropertyName = "VisitDate";
+            this.dataGridViewTextBoxColumn34.HeaderText = "VisitDate";
+            this.dataGridViewTextBoxColumn34.Name = "dataGridViewTextBoxColumn34";
+            // 
+            // visitBasics_viewBindingSource
+            // 
+            this.visitBasics_viewBindingSource.DataMember = "VisitBasics_view";
+            this.visitBasics_viewBindingSource.DataSource = this.dataSet;
             // 
             // buttonSaveVisit
             // 
@@ -1089,6 +1129,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(label38);
+            this.groupBox3.Controls.Add(this.textBoxPesel);
             this.groupBox3.Controls.Add(this.textBoxVisitCity);
             this.groupBox3.Controls.Add(this.textBoxVisitPhoneNo);
             this.groupBox3.Controls.Add(this.textBoxVisitPostalCode);
@@ -1103,9 +1145,9 @@
             this.groupBox3.Controls.Add(label19);
             this.groupBox3.Controls.Add(label20);
             this.groupBox3.Controls.Add(label21);
-            this.groupBox3.Location = new System.Drawing.Point(9, 146);
+            this.groupBox3.Location = new System.Drawing.Point(9, 124);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(407, 206);
+            this.groupBox3.Size = new System.Drawing.Size(407, 228);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Dane pacjenta";
@@ -1113,7 +1155,7 @@
             // textBoxVisitCity
             // 
             this.textBoxVisitCity.Enabled = false;
-            this.textBoxVisitCity.Location = new System.Drawing.Point(129, 149);
+            this.textBoxVisitCity.Location = new System.Drawing.Point(129, 176);
             this.textBoxVisitCity.Name = "textBoxVisitCity";
             this.textBoxVisitCity.Size = new System.Drawing.Size(242, 20);
             this.textBoxVisitCity.TabIndex = 29;
@@ -1121,7 +1163,7 @@
             // textBoxVisitPhoneNo
             // 
             this.textBoxVisitPhoneNo.Enabled = false;
-            this.textBoxVisitPhoneNo.Location = new System.Drawing.Point(129, 175);
+            this.textBoxVisitPhoneNo.Location = new System.Drawing.Point(129, 202);
             this.textBoxVisitPhoneNo.Name = "textBoxVisitPhoneNo";
             this.textBoxVisitPhoneNo.Size = new System.Drawing.Size(242, 20);
             this.textBoxVisitPhoneNo.TabIndex = 28;
@@ -1129,7 +1171,7 @@
             // textBoxVisitPostalCode
             // 
             this.textBoxVisitPostalCode.Enabled = false;
-            this.textBoxVisitPostalCode.Location = new System.Drawing.Point(129, 123);
+            this.textBoxVisitPostalCode.Location = new System.Drawing.Point(129, 150);
             this.textBoxVisitPostalCode.Name = "textBoxVisitPostalCode";
             this.textBoxVisitPostalCode.Size = new System.Drawing.Size(242, 20);
             this.textBoxVisitPostalCode.TabIndex = 27;
@@ -1137,7 +1179,7 @@
             // textBoxVisitStreet
             // 
             this.textBoxVisitStreet.Enabled = false;
-            this.textBoxVisitStreet.Location = new System.Drawing.Point(129, 71);
+            this.textBoxVisitStreet.Location = new System.Drawing.Point(129, 98);
             this.textBoxVisitStreet.Name = "textBoxVisitStreet";
             this.textBoxVisitStreet.Size = new System.Drawing.Size(242, 20);
             this.textBoxVisitStreet.TabIndex = 26;
@@ -1145,7 +1187,7 @@
             // textBoxVisitStreetNo
             // 
             this.textBoxVisitStreetNo.Enabled = false;
-            this.textBoxVisitStreetNo.Location = new System.Drawing.Point(129, 97);
+            this.textBoxVisitStreetNo.Location = new System.Drawing.Point(129, 124);
             this.textBoxVisitStreetNo.Name = "textBoxVisitStreetNo";
             this.textBoxVisitStreetNo.Size = new System.Drawing.Size(242, 20);
             this.textBoxVisitStreetNo.TabIndex = 25;
@@ -1218,14 +1260,14 @@
             this.groupBox1.Controls.Add(this.textBoxVisitPesel);
             this.groupBox1.Location = new System.Drawing.Point(9, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(407, 134);
+            this.groupBox1.Size = new System.Drawing.Size(407, 117);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Szczegóły";
             // 
             // buttonVisitPatientSearch
             // 
-            this.buttonVisitPatientSearch.Location = new System.Drawing.Point(287, 96);
+            this.buttonVisitPatientSearch.Location = new System.Drawing.Point(287, 89);
             this.buttonVisitPatientSearch.Name = "buttonVisitPatientSearch";
             this.buttonVisitPatientSearch.Size = new System.Drawing.Size(84, 23);
             this.buttonVisitPatientSearch.TabIndex = 47;
@@ -1236,14 +1278,14 @@
             // comboBoxVisitDoctor
             // 
             this.comboBoxVisitDoctor.FormattingEnabled = true;
-            this.comboBoxVisitDoctor.Location = new System.Drawing.Point(129, 44);
+            this.comboBoxVisitDoctor.Location = new System.Drawing.Point(129, 42);
             this.comboBoxVisitDoctor.Name = "comboBoxVisitDoctor";
             this.comboBoxVisitDoctor.Size = new System.Drawing.Size(242, 21);
             this.comboBoxVisitDoctor.TabIndex = 46;
             // 
             // dateTimePickerVisitDate
             // 
-            this.dateTimePickerVisitDate.Location = new System.Drawing.Point(129, 70);
+            this.dateTimePickerVisitDate.Location = new System.Drawing.Point(129, 67);
             this.dateTimePickerVisitDate.Name = "dateTimePickerVisitDate";
             this.dateTimePickerVisitDate.Size = new System.Drawing.Size(242, 20);
             this.dateTimePickerVisitDate.TabIndex = 25;
@@ -1434,6 +1476,7 @@
             // visits_viewDataGridView
             // 
             this.visits_viewDataGridView.AutoGenerateColumns = false;
+            this.visits_viewDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.visits_viewDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.visits_viewDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -1875,21 +1918,21 @@
             // 
             // chart2
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea3);
             this.chart2.DataSource = this.countByMonthviewBindingSource;
-            legend1.Name = "Legend1";
-            this.chart2.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chart2.Legends.Add(legend3);
             this.chart2.Location = new System.Drawing.Point(594, 40);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Ilość przyjętych pacjentów w miesiącu przez wszystkich pracowników";
-            series1.XValueMember = "visitMonth";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series1.YValueMembers = "visitCount";
-            this.chart2.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Ilość przyjętych pacjentów w miesiącu przez wszystkich pracowników";
+            series3.XValueMember = "visitMonth";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series3.YValueMembers = "visitCount";
+            this.chart2.Series.Add(series3);
             this.chart2.Size = new System.Drawing.Size(552, 534);
             this.chart2.TabIndex = 1;
             this.chart2.Text = "chart2";
@@ -1901,20 +1944,20 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.DataSource = this.countvisitsBindingSource;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(55, 40);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Ilość przyjętych pacjentów ogółem";
-            series2.XValueMember = "doctor";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series2.YValueMembers = "visitCount";
-            this.chart1.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Ilość przyjętych pacjentów ogółem";
+            series4.XValueMember = "doctor";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series4.YValueMembers = "visitCount";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(506, 534);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -1983,18 +2026,39 @@
             // 
             this.countByMonth_viewTableAdapter.ClearBeforeFill = true;
             // 
+            // visitBasics_viewTableAdapter
+            // 
+            this.visitBasics_viewTableAdapter.ClearBeforeFill = true;
+            // 
+            // textBoxPesel
+            // 
+            this.textBoxPesel.Enabled = false;
+            this.textBoxPesel.Location = new System.Drawing.Point(129, 72);
+            this.textBoxPesel.Name = "textBoxPesel";
+            this.textBoxPesel.Size = new System.Drawing.Size(242, 20);
+            this.textBoxPesel.TabIndex = 48;
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Location = new System.Drawing.Point(6, 75);
+            label38.Name = "label38";
+            label38.Size = new System.Drawing.Size(88, 13);
+            label38.TabIndex = 48;
+            label38.Text = "PESEL pacjenta:";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1205, 716);
+            this.ClientSize = new System.Drawing.Size(1205, 710);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.LogoutButton);
             this.MaximumSize = new System.Drawing.Size(1221, 755);
-            this.MinimumSize = new System.Drawing.Size(1221, 755);
+            this.MinimumSize = new System.Drawing.Size(1091, 612);
             this.Name = "MainWindow";
             this.Text = "Okno główne";
             this.Load += new System.EventHandler(this.MainWindow_Load);
@@ -2017,7 +2081,8 @@
             this.groupBox5.PerformLayout();
             this.tabVistis.ResumeLayout(false);
             this.tabVistis.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVistis)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.visitBasics_viewDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.visitBasics_viewBindingSource)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -2197,7 +2262,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
         private System.Windows.Forms.DataGridView dataGridViewServices;
-        private System.Windows.Forms.DataGridView dataGridViewVistis;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.BindingSource countvisitsBindingSource;
@@ -2209,6 +2273,13 @@
         private DataSetTableAdapters.CountByMonth_viewTableAdapter countByMonth_viewTableAdapter;
         private System.Windows.Forms.CheckBox checkBoxArchive;
         private System.Windows.Forms.ComboBox comboBoxSelectMedicines;
+        private System.Windows.Forms.BindingSource visitBasics_viewBindingSource;
+        private DataSetTableAdapters.VisitBasics_viewTableAdapter visitBasics_viewTableAdapter;
+        private System.Windows.Forms.DataGridView visitBasics_viewDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn31;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn34;
+        private System.Windows.Forms.TextBox textBoxPesel;
     }
 }
 
