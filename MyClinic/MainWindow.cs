@@ -152,7 +152,25 @@ namespace MyClinic
 
         private void buttonDeletePatient_Click(object sender, EventArgs e)
         {
+            Patients_viewRow currentSelectedValue = (Patients_viewRow)((DataRowView)patients_viewBindingSource.Current).Row;
 
+            SqlCommand command;
+            DataSet dataSet = new DataSet();
+            adapter.SelectCommand = new SqlCommand("SELECT * FROM Patients where 1 = 2", connection);
+            adapter.Fill(dataSet, "Patients");
+
+            command = new SqlCommand("UPDATE Patients SET Active=@active WHERE PESEL=@pesel", connection);
+
+            adapter.UpdateCommand = command;
+            adapter.UpdateCommand.Parameters.AddWithValue("@pesel", currentSelectedValue.PESEL);
+            adapter.UpdateCommand.Parameters.AddWithValue("@active", 0);
+
+            adapter.UpdateCommand = command;
+            adapter.SelectCommand = command;
+            adapter.Fill(dataSet, "Patients");
+            adapter.Update(dataSet, "Patients");
+
+            MessageBox.Show("Wypisano pacjenta.");
         }
 
         private void buttonSaveVisit_Click(object sender, EventArgs e)
